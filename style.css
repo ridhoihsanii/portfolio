@@ -1027,16 +1027,27 @@ ul { list-style: none; }
 .contact-layout {
   display: flex;
   flex-direction: column;
-  max-width: 600px;
+  max-width: 560px;
   margin: 0 auto;
   gap: 1.5rem;
+  width: 100%;
+  align-items: center;
+}
+
+.contact-info {
+  width: 100%;
+  text-align: center;
+}
+
+.contact-cards {
+  width: 100%;
 }
 
 .contact-intro {
   color: var(--text-2);
   line-height: 1.8;
   margin-bottom: 1.5rem;
-  text-align: justify;
+  text-align: center;
 }
 
 .contact-cards {
