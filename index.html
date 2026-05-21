@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Rabbani Ridho Ihsani — Software Developer portfolio. Backend Java developer at PT. Tri Adi Bersama (Anteraja)." />
+  <meta name="keywords" content="Rabbani Ridho Ihsani, Software Developer, Java, Spring Boot, Backend Developer, Portfolio" />
+  <meta name="author" content="Rabbani Ridho Ihsani" />
+  <title>Rabbani Ridho Ihsani — Portfolio</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <!-- AOS Animations -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ─── NAVBAR ──────────────────────────────────────────────────── -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="#hero" class="nav-logo">
+        <span class="logo-bracket">&lt;</span>RRI<span class="logo-bracket">/&gt;</span>
+      </a>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#skills" class="nav-link">Skills</a></li>
+        <li><a href="#experience" class="nav-link">Experience</a></li>
+        <li><a href="#projects" class="nav-link">Projects</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+          <i class="fa-solid fa-moon" id="themeIcon"></i>
+        </button>
+        <a href="assets/cv.html" target="_blank" rel="noopener" class="btn-nav-cv">
+          <i class="fa-solid fa-download"></i> CV
+        </a>
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ─── HERO ────────────────────────────────────────────────────── -->
+  <section class="hero" id="hero">
+    <div class="hero-bg">
+      <div class="hero-orb orb-1"></div>
+      <div class="hero-orb orb-2"></div>
+      <div class="hero-orb orb-3"></div>
+    </div>
+    <div class="hero-container">
+      <div class="hero-text">
+        <p class="hero-greeting">👋 Hello, I'm</p>
+        <h1 class="hero-name">
+          Rabbani<br />
+          <span class="gradient-text">Ridho Ihsani</span>
+        </h1>
+        <div class="hero-roles">
+          <span class="role-prefix">I build</span>
+          <span class="role-cycler" id="roleCycler">Backend Systems</span>
+        </div>
+        <p class="hero-desc">
+          Backend-focused software developer experienced in Java, Spring Boot, and browser automation.
+          I build reliable systems that run efficiently, scale gracefully, and solve real business problems
+          — from clean REST APIs to full end-to-end automation pipelines.
+        </p>
+        <div class="hero-cta">
+          <a href="#contact" class="btn-primary">
+            <i class="fa-solid fa-paper-plane"></i> Get In Touch
+          </a>
+          <a href="assets/cv.html" target="_blank" rel="noopener" class="btn-secondary">
+            <i class="fa-solid fa-file-arrow-down"></i> Download CV
+          </a>
+        </div>
+        <div class="hero-socials">
+          <a href="mailto:ridhoihsanii@gmail.com" class="social-pill" title="Email">
+            <i class="fa-solid fa-envelope"></i>
+          </a>
+          <a href="https://www.linkedin.com/in/ridhoihsanii" target="_blank" rel="noopener" class="social-pill" title="LinkedIn">
+            <i class="fa-brands fa-linkedin-in"></i>
+          </a>
+          <a href="https://github.com/ridhoihsanii" target="_blank" rel="noopener" class="social-pill" title="GitHub">
+            <i class="fa-brands fa-github"></i>
+          </a>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <span class="stat-num">4+</span>
+            <span class="stat-label">Years Experience</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-photo-wrap">
+        <div class="photo-ring">
+          <div class="photo-glow"></div>
+          <img src="assets/profile.jpeg" alt="Rabbani Ridho Ihsani" class="hero-photo" loading="eager" />
+        </div>
+        <div class="photo-badge badge-1"><i class="fa-brands fa-java"></i> Java</div>
+        <div class="photo-badge badge-2"><i class="fa-solid fa-leaf"></i> Spring</div>
+        <div class="photo-badge badge-3"><i class="fa-solid fa-code"></i> Dev</div>
+      </div>
+    </div>
+    <a href="#about" class="scroll-indicator" aria-label="Scroll down">
+      <i class="fa-solid fa-chevron-down"></i>
+    </a>
+  </section>
+
+  <!-- ─── ABOUT ────────────────────────────────────────────────────── -->
+  <section class="section" id="about">
+    <div class="container">
+      <div class="section-header" data-aos="fade-up">
+        <span class="section-tag">Who I Am</span>
+        <h2 class="section-title">About Me</h2>
+      </div>
+      <div class="about-grid">
+        <div class="about-photo-col" data-aos="fade-right" data-aos-delay="100">
+          <div class="about-photo-frame">
+            <img src="assets/profile.jpeg" alt="Rabbani Ridho Ihsani" loading="lazy" />
+            <div class="about-photo-border"></div>
+          </div>
+        </div>
+        <div class="about-content" data-aos="fade-left" data-aos-delay="200">
+          <h3 class="about-heading">
+            Software Developer at <span class="accent">PT. Tri Adi Bersama — Anteraja</span>
+            <span class="avail-badge"><i class="fa-solid fa-circle"></i> Open to Work</span>
+          </h3>
+          <p class="about-text">
+            I'm Rabbani Ridho Ihsani, a software developer based in Indonesia specializing in
+            backend engineering and workflow automation. I thrive on turning complex, repetitive
+            processes into clean, automated systems — whether that's a REST API, a data pipeline,
+            or a browser-driven RPA tool.
+          </p>
+          <p class="about-text">
+            At PT. Tri Adi Bersama (Anteraja), I build and maintain backend services with Java and Spring Boot,
+            design integrations with enterprise ERP systems, and deliver tools that measurably
+            improve team productivity. I care deeply about code quality, clean architecture, and
+            delivering software that <em>actually works</em> in production.
+          </p>
+          <div class="about-info-grid">
+            <div class="info-item">
+              <i class="fa-solid fa-location-dot"></i>
+              <span>Indonesia</span>
+            </div>
+            <div class="info-item">
+              <i class="fa-solid fa-envelope"></i>
+              <a href="mailto:ridhoihsanii@gmail.com">ridhoihsanii@gmail.com</a>
+            </div>
+            <div class="info-item">
+              <i class="fa-brands fa-linkedin"></i>
+              <a href="https://linkedin.com/in/ridhoihsanii" target="_blank" rel="noopener">linkedin.com/in/ridhoihsanii</a>
+            </div>
+            <div class="info-item">
+              <i class="fa-solid fa-briefcase"></i>
+              <span>Open to Opportunities</span>
+            </div>
+          </div>
+          <a href="assets/cv.html" target="_blank" rel="noopener" class="btn-primary" style="display:inline-flex;margin-top:1.5rem;">
+            <i class="fa-solid fa-file-arrow-down"></i> View Full Resume
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── SKILLS ───────────────────────────────────────────────────── -->
+  <section class="section section-alt" id="skills">
+    <div class="container">
+      <div class="section-header" data-aos="fade-up">
+        <span class="section-tag">What I Know</span>
+        <h2 class="section-title">Skills & Technologies</h2>
+      </div>
+
+      <div class="skills-categories">
+
+        <!-- Backend -->
+        <div class="skill-category" data-aos="fade-up" data-aos-delay="50">
+          <div class="skill-cat-header">
+            <span class="skill-cat-icon"><i class="fa-solid fa-server"></i></span>
+            <h3>Backend Development</h3>
+          </div>
+          <div class="skill-bars">
+            <div class="skill-item">
+              <div class="skill-label"><span>Java</span><span class="skill-pct">90%</span></div>
+              <div class="skill-bar"><div class="skill-fill" data-w="90"></div></div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-label"><span>Spring Boot</span><span class="skill-pct">85%</span></div>
+              <div class="skill-bar"><div class="skill-fill" data-w="85"></div></div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-label"><span>REST API</span><span class="skill-pct">85%</span></div>
+              <div class="skill-bar"><div class="skill-fill" data-w="85"></div></div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-label"><span>Maven / Gradle</span><span class="skill-pct">80%</span></div>
+              <div class="skill-bar"><div class="skill-fill" data-w="80"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Automation & Testing -->
+        <div class="skill-category" data-aos="fade-up" data-aos-delay="100">
+          <div class="skill-cat-header">
+            <span class="skill-cat-icon"><i class="fa-solid fa-robot"></i></span>
+            <h3>Automation</h3>
+          </div>
+          <div class="skill-bars">
+            <div class="skill-item">
+              <div class="skill-label"><span>Selenium WebDriver</span><span class="skill-pct">85%</span></div>
+              <div class="skill-bar"><div class="skill-fill" data-w="85"></div></div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-label"><span>WebDriverManager</span><span class="skill-pct">80%</span></div>
+              <div class="skill-bar"><div class="skill-fill" data-w="80"></div></div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-label"><span>PDF Parsing (Apache PDFBox)</span><span class="skill-pct">75%</span></div>
+              <div class="skill-bar"><div class="skill-fill" data-w="75"></div></div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-label"><span>Apache POI (Excel)</span><span class="skill-pct">75%</span></div>
+              <div class="skill-bar"><div class="skill-fill" data-w="75"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Frontend -->
+        <div class="skill-category" data-aos="fade-up" data-aos-delay="150">
+          <div class="skill-cat-header">
+            <span class="skill-cat-icon"><i class="fa-solid fa-palette"></i></span>
+            <h3>Frontend</h3>
+          </div>
+          <div class="skill-bars">
+            <div class="skill-item">
+              <div class="skill-label"><span>HTML / CSS</span><span class="skill-pct">82%</span></div>
+              <div class="skill-bar"><div class="skill-fill" data-w="82"></div></div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-label"><span>JavaScript</span><span class="skill-pct">78%</span></div>
+              <div class="skill-bar"><div class="skill-fill" data-w="78"></div></div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-label"><span>Thymeleaf</span><span class="skill-pct">80%</span></div>
+              <div class="skill-bar"><div class="skill-fill" data-w="80"></div></div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-label"><span>Bootstrap</span><span class="skill-pct">75%</span></div>
+              <div class="skill-bar"><div class="skill-fill" data-w="75"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tools & DevOps -->
+        <div class="skill-category" data-aos="fade-up" data-aos-delay="200">
+          <div class="skill-cat-header">
+            <span class="skill-cat-icon"><i class="fa-solid fa-toolbox"></i></span>
+            <h3>Tools & DevOps</h3>
+          </div>
+          <div class="skill-bars">
+            <div class="skill-item">
+              <div class="skill-label"><span>Git</span><span class="skill-pct">80%</span></div>
+              <div class="skill-bar"><div class="skill-fill" data-w="80"></div></div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-label"><span>Docker</span><span class="skill-pct">65%</span></div>
+              <div class="skill-bar"><div class="skill-fill" data-w="65"></div></div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-label"><span>Odoo ERP</span><span class="skill-pct">78%</span></div>
+              <div class="skill-bar"><div class="skill-fill" data-w="78"></div></div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-label"><span>IntelliJ / VS Code</span><span class="skill-pct">85%</span></div>
+              <div class="skill-bar"><div class="skill-fill" data-w="85"></div></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Tech Badge Cloud -->
+      <div class="tech-cloud" data-aos="fade-up" data-aos-delay="100">
+        <span class="tech-badge"><i class="fa-brands fa-java"></i> Java</span>
+        <span class="tech-badge"><i class="fa-solid fa-leaf"></i> Spring Boot</span>
+        <span class="tech-badge"><i class="fa-brands fa-js"></i> JavaScript</span>
+        <span class="tech-badge"><i class="fa-brands fa-html5"></i> HTML5</span>
+        <span class="tech-badge"><i class="fa-brands fa-css3-alt"></i> CSS3</span>
+        <span class="tech-badge"><i class="fa-solid fa-robot"></i> Selenium</span>
+        <span class="tech-badge"><i class="fa-brands fa-docker"></i> Docker</span>
+        <span class="tech-badge"><i class="fa-brands fa-git-alt"></i> Git</span>
+        <span class="tech-badge"><i class="fa-solid fa-database"></i> SQL</span>
+        <span class="tech-badge"><i class="fa-solid fa-file-excel"></i> Apache POI</span>
+        <span class="tech-badge"><i class="fa-solid fa-file-pdf"></i> PDFBox</span>
+        <span class="tech-badge"><i class="fa-solid fa-gears"></i> Maven</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── EXPERIENCE ───────────────────────────────────────────────── -->
+  <section class="section" id="experience">
+    <div class="container">
+      <div class="section-header" data-aos="fade-up">
+        <span class="section-tag">Where I've Worked</span>
+        <h2 class="section-title">Experience</h2>
+      </div>
+
+      <div class="timeline">
+
+        <div class="timeline-item" data-aos="fade-up" data-aos-delay="50">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <div class="timeline-card-header">
+              <div>
+                <h3 class="job-title">Back End Developer</h3>
+                <p class="job-company">
+                  <i class="fa-solid fa-building"></i> PT. Tri Adi Bersama — Anteraja &nbsp;·&nbsp; Kuningan City, Jakarta
+                </p>
+              </div>
+              <span class="job-period">Jun 2022 – Present</span>
+            </div>
+            <ul class="job-duties">
+              <li>Designed, developed, and maintained enterprise-grade backend applications in Java, translating business requirements into robust, production-ready solutions</li>
+              <li>Performed systematic debugging and end-to-end software testing to identify and resolve defects, ensuring applications meet quality standards and functional specifications</li>
+              <li>Collaborated closely with QA engineers and product management teams to coordinate development sprints, align on requirements, and drive on-time project delivery</li>
+              <li>Conducted continuous maintenance, bug fixes, and feature enhancements to keep applications running optimally and consistently meeting evolving user needs</li>
+            </ul>
+            <div class="job-tech">
+              <span>Java</span><span>Spring Boot</span><span>REST API</span>
+              <span>Selenium</span><span>Docker</span><span>Git</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <p class="exp-note" data-aos="fade-up">
+        <i class="fa-solid fa-circle-info"></i>
+        For the complete work history and details, please
+        <a href="assets/cv.html" target="_blank" rel="noopener">download the full CV</a>.
+      </p>
+    </div>
+  </section>
+
+  <!-- ─── PROJECTS ─────────────────────────────────────────────────── -->
+  <section class="section section-alt" id="projects">
+    <div class="container">
+      <div class="section-header" data-aos="fade-up">
+        <span class="section-tag">What I've Built</span>
+        <h2 class="section-title">Projects</h2>
+      </div>
+
+      <div class="projects-grid">
+
+        <div class="project-card" data-aos="fade-up" data-aos-delay="50">
+          <div class="project-card-top">
+            <div class="project-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
+            <div class="project-links">
+              <a href="#" title="Private repository" class="project-link disabled">
+                <i class="fa-brands fa-github"></i>
+              </a>
+            </div>
+          </div>
+          <h3 class="project-title">Timesheet Automation Tool</h3>
+          <p class="project-desc">
+            A Spring Boot web application that automates the Odoo ERP timesheet entry process using
+            Selenium WebDriver. Supports PDF parsing from uploaded timesheets, manual entry mode
+            with workday generation, Excel export, and multi-user configuration with per-email
+            auto-fill profiles.
+          </p>
+          <div class="project-tech">
+            <span>Java</span><span>Spring Boot</span><span>Selenium</span>
+            <span>Thymeleaf</span><span>Apache PDFBox</span><span>Apache POI</span>
+            <span>Bootstrap 5</span><span>Docker</span>
+          </div>
+          <div class="project-highlights">
+            <div class="highlight">
+              <i class="fa-solid fa-check-circle"></i> PDF parsing & data extraction
+            </div>
+            <div class="highlight">
+              <i class="fa-solid fa-check-circle"></i> Selenium browser automation
+            </div>
+            <div class="highlight">
+              <i class="fa-solid fa-check-circle"></i> Multi-user profile auto-fill
+            </div>
+            <div class="highlight">
+              <i class="fa-solid fa-check-circle"></i> Real-time progress via SSE polling
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card" data-aos="fade-up" data-aos-delay="150">
+          <div class="project-card-top">
+            <div class="project-icon"><i class="fa-solid fa-user-tie"></i></div>
+            <div class="project-links">
+              <a href="#hero" class="project-link" title="You're looking at it!">
+                <i class="fa-solid fa-eye"></i>
+              </a>
+            </div>
+          </div>
+          <h3 class="project-title">Personal Portfolio Website</h3>
+          <p class="project-desc">
+            This portfolio — a fully responsive, single-page application built entirely with
+            semantic HTML5, modern CSS (custom properties, Grid, Flexbox), and vanilla JavaScript ES6+.
+            Features dark/light mode with localStorage persistence, AOS scroll-reveal animations,
+            intersection-observer skill bars, role text cycler, and 3D card tilt effects — all
+            with zero build tools or frameworks required.
+          </p>
+          <div class="project-tech">
+            <span>HTML5</span><span>CSS3</span><span>JavaScript</span>
+            <span>AOS</span><span>Font Awesome 6</span>
+          </div>
+          <div class="project-highlights">
+            <div class="highlight">
+              <i class="fa-solid fa-check-circle"></i> Dark / Light mode with localStorage persistence
+            </div>
+            <div class="highlight">
+              <i class="fa-solid fa-check-circle"></i> Fully responsive — mobile, tablet & desktop
+            </div>
+            <div class="highlight">
+              <i class="fa-solid fa-check-circle"></i> No build step — opens directly in any browser
+            </div>
+            <div class="highlight">
+              <i class="fa-solid fa-check-circle"></i> Intersection Observer skill bar animation
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── EDUCATION ────────────────────────────────────────────────── -->
+  <section class="section" id="education">
+    <div class="container">
+      <div class="section-header" data-aos="fade-up">
+        <span class="section-tag">Academic Background</span>
+        <h2 class="section-title">Education</h2>
+      </div>
+      <div class="edu-grid">
+        <div class="edu-card" data-aos="fade-up" data-aos-delay="50">
+          <div class="edu-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+          <div class="edu-content">
+            <h3>Bachelor of Informatics Engineering</h3>
+            <p class="edu-major">Computer Science / Information Technology</p>
+            <p class="edu-school"><i class="fa-solid fa-location-dot"></i> Universitas Indraprasta PGRI, Jakarta</p>
+            <p class="edu-note">
+              Studied software engineering principles, database systems, algorithms & data structures,
+              web development, object-oriented programming, and computer networks.
+              For the full academic record, please
+              <a href="assets/cv.html" target="_blank" rel="noopener">download the CV</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── CONTACT ──────────────────────────────────────────────────── -->
+  <section class="section section-alt" id="contact">
+    <div class="container">
+      <div class="section-header" data-aos="fade-up">
+        <span class="section-tag">Let's Connect</span>
+        <h2 class="section-title">Get In Touch</h2>
+      </div>
+      <div class="contact-layout">
+        <div class="contact-info" data-aos="fade-right" data-aos-delay="100">
+          <p class="contact-intro">
+            Whether you have a project idea, a job opportunity, or just want to say hello —
+            I'd love to hear from you. Feel free to reach out through any of these channels.
+          </p>
+          <div class="contact-cards">
+            <a href="mailto:ridhoihsanii@gmail.com" class="contact-card">
+              <div class="cc-icon"><i class="fa-solid fa-envelope"></i></div>
+              <div class="cc-text">
+                <span class="cc-label">Email</span>
+                <span class="cc-value">ridhoihsanii@gmail.com</span>
+              </div>
+              <i class="fa-solid fa-arrow-right cc-arrow"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/ridhoihsanii" target="_blank" rel="noopener" class="contact-card">
+              <div class="cc-icon cc-linkedin"><i class="fa-brands fa-linkedin-in"></i></div>
+              <div class="cc-text">
+                <span class="cc-label">LinkedIn</span>
+                <span class="cc-value">linkedin.com/in/ridhoihsanii</span>
+              </div>
+              <i class="fa-solid fa-arrow-right cc-arrow"></i>
+            </a>
+            <a href="https://github.com/ridhoihsanii" target="_blank" rel="noopener" class="contact-card">
+              <div class="cc-icon cc-github"><i class="fa-brands fa-github"></i></div>
+              <div class="cc-text">
+                <span class="cc-label">GitHub</span>
+                <span class="cc-value">github.com/ridhoihsanii</span>
+              </div>
+              <i class="fa-solid fa-arrow-right cc-arrow"></i>
+            </a>
+          </div>
+        </div>
+
+        <form class="contact-form" id="contactForm" data-aos="fade-left" data-aos-delay="200"
+              action="mailto:ridhoihsanii@gmail.com" method="get" enctype="text/plain">
+          <div class="form-group">
+            <label for="name">Your Name</label>
+            <input type="text" id="name" name="name" placeholder="John Doe" required />
+          </div>
+          <div class="form-group">
+            <label for="email">Your Email</label>
+            <input type="email" id="email" name="subject" placeholder="john@example.com" required />
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="body" rows="5" placeholder="Hi Ridho, I'd like to..." required></textarea>
+          </div>
+          <button type="submit" class="btn-primary" style="width:100%;justify-content:center;">
+            <i class="fa-solid fa-paper-plane"></i> Send Message
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ───────────────────────────────────────────────────── -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-logo">
+        <span class="logo-bracket">&lt;</span>RRI<span class="logo-bracket">/&gt;</span>
+      </div>
+      <p class="footer-text">
+        Built with <i class="fa-solid fa-heart" style="color:#e11d48"></i> by
+        <strong>Rabbani Ridho Ihsani</strong>
+      </p>
+      <div class="footer-socials">
+        <a href="mailto:ridhoihsanii@gmail.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+        <a href="https://www.linkedin.com/in/ridhoihsanii" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+        <a href="https://github.com/ridhoihsanii" target="_blank" rel="noopener" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+      </div>
+      <p class="footer-copy">&copy; 2026 Rabbani Ridho Ihsani. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Back to Top -->
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">
+    <i class="fa-solid fa-chevron-up"></i>
+  </button>
+
+  <!-- AOS -->
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
