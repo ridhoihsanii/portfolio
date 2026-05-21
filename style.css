@@ -1021,10 +1021,11 @@ ul { list-style: none; }
 
 /* ── CONTACT ────────────────────────────────────────────── */
 .contact-layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3rem;
-  align-items: start;
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+  margin: 0 auto;
+  gap: 1.5rem;
 }
 
 .contact-intro {
