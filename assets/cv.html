@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="format-detection" content="telephone=no" />
   <title>CV – Rabbani Ridho Ihsani</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -22,7 +23,11 @@
 
     /* ── Reset ─────────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { font-size: 14px; }
+    html {
+      font-size: 14px;
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+    }
     body {
       font-family: 'Inter', system-ui, sans-serif;
       color: var(--text);
@@ -367,6 +372,53 @@
     /* ── Screen preview ────────────────────────────────────── */
     @media screen {
       body { background: #e5e7eb; padding: 24px; }
+    }
+
+    /* ── Mobile responsive ─────────────────────────────────── */
+    @media screen and (max-width: 700px) {
+      body { padding: 0; background: var(--white); }
+      html { font-size: 13px; }
+
+      .page {
+        width: 100%;
+        min-height: 0;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        box-shadow: none;
+      }
+
+      .cv-header {
+        grid-column: 1;
+        flex-direction: column;
+        text-align: center;
+        padding: 24px 16px;
+        gap: 14px;
+      }
+
+      .header-photo { width: 72px; height: 72px; }
+      .header-name  { font-size: 1.5rem; }
+      .header-contacts { justify-content: center; }
+
+      .cv-sidebar {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        padding: 20px 16px;
+      }
+
+      .cv-main { padding: 20px 16px; }
+
+      /* Ensure ALL text stays uniform on mobile */
+      .exp-bullets li,
+      .project-desc,
+      .summary-text,
+      .edu-note {
+        font-size: .82rem;
+        text-align: left;
+      }
+
+      .timeline-card-header,
+      .exp-header,
+      .project-title-row { flex-direction: column; gap: 6px; }
     }
   </style>
 </head>
