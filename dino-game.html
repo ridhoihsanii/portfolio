@@ -1,18 +1,11 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+﻿<html>
 
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dino Game</title>
-<meta name="description" content="Dino Chrome">
+<title>T-Rex Game</title>
+<meta name="description" content="Ripped T-Rex/Dino game of Chromium">
 
 
 
-
-
-
- <link rel="icon" href="https://ssl.gstatic.com/classroom/ic_product_classroom_32.png">
 
 
 
@@ -27,11 +20,68 @@
         myClasses[i].style.display = 'none';
       }
     }
-    // Copyright (c) 2023 The Chromium Authors. All rights reserved. Adaptation done by Elizalde Alexios
+    // Copyright (c) 2014 The Chromium Authors. All rights reserved.
     // Use of this source code is governed by a BSD-style license that can be
     // found in the LICENSE file.
     (function() {
     'use strict';
+    /**
+     * Creates a 2-frame pterodactyl sprite on an off-screen canvas.
+     * Frame 0 (wings up) at sourceX=0, Frame 1 (wings down) at sourceX=46.
+     */
+    function createPterodactylSprite(isDark) {
+      var c = document.createElement('canvas');
+      c.width = 92;
+      c.height = 40;
+      var ctx = c.getContext('2d');
+      var color = isDark ? '#aaaaaa' : '#535353';
+
+      function drawPtero(ox, wingsUp) {
+        ctx.fillStyle = color;
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 2;
+        // Body
+        ctx.beginPath();
+        ctx.ellipse(ox + 22, 22, 13, 7, 0, 0, Math.PI * 2);
+        ctx.fill();
+        // Head
+        ctx.beginPath();
+        ctx.ellipse(ox + 35, 18, 6, 5, -0.2, 0, Math.PI * 2);
+        ctx.fill();
+        // Beak
+        ctx.beginPath();
+        ctx.moveTo(ox + 39, 17);
+        ctx.lineTo(ox + 46, 16);
+        ctx.lineTo(ox + 39, 20);
+        ctx.closePath();
+        ctx.fill();
+        // Eye
+        ctx.fillStyle = isDark ? '#0b0f1a' : '#f7f7f7';
+        ctx.beginPath();
+        ctx.arc(ox + 37, 17, 2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = color;
+        // Wings
+        if (wingsUp) {
+          ctx.beginPath();
+          ctx.moveTo(ox + 9, 18); ctx.lineTo(ox + 0, 4); ctx.lineTo(ox + 20, 15); ctx.closePath(); ctx.fill();
+          ctx.beginPath();
+          ctx.moveTo(ox + 35, 18); ctx.lineTo(ox + 46, 4); ctx.lineTo(ox + 22, 15); ctx.closePath(); ctx.fill();
+        } else {
+          ctx.beginPath();
+          ctx.moveTo(ox + 9, 22); ctx.lineTo(ox + 0, 36); ctx.lineTo(ox + 20, 28); ctx.closePath(); ctx.fill();
+          ctx.beginPath();
+          ctx.moveTo(ox + 35, 22); ctx.lineTo(ox + 46, 36); ctx.lineTo(ox + 22, 28); ctx.closePath(); ctx.fill();
+        }
+        // Legs
+        ctx.beginPath(); ctx.moveTo(ox + 18, 28); ctx.lineTo(ox + 14, 38); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(ox + 24, 28); ctx.lineTo(ox + 20, 38); ctx.stroke();
+      }
+
+      drawPtero(0, true);
+      drawPtero(46, false);
+      return c;
+    }
     /**
     * T-Rex runner.
     * @param {string} outerContainerId Outer containing element id.
@@ -286,8 +336,7 @@
     this.canvas = createCanvas(this.containerEl, this.dimensions.WIDTH,
     this.dimensions.HEIGHT, Runner.classes.PLAYER);
     this.canvasCtx = this.canvas.getContext('2d');
-    this.canvasCtx.fillStyle = '#f7f7f7';
-    this.canvasCtx.fill();
+    this.canvasCtx.fillStyle = 'transparent';
     Runner.updateCanvasScaling(this.canvas);
     // Horizon contains clouds, obstacles and the ground.
     this.horizon = new Horizon(this.canvas, this.images, this.dimensions,
@@ -415,6 +464,14 @@
     this.time = now;
     if (this.activated) {
     this.clearCanvas();
+    // Night mode sky overlay
+    if (this.horizon && this.horizon.nightMode && this.horizon.nightMode.opacity > 0) {
+      this.canvasCtx.save();
+      this.canvasCtx.globalAlpha = this.horizon.nightMode.opacity * 0.6;
+      this.canvasCtx.fillStyle = '#0d1b2a';
+      this.canvasCtx.fillRect(0, 0, this.dimensions.WIDTH, this.dimensions.HEIGHT);
+      this.canvasCtx.restore();
+    }
     if (this.tRex.jumping) {
     this.tRex.updateJump(deltaTime, this.config);
     }
@@ -426,10 +483,10 @@
     }
     // The horizon doesn't move until the intro is over.
     if (this.playingIntro) {
-    this.horizon.update(0, this.currentSpeed, hasObstacles);
+    this.horizon.update(0, this.currentSpeed, hasObstacles, this.distanceRan);
     } else {
     deltaTime = !this.started ? 0 : deltaTime;
-    this.horizon.update(deltaTime, this.currentSpeed, hasObstacles);
+    this.horizon.update(deltaTime, this.currentSpeed, hasObstacles, this.distanceRan);
     }
     // Check for collisions.
     var collision = hasObstacles &&
@@ -516,7 +573,7 @@
     onKeyDown: function(e) {
     // Prevent page scroll for all game keys
     if (Runner.keycodes.JUMP[e.keyCode] || Runner.keycodes.DUCK[e.keyCode]) {
-    e.preventDefault();
+      e.preventDefault();
     }
     if (e.target != this.detailsButton) {
     if (!this.crashed && (Runner.keycodes.JUMP[String(e.keyCode)] ||
@@ -970,6 +1027,8 @@
     this.width = 0;
     this.collisionBoxes = [];
     this.gap = 0;
+    this.currentFrame = 0;
+    this.timer = 0;
     this.init(speed);
     };
     /**
@@ -1021,8 +1080,13 @@
     sourceWidth = sourceWidth * 2;
     sourceHeight = sourceHeight * 2;
     }
-    // Sprite
-    var sourceX = (sourceWidth * this.size) * (0.5 * (this.size - 1));
+    // Sprite — animated obstacles (e.g. pterodactyl) use frame-based sourceX
+    var sourceX;
+    if (this.typeConfig.animated) {
+      sourceX = this.currentFrame * sourceWidth;
+    } else {
+      sourceX = (sourceWidth * this.size) * (0.5 * (this.size - 1));
+    }
     this.canvasCtx.drawImage(this.image,
     sourceX, 0,
     sourceWidth * this.size, sourceHeight,
@@ -1037,6 +1101,13 @@
     update: function(deltaTime, speed) {
     if (!this.remove) {
     this.xPos -= Math.floor((speed * FPS / 1000) * deltaTime);
+    if (this.typeConfig.animated) {
+      this.timer += deltaTime;
+      if (this.timer > this.typeConfig.msPerFrame) {
+        this.currentFrame = (this.currentFrame + 1) % this.typeConfig.numFrames;
+        this.timer = 0;
+      }
+    }
     this.draw();
     if (!this.isVisible()) {
     this.remove = true;
@@ -1108,6 +1179,24 @@
     new CollisionBox(0, 12, 7, 38),
     new CollisionBox(8, 0, 7, 49),
     new CollisionBox(13, 10, 10, 38)
+    ]
+    },
+    {
+    type: 'PTERODACTYL',
+    className: ' pterodactyl ',
+    width: 46,
+    height: 40,
+    yPos: null, // set dynamically per spawn
+    multipleSpeed: 999,
+    minGap: 150,
+    minSpeed: 8.5,
+    animated: true,
+    numFrames: 2,
+    msPerFrame: 220,
+    collisionBoxes: [
+    new CollisionBox(15, 15, 16, 5),
+    new CollisionBox(18, 21, 24, 6),
+    new CollisionBox(2, 14, 4, 3)
     ]
     }
     ];
@@ -1674,6 +1763,103 @@
     * @param {HTMLImage} bgImg Horizon line sprite.
     * @constructor
     */
+    //******************************************************************************
+    /**
+     * Nighttime mode: darkens the sky, shows moon and stars.
+     * Activates every NIGHT_FREQUENCY distance units.
+     */
+    var NIGHT_FREQUENCY = 800;
+    function NightMode(canvas, containerWidth) {
+    this.canvas = canvas;
+    this.canvasCtx = canvas.getContext('2d');
+    this.containerWidth = containerWidth;
+    this.xPos = this.containerWidth - 50;
+    this.stars = [];
+    this.opacity = 0;
+    this.active = false;
+    this.fadeDirection = 0; // 1=fade in, -1=fade out
+    this.distanceTicker = 0;
+    this.generateStars();
+    }
+    NightMode.FADE_SPEED = 0.01;
+    NightMode.STAR_COUNT = 6;
+    NightMode.STAR_SIZE = 9;
+    NightMode.STAR_MAX_SIZE = 2;
+    NightMode.prototype = {
+    generateStars: function() {
+      for (var i = 0; i < NightMode.STAR_COUNT; i++) {
+        this.stars.push({
+          x: getRandomNum(0, this.containerWidth),
+          y: getRandomNum(0, 30),
+          size: getRandomNum(1, NightMode.STAR_MAX_SIZE),
+          opacity: 0
+        });
+      }
+    },
+    draw: function() {
+      if (this.opacity === 0) return;
+      var ctx = this.canvasCtx;
+      // Moon
+      ctx.save();
+      ctx.globalAlpha = this.opacity;
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.arc(this.xPos, 30, 10, 0, Math.PI * 2);
+      ctx.fill();
+      // Moon shadow to make crescent
+      ctx.fillStyle = this.active ? '#1a2340' : '#6b7b9a';
+      ctx.beginPath();
+      ctx.arc(this.xPos - 5, 28, 8, 0, Math.PI * 2);
+      ctx.fill();
+      // Stars
+      for (var i = 0; i < this.stars.length; i++) {
+        var star = this.stars[i];
+        ctx.fillStyle = '#ffffff';
+        ctx.globalAlpha = this.opacity * star.opacity;
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.restore();
+    },
+    update: function(distance) {
+      this.distanceTicker += distance;
+      // Trigger night at every NIGHT_FREQUENCY distance
+      if (this.distanceTicker > NIGHT_FREQUENCY) {
+        this.active = !this.active;
+        this.fadeDirection = this.active ? 1 : -1;
+        this.distanceTicker = 0;
+        // Randomly reposition moon and stars
+        this.xPos = getRandomNum(this.containerWidth * 0.3, this.containerWidth - 80);
+        for (var i = 0; i < this.stars.length; i++) {
+          this.stars[i].x = getRandomNum(0, this.containerWidth);
+          this.stars[i].y = getRandomNum(4, 28);
+          this.stars[i].size = getRandomNum(1, NightMode.STAR_MAX_SIZE);
+        }
+      }
+      // Fade opacity
+      if (this.fadeDirection !== 0) {
+        this.opacity += NightMode.FADE_SPEED * this.fadeDirection;
+        if (this.fadeDirection === 1 && this.opacity >= 0.8) {
+          this.opacity = 0.8;
+          this.fadeDirection = 0;
+          // Fade in stars
+          for (var j = 0; j < this.stars.length; j++) {
+            this.stars[j].opacity = getRandomNum(0, 10) / 10;
+          }
+        } else if (this.fadeDirection === -1 && this.opacity <= 0) {
+          this.opacity = 0;
+          this.fadeDirection = 0;
+        }
+      }
+    },
+    reset: function() {
+      this.active = false;
+      this.opacity = 0;
+      this.fadeDirection = 0;
+      this.distanceTicker = 0;
+    }
+    };
     function HorizonLine(canvas, bgImg) {
     this.image = bgImg;
     this.canvas = canvas;
@@ -1801,8 +1987,10 @@
     // Obstacles
     this.obstacleImgs = {
     CACTUS_SMALL: images.CACTUS_SMALL,
-    CACTUS_LARGE: images.CACTUS_LARGE
+    CACTUS_LARGE: images.CACTUS_LARGE,
+    PTERODACTYL: createPterodactylSprite(false)
     };
+    this.nightMode = new NightMode(canvas, dimensions.WIDTH);
     this.init();
     };
     /**
@@ -1831,12 +2019,17 @@
     * the obstacles from being updated / added. This happens in the
     * ease in section.
     */
-    update: function(deltaTime, currentSpeed, updateObstacles) {
+    update: function(deltaTime, currentSpeed, updateObstacles, distance) {
     this.runningTime += deltaTime;
     this.horizonLine.update(deltaTime, currentSpeed);
     this.updateClouds(deltaTime, currentSpeed);
     if (updateObstacles) {
     this.updateObstacles(deltaTime, currentSpeed);
+    }
+    if (typeof distance !== 'undefined') {
+    var distDelta = (currentSpeed * FPS / 1000) * deltaTime / 60;
+    this.nightMode.update(distDelta);
+    this.nightMode.draw();
     }
     },
     /**
@@ -1900,9 +2093,19 @@
     * @param {number} currentSpeed
     */
     addNewObstacle: function(currentSpeed) {
-    var obstacleTypeIndex =
-    getRandomNum(0, Obstacle.types.length - 1);
-    var obstacleType = Obstacle.types[obstacleTypeIndex];
+    // Build eligible obstacle types based on current speed
+    var eligibleTypes = Obstacle.types.filter(function(t) {
+      return !t.minSpeed || currentSpeed >= t.minSpeed;
+    });
+    var obstacleTypeIndex = getRandomNum(0, eligibleTypes.length - 1);
+    var obstacleType = eligibleTypes[obstacleTypeIndex];
+    // For pterodactyl, pick a random flying height
+    if (obstacleType.type === 'PTERODACTYL') {
+      var flyHeights = [50, 75, 100]; // pixels from top of canvas
+      obstacleType = Object.assign({}, obstacleType, {
+        yPos: flyHeights[getRandomNum(0, flyHeights.length - 1)]
+      });
+    }
     var obstacleImg = this.obstacleImgs[obstacleType.type];
     this.obstacles.push(new Obstacle(this.canvasCtx, obstacleType,
     obstacleImg, this.dimensions, this.gapCoefficient, currentSpeed));
@@ -1914,6 +2117,7 @@
     reset: function() {
     this.obstacles = [];
     this.horizonLine.reset();
+    this.nightMode.reset();
     },
     /**
     * Update the canvas width and scaling.
@@ -2080,8 +2284,8 @@ input[type=checkbox] {
   box-sizing: border-box;
   font-size: 1em;
   line-height: 1.6em;
-  margin: 0 auto;
-  max-width: 100%;
+  margin: 50px auto 0;
+  max-width: 600px;
   width: 100%;
 }
 
@@ -2388,7 +2592,9 @@ a {
   margin-bottom: 4px;
 }
 
-.suggestion-body { margin: 0; padding: 0; overflow: hidden; background: transparent; }
+.suggestion-body {
+  color: #777;
+}
 
 .error-code {
   color: #A0A0A0;
@@ -2404,7 +2610,9 @@ a {
 
 /* Decrease padding at low sizes. */
 @media (max-width: 640px), (max-height: 640px) {
-  body { margin: 0; padding: 0; overflow: hidden; background: transparent; }
+  body {
+    margin: 15px;
+  }
   h1 {
     margin: 10px 0 15px;
   }
@@ -2426,7 +2634,9 @@ a {
 }
 
 /* Don't allow overflow when in a subframe. */
-html[subframe] body { margin: 0; padding: 0; overflow: hidden; background: transparent; }
+html[subframe] body {
+  overflow: hidden;
+}
 
 #sub-frame-error {
   -webkit-align-items: center;
@@ -2502,7 +2712,7 @@ html[subframe] body { margin: 0; padding: 0; overflow: hidden; background: trans
   font-size: 1em;
   line-height: 1.55;
   margin: 0 auto;
-  max-width: 100%;
+  max-width: 600px;
   width: 100%;
 }
 
@@ -2568,7 +2778,6 @@ html[subframe] body { margin: 0; padding: 0; overflow: hidden; background: trans
 </head>
 
 <body id="t">
-
 <div id="main-frame-error" class="interstitial-wrapper" jstcache="0">
     <div id="offline-resources" jstcache="0">
     <div id="offline-resources-1x" jstcache="0">
@@ -2596,18 +2805,7 @@ html[subframe] body { margin: 0; padding: 0; overflow: hidden; background: trans
     </template>
   </div>
 
-  
-
-  <div class="onlyforchrome">
-    <div id="socialbutts" class="addthis_toolbox addthis_default_style" style="text-align:center; padding-top:65px;">
-      
-    </div>
-  </div>
-
-    
-      
-
-  <script type="text/javascript">
+    <script type="text/javascript">
     new Runner('.interstitial-wrapper');
   </script>
 
@@ -2629,7 +2827,6 @@ html[subframe] body { margin: 0; padding: 0; overflow: hidden; background: trans
       } catch(e) {}
     })();
   </script>
-
 </body>
 
 </html>
