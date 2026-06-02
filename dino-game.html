@@ -1949,6 +1949,38 @@ a {
 body { margin: 0; padding: 0; overflow: hidden; background: #0b0f1a; }
 body[data-parent-theme="light"] { background: #f8fafc; }
 
+/* ── Portfolio iframe override ───────────────────────────── */
+html, body {
+  height: 160px !important;
+}
+.interstitial-wrapper,
+.offline .interstitial-wrapper {
+  position: relative !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  height: 160px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow: hidden !important;
+}
+.offline .runner-container {
+  position: relative !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: 150px !important;
+  overflow: visible !important;
+}
+.offline .runner-canvas {
+  position: relative !important;
+  top: 0 !important;
+  left: 0 !important;
+  height: 150px !important;
+  max-width: 100% !important;
+}
+/* ─────────────────────────────────────────────────────────── */
+
 body.safe-browsing {
   background-color: rgb(206, 52, 38);
   color: white;
