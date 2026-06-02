@@ -35,7 +35,7 @@
         <li><a href="#skills" class="nav-link">Skills</a></li>
         <li><a href="#experience" class="nav-link">Experience</a></li>
         <li><a href="#projects" class="nav-link">Projects</a></li>
-        <li><a href="#game" class="nav-link nav-link-game">🎮 Dino Game</a></li>
+        <li><a href="#game" class="nav-link nav-link-game">🎮Game</a></li>
         <li><a href="#contact" class="nav-link">Contact</a></li>
       </ul>
 
@@ -467,7 +467,7 @@
     </div>
   </section>
 
-  <!-- ─── MINI GAME ───────────────────────────────────────────────── -->
+  <!-- ─── DINO GAME ───────────────────────────────────────────────── -->
   <section class="section" id="game">
     <div class="container">
       <div class="section-header" data-aos="fade-up">
@@ -475,53 +475,28 @@
         <h2 class="section-title">Dino Game</h2>
       </div>
       <p class="game-intro" data-aos="fade-up" data-aos-delay="100">
-        The classic Chrome Dino game — run as far as you can without hitting obstacles!
+        The classic Chrome Dino game — dodge cacti, duck under pterodactyls, and survive as long as you can!
       </p>
       <div class="game-controls" data-aos="fade-up" data-aos-delay="130">
         <div class="game-ctrl-item">
-          <span class="game-ctrl-key">Space / ↑ / Tap</span>
+          <span class="game-ctrl-key">Space / ↑</span>
           <span class="game-ctrl-desc">Jump</span>
         </div>
         <div class="game-ctrl-sep">·</div>
         <div class="game-ctrl-item">
-          <span class="game-ctrl-key">↓ (hold)</span>
-          <span class="game-ctrl-desc">Duck</span>
-        </div>
-        <div class="game-ctrl-sep">·</div>
-        <div class="game-ctrl-item">
-          <span class="game-ctrl-key">🌵 Cacti</span>
-          <span class="game-ctrl-desc">Jump over</span>
-        </div>
-        <div class="game-ctrl-sep">·</div>
-        <div class="game-ctrl-item">
-          <span class="game-ctrl-key">🦅 Pterodactyls</span>
-          <span class="game-ctrl-desc">Duck (low) or jump (high)</span>
+          <span class="game-ctrl-key">↓</span>
+          <span class="game-ctrl-desc">Duck (dodge pterodactyl)</span>
         </div>
       </div>
       <div class="game-wrapper" data-aos="fade-up" data-aos-delay="150">
-        <iframe id="dinoGameFrame" src="dino-game.html" frameborder="0" allowtransparency="true" allow="autoplay" scrolling="no" title="Dino Game"></iframe>
+        <iframe id="dinoGameFrame" src="dino-game.html" scrolling="no" allowtransparency="true"></iframe>
         <div class="game-play-overlay" id="gamePlayOverlay">
-          <button class="game-play-btn" id="gamePlayBtn" aria-label="Play Mini Game">
+          <button class="game-play-btn" id="gamePlayBtn" aria-label="Play Dino Game">
             <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
               <path d="M8 5.14v14l11-7-11-7z"/>
             </svg>
           </button>
           <p class="game-play-hint">Click to play &nbsp;·&nbsp; Space to jump</p>
-        </div>
-        <!-- Share Score Modal -->
-        <div class="game-share-modal hidden" id="gameShareModal">
-          <div class="game-share-box">
-            <button class="game-share-close" id="gameShareClose" aria-label="Close">✕</button>
-            <div class="game-share-icon">🏆</div>
-            <h3>Share Your Score!</h3>
-            <p id="gameShareScoreText">Total Score: <strong>0</strong></p>
-            <input type="text" id="gameShareName" placeholder="Enter your name…" maxlength="20" autocomplete="off" spellcheck="false">
-            <div class="game-share-btns">
-              <button class="game-share-cancel" id="gameShareCancel">Cancel</button>
-              <button class="game-share-submit" id="gameShareSubmit">Share 🚀</button>
-            </div>
-            <p class="game-share-status" id="gameShareStatus"></p>
-          </div>
         </div>
       </div>
     </div>
