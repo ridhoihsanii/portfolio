@@ -1509,12 +1509,16 @@ ul { list-style: none; }
   -webkit-user-select: none;
 }
 
-#resumeRunCanvas {
+#dinoGameFrame {
   width: 100%;
-  height: auto;
+  height: 220px;
   display: block;
-  touch-action: none;
+  border: none;
   background: transparent;
+}
+
+[data-theme="light"] #dinoGameFrame {
+  background: #f8fafc;
 }
 
 .game-play-overlay {
