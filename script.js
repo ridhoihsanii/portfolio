@@ -132,6 +132,12 @@ document.addEventListener('DOMContentLoaded', () => {
   // ── Draggable Photo Badges ────────────────────────────────────
   initDraggableBadges();
 
+  // ── Like Button ───────────────────────────────────────────────
+  initLikeButton();
+
+  // ── Share Button ──────────────────────────────────────────────
+  initShareButton();
+
 });
 
 function initDraggableBadges() {
@@ -212,5 +218,111 @@ function initDraggableBadges() {
     badge.addEventListener('touchstart', e => { const t = e.touches[0]; onStart(t.clientX, t.clientY); }, { passive: true });
     document.addEventListener('touchmove',  e => { if (dragging) { e.preventDefault(); const t = e.touches[0]; onMove(t.clientX, t.clientY); } }, { passive: false });
     document.addEventListener('touchend',   onEnd);
+  });
+}
+
+function initLikeButton() {
+  const btn       = document.getElementById('likeBtn');
+  const countEl   = document.getElementById('likeCount');
+  const STORE_KEY = 'portfolio_likes';
+  const LIKED_KEY = 'portfolio_liked';
+
+  let count  = parseInt(localStorage.getItem(STORE_KEY) || '0', 10);
+  let liked  = localStorage.getItem(LIKED_KEY) === 'true';
+
+  function render() {
+    countEl.textContent = count >= 1000
+      ? (count / 1000).toFixed(1).replace(/\.0$/, '') + 'k'
+      : count;
+    btn.classList.toggle('liked', liked);
+    countEl.classList.toggle('liked-text', liked);
+  }
+
+  function spawnParticles() {
+    const r  = btn.getBoundingClientRect();
+    const cx = r.left + r.width / 2;
+    const cy = r.top  + r.height / 2;
+    const n  = 5 + Math.floor(Math.random() * 4);
+    for (let i = 0; i < n; i++) {
+      const p = document.createElement('span');
+      p.className = 'heart-particle';
+      p.textContent = '♥';
+      p.style.left = (cx + (Math.random() * 24) - 12) + 'px';
+      p.style.top  = cy + 'px';
+      p.style.animationDuration = (.55 + Math.random() * .4) + 's';
+      p.style.fontSize = (.65 + Math.random() * .45) + 'rem';
+      document.body.appendChild(p);
+      p.addEventListener('animationend', () => p.remove());
+    }
+  }
+
+  btn.addEventListener('click', () => {
+    liked = !liked;
+    count = liked ? count + 1 : Math.max(0, count - 1);
+    localStorage.setItem(STORE_KEY, count);
+    localStorage.setItem(LIKED_KEY, liked);
+    render();
+
+    btn.classList.remove('pop');
+    void btn.offsetWidth;
+    btn.classList.add('pop');
+    btn.addEventListener('animationend', () => btn.classList.remove('pop'), { once: true });
+
+    if (liked) spawnParticles();
+  });
+
+  render();
+}
+
+function initShareButton() {
+  const btn      = document.getElementById('shareBtn');
+  const labelEl  = document.getElementById('shareLabel');
+  let resetTimer = null;
+
+  function setLabel(text, active) {
+    labelEl.textContent = text;
+    btn.classList.toggle('copied', active);
+    if (resetTimer) clearTimeout(resetTimer);
+    if (active) {
+      resetTimer = setTimeout(() => {
+        labelEl.textContent = 'Share';
+        btn.classList.remove('copied');
+      }, 2000);
+    }
+  }
+
+  btn.addEventListener('click', async () => {
+    btn.classList.remove('pop');
+    void btn.offsetWidth;
+    btn.classList.add('pop');
+    btn.addEventListener('animationend', () => btn.classList.remove('pop'), { once: true });
+
+    const shareData = {
+      title: 'Rabbani Ridho Ihsani — Portfolio',
+      text:  'Check out this portfolio by Rabbani Ridho Ihsani, Backend Developer!',
+      url:   window.location.href,
+    };
+
+    if (navigator.share) {
+      try {
+        await navigator.share(shareData);
+        setLabel('Shared!', true);
+      } catch (_) { /* user cancelled */ }
+    } else {
+      try {
+        await navigator.clipboard.writeText(window.location.href);
+        setLabel('Copied!', true);
+      } catch (_) {
+        // final fallback
+        const ta = document.createElement('textarea');
+        ta.value = window.location.href;
+        ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        ta.remove();
+        setLabel('Copied!', true);
+      }
+    }
   });
 }

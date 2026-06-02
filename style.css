@@ -1324,6 +1324,124 @@ ul { list-style: none; }
 
 .back-to-top:hover { transform: translateY(-3px); box-shadow: 0 8px 25px var(--accent-glow); }
 
+/* ── Like & Share Buttons ───────────────────────────────── */
+.action-widgets {
+  position: fixed;
+  bottom: 2rem;
+  left: 2rem;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: .75rem;
+  z-index: 999;
+}
+
+.action-widget {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .3rem;
+}
+
+.action-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  cursor: pointer;
+  font-size: 1.1rem;
+  box-shadow: var(--shadow-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform .2s cubic-bezier(.34,1.56,.64,1), box-shadow .2s ease, border-color .2s ease, background .2s ease, color .2s ease;
+  color: var(--text-3);
+}
+
+.action-label {
+  font-size: .72rem;
+  font-weight: 700;
+  color: var(--text-2);
+  font-family: var(--font-mono);
+  min-width: 20px;
+  text-align: center;
+  transition: color .2s ease;
+  line-height: 1;
+}
+
+/* Like */
+.like-btn:hover {
+  transform: scale(1.12);
+  box-shadow: var(--shadow-lg);
+  border-color: #e11d48;
+  color: #e11d48;
+}
+
+.like-btn.liked {
+  background: #fff1f2;
+  border-color: #e11d48;
+  color: #e11d48;
+  box-shadow: 0 4px 18px rgba(225, 29, 72, .3);
+}
+
+[data-theme="dark"] .like-btn.liked {
+  background: rgba(225, 29, 72, .15);
+}
+
+.like-btn.liked:hover {
+  transform: scale(1.12);
+  box-shadow: 0 6px 24px rgba(225, 29, 72, .4);
+}
+
+.like-btn.pop {
+  animation: like-pop .4s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+@keyframes like-pop {
+  0%   { transform: scale(1); }
+  25%  { transform: scale(1.45); }
+  50%  { transform: scale(.85); }
+  75%  { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+.like-count.liked-text { color: #e11d48; }
+
+/* Share */
+.share-btn:hover {
+  transform: scale(1.12);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.share-btn.copied {
+  background: var(--accent-light);
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: 0 4px 18px var(--accent-glow);
+}
+
+.share-btn.pop {
+  animation: like-pop .4s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+/* Floating mini hearts */
+.heart-particle {
+  position: fixed;
+  pointer-events: none;
+  font-size: .85rem;
+  color: #e11d48;
+  animation: heart-rise .8s ease-out forwards;
+  z-index: 9999;
+}
+
+@keyframes heart-rise {
+  0%   { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); }
+  100% { opacity: 0; transform: translateY(-70px) scale(.5) rotate(20deg); }
+}
+
 /* ── Responsive ─────────────────────────────────────────── */
 @media (max-width: 1024px) {
   .hero-container { grid-template-columns: 1fr; text-align: center; gap: 3rem; }
