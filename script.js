@@ -387,6 +387,31 @@ function initResumeRun() {
   const DDW = 68, DDH = 28;      // ducking bounding box
   const JV = -14.5, GR = 0.68;   // jump velocity, gravity
 
+  // ── Dino sprite (Chrome Dino original, tinted green) ──────────────
+  const DINO_B64 = 'iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAMAAAD7We5FAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAAZQTFRFNTU1////gM3W6AAAAAJ0Uk5TcM7g7fUAAAA7SURBVHjaYmBgYGBkYISAmAnEwGLsAsgC7ALIDgALsAsgCwArwApgF0AWAFeAFcAuQCwArwCrwIsAAQYAIDwAL8EC9mYAAAAASUVORK5CYII=';
+  let dinoCanvas = null, dinoDuckCanvas = null;
+  (function loadDinoSprite() {
+    const img = new Image();
+    img.onload = () => {
+      // Standing pose — tinted green
+      dinoCanvas = document.createElement('canvas');
+      dinoCanvas.width = DW; dinoCanvas.height = DH;
+      const dc = dinoCanvas.getContext('2d');
+      dc.drawImage(img, 0, 0, DW, DH);
+      dc.globalCompositeOperation = 'source-in';
+      dc.fillStyle = '#4ade80'; dc.fillRect(0, 0, DW, DH);
+
+      // Duck pose — same sprite scaled wide & low, tinted green
+      dinoDuckCanvas = document.createElement('canvas');
+      dinoDuckCanvas.width = DDW; dinoDuckCanvas.height = DDH;
+      const dd = dinoDuckCanvas.getContext('2d');
+      dd.drawImage(img, 0, 0, DDW, DDH);
+      dd.globalCompositeOperation = 'source-in';
+      dd.fillStyle = '#4ade80'; dd.fillRect(0, 0, DDW, DDH);
+    };
+    img.src = 'data:image/png;base64,' + DINO_B64;
+  })();
+
   // ── Obstacle types ────────────────────────────────────────────────
   const CACTUS = [
     {w:22, h:52, s:'slim'},
@@ -602,91 +627,45 @@ function initResumeRun() {
   function drawDino() {
     const p = player;
     if (state === 'playing') p.lt += 0.22;
-    const footY = p.y + (p.ducking ? DDH : DH);
     const lp = Math.sin(p.lt * 2.4);
+    // Slight vertical bob when running on ground
+    const bob = (p.gr && !p.ducking) ? Math.abs(lp) * 1.5 : 0;
 
-    ctx.save();
-    ctx.translate(p.x, footY);
-    ctx.shadowColor = C.dinoGlow; ctx.shadowBlur = 14;
-    ctx.fillStyle = C.dino;   // green
+    if (p.ducking && dinoDuckCanvas) {
+      // Duck pose — wide, low sprite
+      ctx.save();
+      ctx.shadowColor = C.dinoGlow; ctx.shadowBlur = 14;
+      ctx.drawImage(dinoDuckCanvas, p.x - 4, p.y, DDW, DDH);
+      ctx.restore();
 
-    if (p.ducking) {
-      // ── Duck pose: wide & low, head thrust forward (right) ──────────
-      // Body
-      ctx.fillRect(0, -DDH,     58, 20);
-      // Neck + head forward
-      ctx.fillRect(40, -DDH-8,  26, 18);
-      // Snout
-      ctx.fillRect(62, -DDH+2,   8, 10);
-      // Tail (left side, small wedge)
-      ctx.beginPath();
-      ctx.moveTo(0, -DDH); ctx.lineTo(-8,-DDH+6); ctx.lineTo(-3,-DDH+16); ctx.lineTo(6,-DDH+14);
-      ctx.closePath(); ctx.fill();
-      // Legs (alternating)
-      ctx.fillRect(10, -DDH+18, 11, lp>0 ? 13 : 7);
-      ctx.fillRect(26, -DDH+18, 11, lp>0 ? 7  : 13);
-      // Eye
-      ctx.shadowBlur = 0; ctx.fillStyle = '#0f172a';
-      ctx.fillRect(57, -DDH+2, 9, 9);
-      ctx.fillStyle = 'rgba(255,255,255,0.85)';
-      ctx.fillRect(58, -DDH+3, 4, 4);
+    } else if (!p.ducking && dinoCanvas) {
+      // Standing / running / jumping — sprite with slight bob
+      ctx.save();
+      ctx.shadowColor = C.dinoGlow; ctx.shadowBlur = 14;
+      ctx.drawImage(dinoCanvas, p.x, p.y + bob, DW, DH - bob);
 
-    } else {
-      // ── Standing / running: Chrome Dino pixel-art style, facing right ─
-      // Tail (tapers back-left from lower body)
-      ctx.beginPath();
-      ctx.moveTo(4,  -DH+32); ctx.lineTo(-13,-DH+42);
-      ctx.lineTo(-6, -DH+52); ctx.lineTo(4,  -DH+46);
-      ctx.closePath(); ctx.fill();
-
-      // Main body
-      ctx.fillRect(0, -DH+20, 38, 26);
-
-      // Upper-back hump (narrows toward head)
-      ctx.fillRect(0, -DH+10, 20, 13);
-
-      // Neck (connects hump to head)
-      ctx.fillRect(14, -DH+4, 18, 14);
-
-      // Head (extends forward/right)
-      ctx.fillRect(16, -DH,   28, 22);
-
-      // Snout tip
-      ctx.fillRect(40, -DH+8, 6, 10);
-
-      // Short arm (tiny forearm sticking out from mid-body)
-      ctx.fillRect(22, -DH+32, 13, 6);
-
-      // Legs (alternating length for run cycle)
-      if (p.gr) {
-        ctx.fillRect( 8, -18, 11, lp>0 ? 22 : 10);
-        ctx.fillRect(23, -18, 11, lp>0 ? 10 : 22);
-      } else {
-        // Airborne: legs slightly tucked
-        ctx.fillRect( 6, -17, 11, 14);
-        ctx.fillRect(22, -15, 11, 12);
-      }
-
-      // Eye (large dark square near front-top of head, Chrome Dino style)
-      ctx.shadowBlur = 0; ctx.fillStyle = '#052e16';
-      ctx.fillRect(34, -DH+4, 9, 9);
-      ctx.fillStyle = 'rgba(255,255,255,0.9)';
-      ctx.fillRect(35, -DH+5, 4, 4);
-
-      // Nostril / mouth gap
-      ctx.fillStyle = '#052e16';
-      ctx.fillRect(40, -DH+13, 5, 2);
-
-      // Jump trail (speed lines under feet)
+      // Jump trail under feet when airborne
       if (!p.gr) {
-        ctx.globalAlpha = 0.25;
+        ctx.globalAlpha = 0.28;
         ctx.fillStyle = C.dinoGlow;
-        ctx.fillRect(8,  -3, 8, Math.min(22, Math.abs(p.vy)*2.5));
-        ctx.fillRect(24, -2, 8, Math.min(18, Math.abs(p.vy)*2.0));
+        ctx.fillRect(p.x + 6,  p.y + DH - 3, 8, Math.min(22, Math.abs(p.vy)*2.5));
+        ctx.fillRect(p.x + 22, p.y + DH - 2, 8, Math.min(18, Math.abs(p.vy)*2.0));
         ctx.globalAlpha = 1;
       }
+      ctx.restore();
+
+    } else {
+      // Fallback rectangles if sprite not yet loaded
+      ctx.save();
+      ctx.fillStyle = C.dino;
+      ctx.shadowColor = C.dinoGlow; ctx.shadowBlur = 14;
+      if (p.ducking) {
+        ctx.fillRect(p.x, p.y, DDW, DDH);
+      } else {
+        ctx.fillRect(p.x, p.y, DW, DH);
+      }
+      ctx.restore();
     }
-    ctx.restore();
   }
 
   // ── Draw cactus ───────────────────────────────────────────────────
