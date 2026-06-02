@@ -464,14 +464,6 @@
     this.time = now;
     if (this.activated) {
     this.clearCanvas();
-    // Night mode sky overlay
-    if (this.horizon && this.horizon.nightMode && this.horizon.nightMode.opacity > 0) {
-      this.canvasCtx.save();
-      this.canvasCtx.globalAlpha = this.horizon.nightMode.opacity * 0.2;
-      this.canvasCtx.fillStyle = '#3a6bbf';
-      this.canvasCtx.fillRect(0, 0, this.dimensions.WIDTH, this.dimensions.HEIGHT);
-      this.canvasCtx.restore();
-    }
     if (this.tRex.jumping) {
     this.tRex.updateJump(deltaTime, this.config);
     }
@@ -1990,7 +1982,6 @@
     CACTUS_LARGE: images.CACTUS_LARGE,
     PTERODACTYL: createPterodactylSprite(false)
     };
-    this.nightMode = new NightMode(canvas, dimensions.WIDTH);
     this.init();
     };
     /**
@@ -2025,11 +2016,6 @@
     this.updateClouds(deltaTime, currentSpeed);
     if (updateObstacles) {
     this.updateObstacles(deltaTime, currentSpeed);
-    }
-    if (typeof distance !== 'undefined') {
-    var distDelta = (currentSpeed * FPS / 1000) * deltaTime / 60;
-    this.nightMode.update(distDelta);
-    this.nightMode.draw();
     }
     },
     /**
@@ -2118,7 +2104,6 @@
     reset: function() {
     this.obstacles = [];
     this.horizonLine.reset();
-    this.nightMode.reset();
     },
     /**
     * Update the canvas width and scaling.
@@ -2151,8 +2136,7 @@ a {
   color: #585858;
 }
 
-body { margin: 0; padding: 0; overflow: hidden; background: #0b0f1a; }
-body[data-parent-theme="light"] { background: #f8fafc; }
+body { margin: 0; padding: 0; overflow: hidden; background: #f8fafc; }
 
 /* ── Portfolio iframe override ───────────────────────────── */
 html, body {
@@ -2810,24 +2794,6 @@ html[subframe] body {
     new Runner('.interstitial-wrapper');
   </script>
 
-  <script type="text/javascript">
-    // Sync theme with parent portfolio
-    (function syncTheme() {
-      function apply() {
-        try {
-          var t = window.parent.document.documentElement.dataset.theme || 'dark';
-          document.body.setAttribute('data-parent-theme', t);
-        } catch(e) {}
-      }
-      apply();
-      try {
-        new MutationObserver(apply).observe(
-          window.parent.document.documentElement,
-          { attributes: true, attributeFilter: ['data-theme'] }
-        );
-      } catch(e) {}
-    })();
-  </script>
 </body>
 
 </html>
