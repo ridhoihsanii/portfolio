@@ -514,6 +514,10 @@
     * @param {Event} e
     */
     onKeyDown: function(e) {
+    // Prevent page scroll for all game keys
+    if (Runner.keycodes.JUMP[e.keyCode] || Runner.keycodes.DUCK[e.keyCode]) {
+    e.preventDefault();
+    }
     if (e.target != this.detailsButton) {
     if (!this.crashed && (Runner.keycodes.JUMP[String(e.keyCode)] ||
     e.type == Runner.events.TOUCHSTART)) {
@@ -533,7 +537,6 @@
     }
     // Speed drop, activated only when jump key is not pressed.
     if (Runner.keycodes.DUCK[e.keyCode] && this.tRex.jumping) {
-    e.preventDefault();
     this.tRex.setSpeedDrop();
     }
     },
@@ -2041,8 +2044,8 @@ input[type=checkbox] {
   box-sizing: border-box;
   font-size: 1em;
   line-height: 1.6em;
-  margin: 50px auto 0;
-  max-width: 600px;
+  margin: 0 auto;
+  max-width: 100%;
   width: 100%;
 }
 
@@ -2462,14 +2465,14 @@ html[subframe] body { margin: 0; padding: 0; overflow: hidden; background: trans
   color: #2b2b2b;
   font-size: 1em;
   line-height: 1.55;
-  margin: 100px auto 0;
-  max-width: 600px;
+  margin: 0 auto;
+  max-width: 100%;
   width: 100%;
 }
 
 .offline .runner-container {
   height: 150px;
-  max-width: 600px;
+  max-width: 100%;
   overflow: hidden;
   position: absolute;
   top: 10px;
@@ -2479,7 +2482,7 @@ html[subframe] body { margin: 0; padding: 0; overflow: hidden; background: trans
 
 .offline .runner-canvas {
   height: 150px;
-  max-width: 600px;
+  max-width: 100%;
   opacity: 1;
   overflow: hidden;
   position: absolute;

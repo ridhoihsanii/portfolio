@@ -377,14 +377,27 @@ function initResumeRun() {
     frame.focus();
   }
 
+  const GAME_KEYS = ['Space', 'ArrowUp', 'ArrowDown'];
+
+  function isGameSectionVisible() {
+    const section = frame.closest('section') || frame.parentElement;
+    if (!section) return false;
+    const rect = section.getBoundingClientRect();
+    return rect.top < window.innerHeight && rect.bottom > 0;
+  }
+
   playBtn.addEventListener('click', startGame);
   overlay.addEventListener('click', function(e) {
     if (e.target === overlay) startGame();
   });
 
   document.addEventListener('keydown', function(e) {
-    if ((e.code === 'Space' || e.code === 'ArrowUp') && !overlay.classList.contains('hidden')) {
-      startGame();
+    if (!GAME_KEYS.includes(e.code)) return;
+    if (isGameSectionVisible()) {
+      e.preventDefault();
+      if ((e.code === 'Space' || e.code === 'ArrowUp') && !overlay.classList.contains('hidden')) {
+        startGame();
+      }
     }
   });
 }
