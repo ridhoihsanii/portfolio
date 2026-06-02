@@ -224,16 +224,17 @@ function initDraggableBadges() {
 function initLikeButton() {
   const btn       = document.getElementById('likeBtn');
   const countEl   = document.getElementById('likeCount');
-  const STORE_KEY = 'portfolio_likes';
-  const LIKED_KEY = 'portfolio_liked';
+  const LIKED_KEY = 'portfolio_liked';   // localStorage: apakah browser ini sudah like
+  const LOCAL_KEY = 'portfolio_likes';   // localStorage: fallback count
 
-  let count  = parseInt(localStorage.getItem(STORE_KEY) || '0', 10);
-  let liked  = localStorage.getItem(LIKED_KEY) === 'true';
+  let liked = localStorage.getItem(LIKED_KEY) === 'true';
 
-  function render() {
-    countEl.textContent = count >= 1000
-      ? (count / 1000).toFixed(1).replace(/\.0$/, '') + 'k'
-      : count;
+  function formatCount(n) {
+    return n >= 1000 ? (n / 1000).toFixed(1).replace(/\.0$/, '') + 'k' : n;
+  }
+
+  function renderUI(count) {
+    countEl.textContent = formatCount(count);
     btn.classList.toggle('liked', liked);
     countEl.classList.toggle('liked-text', liked);
   }
@@ -242,8 +243,7 @@ function initLikeButton() {
     const r  = btn.getBoundingClientRect();
     const cx = r.left + r.width / 2;
     const cy = r.top  + r.height / 2;
-    const n  = 5 + Math.floor(Math.random() * 4);
-    for (let i = 0; i < n; i++) {
+    for (let i = 0; i < 5 + Math.floor(Math.random() * 4); i++) {
       const p = document.createElement('span');
       p.className = 'heart-particle';
       p.textContent = '♥';
@@ -256,22 +256,49 @@ function initLikeButton() {
     }
   }
 
-  btn.addEventListener('click', () => {
-    liked = !liked;
-    count = liked ? count + 1 : Math.max(0, count - 1);
-    localStorage.setItem(STORE_KEY, count);
-    localStorage.setItem(LIKED_KEY, liked);
-    render();
-
+  function animateBtn() {
     btn.classList.remove('pop');
     void btn.offsetWidth;
     btn.classList.add('pop');
     btn.addEventListener('animationend', () => btn.classList.remove('pop'), { once: true });
+  }
 
-    if (liked) spawnParticles();
-  });
+  const db = window._firebaseDB;
 
-  render();
+  if (db) {
+    // ── Mode Firebase: count global, realtime ──────────────────
+    const likesRef = db.ref('portfolio/likes');
+
+    // Dengarkan perubahan realtime dari semua pengunjung
+    likesRef.on('value', snapshot => {
+      renderUI(snapshot.val() || 0);
+    });
+
+    btn.addEventListener('click', () => {
+      liked = !liked;
+      localStorage.setItem(LIKED_KEY, liked);
+      animateBtn();
+      if (liked) spawnParticles();
+
+      // Increment/decrement atomik — aman dari race condition
+      likesRef.transaction(current => (current || 0) + (liked ? 1 : -1 < 0 ? 0 : -1));
+    });
+
+  } else {
+    // ── Mode Fallback: localStorage per-browser ────────────────
+    let count = parseInt(localStorage.getItem(LOCAL_KEY) || '0', 10);
+    renderUI(count);
+
+    btn.addEventListener('click', () => {
+      liked = !liked;
+      count = liked ? count + 1 : Math.max(0, count - 1);
+      localStorage.setItem(LIKED_KEY, liked);
+      localStorage.setItem(LOCAL_KEY, count);
+      renderUI(count);
+      animateBtn();
+      if (liked) spawnParticles();
+    });
+  }
 }
 
 function initShareButton() {
