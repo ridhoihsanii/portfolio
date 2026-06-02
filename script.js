@@ -129,4 +129,85 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // ── Draggable Photo Badges ────────────────────────────────────
+  initDraggableBadges();
+
 });
+
+function initDraggableBadges() {
+  document.querySelectorAll('.photo-badge').forEach(badge => {
+    let dragging  = false;
+    let hasMoved  = false;
+    let ox = 0, oy = 0;
+    let homeX = 0, homeY = 0;
+
+    badge.style.cursor = 'grab';
+    badge.title = 'Drag me!';
+
+    const onStart = (cx, cy) => {
+      const r = badge.getBoundingClientRect();
+      homeX = r.left;
+      homeY = r.top;
+      ox = cx - r.left;
+      oy = cy - r.top;
+      dragging  = true;
+      hasMoved  = false;
+
+      // Switch to fixed so badge is always above everything
+      Object.assign(badge.style, {
+        position:   'fixed',
+        left:       r.left + 'px',
+        top:        r.top  + 'px',
+        width:      r.width + 'px',
+        zIndex:     '99999',
+        cursor:     'grabbing',
+        animation:  'none',
+        transition: 'transform 0.1s, box-shadow 0.15s',
+        transform:  'scale(1.15) rotate(4deg)',
+        boxShadow:  '0 12px 32px rgba(0,0,0,0.25)',
+      });
+    };
+
+    const onMove = (cx, cy) => {
+      if (!dragging) return;
+      hasMoved = true;
+      badge.style.left = (cx - ox) + 'px';
+      badge.style.top  = (cy - oy) + 'px';
+    };
+
+    const onEnd = () => {
+      if (!dragging) return;
+      dragging = false;
+
+      if (!hasMoved) {
+        // Click only — pop bounce
+        badge.style.cssText = '';
+        badge.style.cursor = 'grab';
+        badge.classList.add('badge-pop');
+        setTimeout(() => badge.classList.remove('badge-pop'), 450);
+        return;
+      }
+
+      // Spring back to original position
+      Object.assign(badge.style, {
+        transition: 'left 0.55s cubic-bezier(0.34,1.56,0.64,1), top 0.55s cubic-bezier(0.34,1.56,0.64,1), transform 0.4s ease, box-shadow 0.3s ease',
+        left:       homeX + 'px',
+        top:        homeY + 'px',
+        transform:  'scale(1) rotate(0deg)',
+        boxShadow:  '',
+        cursor:     'grab',
+      });
+
+      // After spring animation ends, restore original CSS
+      setTimeout(() => { badge.style.cssText = ''; badge.style.cursor = 'grab'; }, 580);
+    };
+
+    badge.addEventListener('mousedown',  e => { e.preventDefault(); onStart(e.clientX, e.clientY); });
+    document.addEventListener('mousemove',  e => onMove(e.clientX, e.clientY));
+    document.addEventListener('mouseup',    onEnd);
+
+    badge.addEventListener('touchstart', e => { const t = e.touches[0]; onStart(t.clientX, t.clientY); }, { passive: true });
+    document.addEventListener('touchmove',  e => { if (dragging) { e.preventDefault(); const t = e.touches[0]; onMove(t.clientX, t.clientY); } }, { passive: false });
+    document.addEventListener('touchend',   onEnd);
+  });
+}

@@ -437,6 +437,8 @@ ul { list-style: none; }
 .hero-photo-wrap {
   position: relative;
   flex-shrink: 0;
+  padding: 15px 80px 15px 85px;
+  z-index: 0;
 }
 
 .photo-ring {
@@ -447,6 +449,7 @@ ul { list-style: none; }
   padding: 6px;
   background: linear-gradient(135deg, var(--accent), var(--accent-2), #ec4899);
   animation: spin-slow 10s linear infinite;
+  z-index: 1;
 }
 
 @keyframes spin-slow {
@@ -472,7 +475,7 @@ ul { list-style: none; }
   object-fit: cover;
   object-position: center top;
   position: relative;
-  z-index: 1;
+  z-index: 0;
   border: 4px solid var(--surface);
 }
 
@@ -488,17 +491,31 @@ ul { list-style: none; }
   box-shadow: var(--shadow-md);
   display: flex; align-items: center; gap: .4rem;
   animation: badge-float 4s ease-in-out infinite;
+  z-index: 2;
 }
 
 .photo-badge i { color: var(--accent); }
 
-.badge-1 { top: 10%; left: -20px; animation-delay: 0s; }
-.badge-2 { bottom: 20%; right: -20px; animation-delay: -1.5s; }
-.badge-3 { top: 55%; left: -30px; animation-delay: -3s; }
+.badge-1 { top: 10%; left: 10px; animation-delay: 0s; }
+.badge-2 { bottom: 20%; right: 10px; animation-delay: -1.5s; }
+.badge-3 { top: 55%; left: 5px; animation-delay: -3s; }
 
 @keyframes badge-float {
   0%, 100% { transform: translateY(0); }
   50%       { transform: translateY(-8px); }
+}
+
+@keyframes badge-pop {
+  0%   { transform: scale(1)    rotate(0deg);   }
+  30%  { transform: scale(1.35) rotate(-8deg);  }
+  60%  { transform: scale(0.9)  rotate(5deg);   }
+  80%  { transform: scale(1.1)  rotate(-2deg);  }
+  100% { transform: scale(1)    rotate(0deg);   }
+}
+
+.badge-pop {
+  animation: badge-pop 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) both !important;
+  cursor: grab !important;
 }
 
 /* ── Scroll Indicator ───────────────────────────────────── */
