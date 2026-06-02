@@ -239,6 +239,16 @@ ul { list-style: none; }
   opacity: 1;
 }
 
+.nav-link-game {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.nav-link-game:hover, .nav-link-game.active {
+  background: var(--accent);
+  color: #fff !important;
+}
+
 .nav-actions {
   display: flex;
   align-items: center;
@@ -1441,6 +1451,255 @@ ul { list-style: none; }
   0%   { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); }
   100% { opacity: 0; transform: translateY(-70px) scale(.5) rotate(20deg); }
 }
+
+/* ── Resume Run Game ────────────────────────────────────── */
+.game-intro {
+  text-align: center;
+  color: var(--text-2);
+  margin-bottom: .9rem;
+  font-size: .95rem;
+}
+
+.game-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem .2rem;
+  margin-bottom: 1.25rem;
+}
+
+.game-ctrl-sep {
+  color: var(--text-3, #64748b);
+  font-size: 1rem;
+  padding: 0 .2rem;
+}
+
+.game-ctrl-item {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  padding: .35rem .75rem;
+  background: var(--surface, rgba(99,102,241,.07));
+  border: 1px solid var(--border, rgba(99,102,241,.2));
+  border-radius: 20px;
+  font-size: .82rem;
+}
+
+.game-ctrl-key {
+  font-family: 'Fira Code', monospace;
+  color: var(--accent, #6366f1);
+  font-weight: 600;
+  font-size: .8rem;
+}
+
+.game-ctrl-desc {
+  color: var(--text-2);
+}
+
+.game-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+#resumeRunCanvas {
+  width: 100%;
+  height: auto;
+  display: block;
+  touch-action: none;
+  background: transparent;
+}
+
+.game-play-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(11, 15, 26, 0.55);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  border-radius: inherit;
+  transition: opacity .3s ease, visibility .3s ease;
+  z-index: 10;
+  cursor: default;
+}
+
+.game-play-overlay.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.game-play-btn {
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 0 10px rgba(99,102,241,.2), 0 8px 32px rgba(99,102,241,.45);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.game-play-btn:hover {
+  transform: scale(1.12);
+  box-shadow: 0 0 0 14px rgba(99,102,241,.25), 0 12px 40px rgba(99,102,241,.55);
+}
+
+.game-play-btn svg {
+  width: 36px;
+  height: 36px;
+  margin-left: 5px;
+}
+
+.game-play-hint {
+  color: #94a3b8;
+  font-size: 13px;
+  margin-top: 18px;
+  letter-spacing: .02em;
+}
+
+/* ── Game Share Modal ────────────────────────────────────── */
+.game-share-modal {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(7, 10, 20, 0.72);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border-radius: inherit;
+  z-index: 20;
+  transition: opacity .25s ease, visibility .25s ease;
+}
+
+.game-share-modal.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.game-share-box {
+  position: relative;
+  background: var(--surface, #1e2235);
+  border: 1px solid rgba(99,102,241,.35);
+  border-radius: 20px;
+  padding: 2rem 2.25rem 1.75rem;
+  min-width: 300px;
+  max-width: 380px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 24px 60px rgba(0,0,0,.55), 0 0 0 1px rgba(99,102,241,.18);
+}
+
+.game-share-close {
+  position: absolute;
+  top: 12px; right: 14px;
+  background: transparent;
+  border: none;
+  color: var(--text-2, #94a3b8);
+  font-size: 16px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 4px 6px;
+  border-radius: 6px;
+  transition: color .15s, background .15s;
+}
+.game-share-close:hover { color: #fff; background: rgba(255,255,255,.08); }
+
+.game-share-icon {
+  font-size: 2.5rem;
+  margin-bottom: .5rem;
+  line-height: 1;
+}
+
+.game-share-box h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text, #0f172a);
+  margin-bottom: .35rem;
+}
+
+#gameShareScoreText {
+  color: var(--text-2, #94a3b8);
+  font-size: .9rem;
+  margin-bottom: 1.1rem;
+}
+#gameShareScoreText strong {
+  color: #a5b4fc;
+  font-size: 1.05rem;
+}
+
+#gameShareName {
+  width: 100%;
+  padding: .65rem 1rem;
+  background: var(--bg-alt, #f1f5f9);
+  border: 1px solid var(--border, rgba(99,102,241,.35));
+  border-radius: 10px;
+  color: var(--text, #0f172a);
+  font-size: .95rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color .15s;
+  box-sizing: border-box;
+}
+#gameShareName::placeholder { color: var(--text-3, #94a3b8); }
+#gameShareName:focus { border-color: #6366f1; outline: 2px solid rgba(99,102,241,.25); }
+
+.game-share-btns {
+  display: flex;
+  gap: .75rem;
+  margin-top: 1rem;
+}
+
+.game-share-cancel {
+  flex: 1;
+  padding: .6rem;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 10px;
+  color: var(--text-2, #94a3b8);
+  font-size: .9rem;
+  cursor: pointer;
+  transition: background .15s;
+}
+.game-share-cancel:hover { background: rgba(255,255,255,.12); }
+
+.game-share-submit {
+  flex: 2;
+  padding: .6rem;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  font-size: .9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity .15s, transform .1s;
+}
+.game-share-submit:hover { opacity: .9; transform: translateY(-1px); }
+.game-share-submit:disabled { opacity: .5; cursor: default; transform: none; }
+
+.game-share-status {
+  min-height: 1.2em;
+  margin-top: .75rem;
+  font-size: .82rem;
+  color: #86efac;
+}
+.game-share-status.error { color: #f87171; }
 
 /* ── Responsive ─────────────────────────────────────────── */
 @media (max-width: 1024px) {

@@ -493,68 +493,105 @@ function initResumeRun() {
 
   // ── Draw background ───────────────────────────────────────────────
   function drawBg(f) {
-    const sg = ctx.createLinearGradient(0,0,0,GY);
-    sg.addColorStop(0, C.sky1); sg.addColorStop(1, C.sky2);
-    ctx.fillStyle = sg; ctx.fillRect(0,0,W,GY);
+    const isDark = document.documentElement.dataset.theme === 'dark';
 
-    // Stars
-    STARS.forEach(s => {
-      s.t += .012;
-      ctx.globalAlpha = .18 + .55*Math.abs(Math.sin(s.t));
-      ctx.fillStyle = '#e2e8f0';
-      ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI*2); ctx.fill();
-    });
-    ctx.globalAlpha = 1;
+    // Sky — fully transparent so the portfolio page background shows through
+    ctx.clearRect(0, 0, W, H);
 
-    // Moon (crescent)
-    ctx.save();
-    ctx.shadowColor = '#fef3c7'; ctx.shadowBlur = 20;
-    ctx.fillStyle = '#fef9c3';
-    ctx.beginPath(); ctx.arc(MOON.x, MOON.y, MOON.r, 0, Math.PI*2); ctx.fill();
-    ctx.globalCompositeOperation = 'destination-out';
-    ctx.fillStyle = '#000';
-    ctx.beginPath(); ctx.arc(MOON.x+10, MOON.y-5, MOON.r-5, 0, Math.PI*2); ctx.fill();
-    ctx.globalCompositeOperation = 'source-over';
-    ctx.restore();
+    if (isDark) {
+      // ── Dark mode: stars + moon ─────────────────────────────────────
+      STARS.forEach(s => {
+        s.t += .012;
+        ctx.globalAlpha = .14 + .45*Math.abs(Math.sin(s.t));
+        ctx.fillStyle = '#e2e8f0';
+        ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI*2); ctx.fill();
+      });
+      ctx.globalAlpha = 1;
 
-    // Clouds
-    clouds.forEach(cl => {
+      // Moon (crescent)
       ctx.save();
-      ctx.shadowColor = C.dinoGlow; ctx.shadowBlur = 6;
-      ctx.globalAlpha = 0.14;
-      ctx.fillStyle = '#cbd5e1';
-      rr(cl.x, cl.y, cl.w, cl.h, cl.h/2); ctx.fill();
-      rr(cl.x+cl.w*0.2, cl.y-cl.h*0.45, cl.w*0.6, cl.h, cl.h/2); ctx.fill();
+      ctx.shadowColor = '#fef3c7'; ctx.shadowBlur = 20;
+      ctx.fillStyle = '#fef9c3';
+      ctx.beginPath(); ctx.arc(MOON.x, MOON.y, MOON.r, 0, Math.PI*2); ctx.fill();
+      ctx.globalCompositeOperation = 'destination-out';
+      ctx.fillStyle = '#000';
+      ctx.beginPath(); ctx.arc(MOON.x+10, MOON.y-5, MOON.r-5, 0, Math.PI*2); ctx.fill();
+      ctx.globalCompositeOperation = 'source-over';
       ctx.restore();
-    });
 
-    // Ground fill
-    ctx.fillStyle = C.ground; ctx.fillRect(0, GY, W, H-GY);
+      // Clouds (dark mode — subtle dark shapes)
+      clouds.forEach(cl => {
+        ctx.save();
+        ctx.globalAlpha = 0.10;
+        ctx.fillStyle = '#94a3b8';
+        rr(cl.x, cl.y, cl.w, cl.h, cl.h/2); ctx.fill();
+        rr(cl.x+cl.w*0.2, cl.y-cl.h*0.45, cl.w*0.6, cl.h, cl.h/2); ctx.fill();
+        ctx.restore();
+      });
 
-    // Ground glow line
-    ctx.save();
-    ctx.shadowColor = C.gline; ctx.shadowBlur = 14;
-    const lg = ctx.createLinearGradient(0,0,W,0);
-    lg.addColorStop(0,'transparent'); lg.addColorStop(.08,C.gline);
-    lg.addColorStop(.92,C.gline); lg.addColorStop(1,'transparent');
-    ctx.strokeStyle = lg; ctx.lineWidth = 2.5;
-    ctx.beginPath(); ctx.moveTo(0,GY); ctx.lineTo(W,GY); ctx.stroke();
-    ctx.restore();
+      // Ground fill — dark portfolio color
+      ctx.fillStyle = '#0b0f1a'; ctx.fillRect(0, GY, W, H-GY);
 
-    // Ground dots (scrolling)
-    ctx.fillStyle = 'rgba(34,211,238,0.07)';
-    const dotOff = (f * (spd||6) * 0.8) % 40;
-    for (let x = -dotOff; x < W; x += 40) {
-      ctx.beginPath(); ctx.arc(x, GY+12, 1.5, 0, Math.PI*2); ctx.fill();
-      ctx.beginPath(); ctx.arc(x+20, GY+24, 1, 0, Math.PI*2); ctx.fill();
+      // Ground glow line — cyan accent
+      ctx.save();
+      ctx.shadowColor = C.gline; ctx.shadowBlur = 14;
+      const lg = ctx.createLinearGradient(0,0,W,0);
+      lg.addColorStop(0,'transparent'); lg.addColorStop(.08,C.gline);
+      lg.addColorStop(.92,C.gline); lg.addColorStop(1,'transparent');
+      ctx.strokeStyle = lg; ctx.lineWidth = 2.5;
+      ctx.beginPath(); ctx.moveTo(0,GY); ctx.lineTo(W,GY); ctx.stroke();
+      ctx.restore();
+
+      // Ground dots (scrolling)
+      ctx.fillStyle = 'rgba(34,211,238,0.07)';
+      const dotOff = (f * (spd||6) * 0.8) % 40;
+      for (let x = -dotOff; x < W; x += 40) {
+        ctx.beginPath(); ctx.arc(x, GY+12, 1.5, 0, Math.PI*2); ctx.fill();
+        ctx.beginPath(); ctx.arc(x+20, GY+24, 1, 0, Math.PI*2); ctx.fill();
+      }
+
+    } else {
+      // ── Light mode: soft clouds, clean ground ───────────────────────
+      // Clouds (light mode — subtle gray puffs)
+      clouds.forEach(cl => {
+        ctx.save();
+        ctx.globalAlpha = 0.18;
+        ctx.fillStyle = '#94a3b8';
+        rr(cl.x, cl.y, cl.w, cl.h, cl.h/2); ctx.fill();
+        rr(cl.x+cl.w*0.2, cl.y-cl.h*0.45, cl.w*0.6, cl.h, cl.h/2); ctx.fill();
+        ctx.restore();
+      });
+
+      // Ground fill — light portfolio color
+      ctx.fillStyle = '#e2e8f0'; ctx.fillRect(0, GY, W, H-GY);
+
+      // Ground line — accent-colored in light mode
+      ctx.save();
+      ctx.shadowColor = 'rgba(99,102,241,0.4)'; ctx.shadowBlur = 10;
+      const ll = ctx.createLinearGradient(0,0,W,0);
+      ll.addColorStop(0,'transparent'); ll.addColorStop(.08,'#6366f1');
+      ll.addColorStop(.92,'#8b5cf6'); ll.addColorStop(1,'transparent');
+      ctx.strokeStyle = ll; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(0,GY); ctx.lineTo(W,GY); ctx.stroke();
+      ctx.restore();
+
+      // Ground dots (scrolling, light mode)
+      ctx.fillStyle = 'rgba(99,102,241,0.08)';
+      const dotOff = (f * (spd||6) * 0.8) % 40;
+      for (let x = -dotOff; x < W; x += 40) {
+        ctx.beginPath(); ctx.arc(x, GY+12, 1.5, 0, Math.PI*2); ctx.fill();
+        ctx.beginPath(); ctx.arc(x+20, GY+24, 1, 0, Math.PI*2); ctx.fill();
+      }
     }
 
-    // Speed flash
+    // Speed flash (both modes)
     if (flashTimer > 0) {
       ctx.fillStyle = `rgba(99,102,241,${flashTimer/55*0.16})`;
       ctx.fillRect(0,0,W,H);
       ctx.font = "bold 20px 'Fira Code',monospace";
-      ctx.fillStyle = `rgba(199,210,254,${flashTimer/55})`;
+      ctx.fillStyle = isDark
+        ? `rgba(199,210,254,${flashTimer/55})`
+        : `rgba(67,56,202,${flashTimer/55})`;
       ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
       ctx.fillText('⚡ SPEED UP!', W/2, 48);
       flashTimer--;
@@ -784,41 +821,47 @@ function initResumeRun() {
 
   // ── HUD ───────────────────────────────────────────────────────────
   function drawHUD() {
+    const isDark = document.documentElement.dataset.theme === 'dark';
+    const textCol  = isDark ? C.gline    : '#6366f1';
+    const dimCol   = isDark ? C.dim      : '#64748b';
+    const spdCol   = isDark ? 'rgba(99,102,241,0.75)' : 'rgba(99,102,241,0.9)';
     ctx.save();
     ctx.textBaseline = 'top';
-    ctx.shadowColor = C.gline; ctx.shadowBlur = 8;
+    ctx.shadowColor = textCol; ctx.shadowBlur = isDark ? 8 : 0;
 
     ctx.font = "bold 14px 'Fira Code',monospace";
-    // HI label + value
-    ctx.fillStyle = C.dim;
-    ctx.textAlign = 'right';
+    ctx.fillStyle = dimCol; ctx.textAlign = 'right';
     ctx.fillText('HI', W-118, 16);
-    ctx.fillStyle = '#94a3b8';
+    ctx.fillStyle = dimCol;
     ctx.fillText(String(hiScore).padStart(5,'0'), W-70, 16);
-    // Current score
-    ctx.fillStyle = C.gline;
+    ctx.fillStyle = textCol;
     ctx.fillText(String(score).padStart(5,'0'), W-12, 16);
 
-    // SPD badge
     ctx.shadowBlur = 0;
     ctx.font = "11px 'Fira Code',monospace";
-    ctx.fillStyle = 'rgba(99,102,241,0.75)';
-    ctx.textAlign = 'left';
+    ctx.fillStyle = spdCol; ctx.textAlign = 'left';
     ctx.fillText('SPD x'+(spd||6).toFixed(1), 14, 18);
-
     ctx.restore();
   }
 
   // ── Game Over screen ──────────────────────────────────────────────
   function drawDead() {
-    ctx.fillStyle='rgba(6,11,22,.88)'; ctx.fillRect(0,0,W,H);
+    const isDark = document.documentElement.dataset.theme === 'dark';
+    const overlay   = isDark ? 'rgba(6,11,22,.90)'    : 'rgba(248,250,252,.93)';
+    const scoreCol  = isDark ? '#94a3b8'               : '#475569';
+    const textMain  = isDark ? C.text                  : '#0f172a';
+    const rowStripe = isDark ? 'rgba(255,255,255,.04)' : 'rgba(0,0,0,.03)';
+    const sepCol    = isDark ? 'rgba(99,102,241,.35)'  : 'rgba(99,102,241,.25)';
+    const tblHdr    = isDark ? 'rgba(255,255,255,.1)'  : 'rgba(0,0,0,.08)';
+
+    ctx.fillStyle = overlay; ctx.fillRect(0,0,W,H);
     ctx.textAlign='center'; ctx.textBaseline='middle';
 
     ctx.font="bold 46px 'Plus Jakarta Sans',sans-serif";
     ctx.fillStyle=C.danger;
     ctx.fillText('GAME OVER', W/2, 52);
 
-    ctx.font="15px 'Fira Code',monospace"; ctx.fillStyle=C.dim;
+    ctx.font="15px 'Fira Code',monospace"; ctx.fillStyle=scoreCol;
     ctx.fillText('Score: '+lastScore, W/2, 92);
 
     const sg=ctx.createLinearGradient(W/2-130,0,W/2+130,0);
@@ -844,7 +887,7 @@ function initResumeRun() {
     ctx.fillText('\uD83C\uDFC6  Share Score', bx2+btnW/2, btnY+btnH/2);
 
     // Separator
-    ctx.strokeStyle='rgba(99,102,241,.35)'; ctx.lineWidth=1;
+    ctx.strokeStyle=sepCol; ctx.lineWidth=1;
     ctx.beginPath(); ctx.moveTo(60,216); ctx.lineTo(W-60,216); ctx.stroke();
 
     // Leaderboard
@@ -853,25 +896,25 @@ function initResumeRun() {
     ctx.fillText('\uD83C\uDFC6  HIGH SCORES', W/2, 234);
 
     const colRank=110, colName=310, colScoreX=680, rowH=26, firstRowY=264;
-    ctx.font="11px 'Fira Code',monospace"; ctx.fillStyle=C.dim;
+    ctx.font="11px 'Fira Code',monospace"; ctx.fillStyle=scoreCol;
     ctx.textAlign='center'; ctx.fillText('#', colRank, firstRowY-18);
     ctx.textAlign='left';   ctx.fillText('Name', colName, firstRowY-18);
     ctx.textAlign='right';  ctx.fillText('Score', colScoreX, firstRowY-18);
-    ctx.strokeStyle='rgba(255,255,255,.1)'; ctx.lineWidth=1;
+    ctx.strokeStyle=tblHdr; ctx.lineWidth=1;
     ctx.beginPath(); ctx.moveTo(80,firstRowY-9); ctx.lineTo(W-80,firstRowY-9); ctx.stroke();
 
     if (highScores.length===0) {
-      ctx.font="14px 'Plus Jakarta Sans',sans-serif"; ctx.fillStyle=C.dim; ctx.textAlign='center';
+      ctx.font="14px 'Plus Jakarta Sans',sans-serif"; ctx.fillStyle=scoreCol; ctx.textAlign='center';
       ctx.fillText(window._firebaseDB ? 'Loading\u2026' : 'Be the first!', W/2, firstRowY+rowH);
     } else {
       const rankColors=['#fbbf24','#94a3b8','#cd7c2f'];
       highScores.slice(0,5).forEach((entry,i) => {
         const ry=firstRowY+i*rowH;
-        ctx.fillStyle=i%2===0?'rgba(255,255,255,.04)':'transparent';
-        ctx.fillRect(80,ry-12,W-160,rowH-2);
-        ctx.font=`bold 13px 'Fira Code',monospace`; ctx.fillStyle=rankColors[i]||C.dim;
+        ctx.fillStyle=rowStripe;
+        if (i%2===0) ctx.fillRect(80,ry-12,W-160,rowH-2);
+        ctx.font=`bold 13px 'Fira Code',monospace`; ctx.fillStyle=rankColors[i]||scoreCol;
         ctx.textAlign='center'; ctx.fillText(i+1, colRank, ry);
-        ctx.font="13px 'Plus Jakarta Sans',sans-serif"; ctx.fillStyle=C.text;
+        ctx.font="13px 'Plus Jakarta Sans',sans-serif"; ctx.fillStyle=textMain;
         ctx.textAlign='left';
         const nm=entry.name.length>22?entry.name.slice(0,20)+'\u2026':entry.name;
         ctx.fillText(nm, colName, ry);
@@ -880,7 +923,7 @@ function initResumeRun() {
       });
     }
 
-    ctx.font="13px 'Plus Jakarta Sans',sans-serif"; ctx.fillStyle=C.dim;
+    ctx.font="13px 'Plus Jakarta Sans',sans-serif"; ctx.fillStyle=scoreCol;
     ctx.textAlign='center';
     ctx.fillText('Got a real bug? Contact me above! \uD83D\uDC46', W/2, H-20);
   }
