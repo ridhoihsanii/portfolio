@@ -35,6 +35,7 @@
         <li><a href="#skills" class="nav-link">Skills</a></li>
         <li><a href="#experience" class="nav-link">Experience</a></li>
         <li><a href="#projects" class="nav-link">Projects</a></li>
+        <li><a href="#game" class="nav-link nav-link-game">🎮 Mini Game</a></li>
         <li><a href="#contact" class="nav-link">Contact</a></li>
       </ul>
 
@@ -460,6 +461,66 @@
               For the full academic record, please
               <a href="assets/cv.html" target="_blank" rel="noopener">download the CV</a>.
             </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── MINI GAME ───────────────────────────────────────────────── -->
+  <section class="section" id="game">
+    <div class="container">
+      <div class="section-header" data-aos="fade-up">
+        <span class="section-tag">Take a Break</span>
+        <h2 class="section-title">Mini Game</h2>
+      </div>
+      <p class="game-intro" data-aos="fade-up" data-aos-delay="100">
+        Dodge bugs, collect skills, and survive deadlines — a mini-game built into this portfolio!
+      </p>
+      <div class="game-controls" data-aos="fade-up" data-aos-delay="130">
+        <div class="game-ctrl-item">
+          <span class="game-ctrl-key">Space / ↑ / Tap</span>
+          <span class="game-ctrl-desc">Jump</span>
+        </div>
+        <div class="game-ctrl-sep">·</div>
+        <div class="game-ctrl-item">
+          <span class="game-ctrl-key">↓ / Enter (hold)</span>
+          <span class="game-ctrl-desc">Duck under pterodactyls</span>
+        </div>
+        <div class="game-ctrl-sep">·</div>
+        <div class="game-ctrl-item">
+          <span class="game-ctrl-key">🦖 Cacti</span>
+          <span class="game-ctrl-desc">Jump over</span>
+        </div>
+        <div class="game-ctrl-sep">·</div>
+        <div class="game-ctrl-item">
+          <span class="game-ctrl-key">🦅 Pterodactyls</span>
+          <span class="game-ctrl-desc">Duck under (low) or jump over (high)</span>
+        </div>
+      </div>
+      <div class="game-wrapper" data-aos="fade-up" data-aos-delay="150">
+        <canvas id="resumeRunCanvas" width="800" height="450"></canvas>
+        <div class="game-play-overlay" id="gamePlayOverlay">
+          <button class="game-play-btn" id="gamePlayBtn" aria-label="Play Mini Game">
+            <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8 5.14v14l11-7-11-7z"/>
+            </svg>
+          </button>
+          <p class="game-play-hint">Click to play &nbsp;·&nbsp; Space to jump</p>
+        </div>
+        <!-- Share Score Modal -->
+        <div class="game-share-modal hidden" id="gameShareModal">
+          <div class="game-share-box">
+            <button class="game-share-close" id="gameShareClose" aria-label="Close">✕</button>
+            <div class="game-share-icon">🏆</div>
+            <h3>Share Your Score!</h3>
+            <p id="gameShareScoreText">Total Score: <strong>0</strong></p>
+            <input type="text" id="gameShareName" placeholder="Enter your name…" maxlength="20" autocomplete="off" spellcheck="false">
+            <div class="game-share-btns">
+              <button class="game-share-cancel" id="gameShareCancel">Cancel</button>
+              <button class="game-share-submit" id="gameShareSubmit">Share 🚀</button>
+            </div>
+            <p class="game-share-status" id="gameShareStatus"></p>
           </div>
         </div>
       </div>
