@@ -1186,7 +1186,7 @@
     className: ' pterodactyl ',
     width: 46,
     height: 40,
-    yPos: null, // set dynamically per spawn
+    yPos: 75, // set dynamically per spawn in addNewObstacle
     multipleSpeed: 999,
     minGap: 150,
     minSpeed: 8.5,
@@ -2102,9 +2102,10 @@
     // For pterodactyl, pick a random flying height
     if (obstacleType.type === 'PTERODACTYL') {
       var flyHeights = [50, 75, 100]; // pixels from top of canvas
-      obstacleType = Object.assign({}, obstacleType, {
-        yPos: flyHeights[getRandomNum(0, flyHeights.length - 1)]
-      });
+      var ptero = {};
+      for (var k in obstacleType) { ptero[k] = obstacleType[k]; }
+      ptero.yPos = flyHeights[getRandomNum(0, flyHeights.length - 1)];
+      obstacleType = ptero;
     }
     var obstacleImg = this.obstacleImgs[obstacleType.type];
     this.obstacles.push(new Obstacle(this.canvasCtx, obstacleType,
@@ -2777,7 +2778,7 @@ html[subframe] body {
 </style>
 </head>
 
-<body id="t">
+<body id="t" class="offline">
 <div id="main-frame-error" class="interstitial-wrapper" jstcache="0">
     <div id="offline-resources" jstcache="0">
     <div id="offline-resources-1x" jstcache="0">

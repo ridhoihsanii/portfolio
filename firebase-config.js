@@ -1,5 +1,5 @@
 /* ──────────────────────────────────────────────────────────────
-   Firebase Configuration — Like Counter
+   Firebase Configuration — Like Counter + Game High Scores
    ──────────────────────────────────────────────────────────────
    Setup:
    1. Buka https://console.firebase.google.com
@@ -13,6 +13,12 @@
         "rules": {
           "portfolio": {
             "likes": {
+              ".read": true,
+              ".write": true
+            }
+          },
+          "game": {
+            "highscores": {
               ".read": true,
               ".write": true
             }
