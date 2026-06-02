@@ -1511,8 +1511,7 @@ ul { list-style: none; }
 
 #dinoGameFrame {
   width: 100%;
-  aspect-ratio: 16 / 9;
-  height: auto;
+  height: 200px;
   display: block;
   border: none;
   background: transparent;

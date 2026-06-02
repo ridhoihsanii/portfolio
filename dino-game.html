@@ -1955,15 +1955,17 @@ html, body {
   padding: 0 !important;
   overflow: hidden !important;
   width: 100% !important;
+  height: 200px !important;
 }
 .interstitial-wrapper,
 .offline .interstitial-wrapper {
   position: relative !important;
   margin: 0 !important;
   padding: 0 !important;
+  height: 200px !important;
   width: 100% !important;
   max-width: 100% !important;
-  overflow: visible !important;
+  overflow: hidden !important;
 }
 .offline .runner-container {
   position: relative !important;
@@ -2607,24 +2609,6 @@ html[subframe] body { margin: 0; padding: 0; overflow: hidden; background: trans
 
   <script type="text/javascript">
     new Runner('.interstitial-wrapper');
-  </script>
-
-  <script type="text/javascript">
-    // Scale game to fill 16:9 iframe height
-    (function scaleGame() {
-      function apply() {
-        var iframeH = window.innerHeight;
-        var iframeW = window.innerWidth;
-        var scale   = iframeH / 150;
-        var bodyW   = iframeW / scale;
-        document.body.style.transformOrigin = 'top left';
-        document.body.style.transform       = 'scale(' + scale + ')';
-        document.body.style.width           = bodyW + 'px';
-        document.body.style.height          = '150px';
-      }
-      apply();
-      window.addEventListener('resize', apply);
-    })();
   </script>
 
   <script type="text/javascript">
