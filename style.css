@@ -1477,7 +1477,66 @@ ul { list-style: none; }
   .skills-categories { grid-template-columns: 1fr; }
   .contact-layout { grid-template-columns: 1fr; }
   .about-info-grid { grid-template-columns: 1fr; }
+
+  /* About section mobile fixes */
+  .about-heading {
+    font-size: 1.2rem;
+    line-height: 1.5;
+  }
+  .avail-badge {
+    display: inline-flex;
+    margin-left: .4rem;
+    font-size: .65rem;
+  }
+  .about-text {
+    text-align: left;
+    overflow-wrap: break-word;
+  }
+  .about-photo-border {
+    inset: 8px -6px -6px 8px;
+  }
+  .info-item a {
+    word-break: break-all;
+  }
   .projects-grid { grid-template-columns: 1fr; }
+
+  /* Hero text fixes */
+  .hero-container { padding: 3rem 1.25rem; }
+  .hero-desc {
+    text-align: left;
+    max-width: 100%;
+    font-size: .95rem;
+    overflow-wrap: break-word;
+  }
+  .hero-roles {
+    justify-content: center;
+    flex-wrap: wrap;
+    font-size: 1.05rem;
+    overflow-wrap: break-word;
+  }
+  .role-cycler { word-break: break-word; }
+
+  /* Like & Share button — smaller on mobile */
+  .action-widgets {
+    bottom: 1.25rem;
+    left: 1.25rem;
+    gap: .5rem;
+  }
+  .action-btn {
+    width: 38px;
+    height: 38px;
+    font-size: .95rem;
+  }
+  .action-label { font-size: .65rem; }
+
+  /* Back to top — consistent size */
+  .back-to-top {
+    bottom: 1.25rem;
+    right: 1.25rem;
+    width: 38px;
+    height: 38px;
+    font-size: .9rem;
+  }
 }
 
 @media (max-width: 480px) {
