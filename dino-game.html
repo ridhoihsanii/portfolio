@@ -467,8 +467,8 @@
     // Night mode sky overlay
     if (this.horizon && this.horizon.nightMode && this.horizon.nightMode.opacity > 0) {
       this.canvasCtx.save();
-      this.canvasCtx.globalAlpha = this.horizon.nightMode.opacity * 0.6;
-      this.canvasCtx.fillStyle = '#0d1b2a';
+      this.canvasCtx.globalAlpha = this.horizon.nightMode.opacity * 0.3;
+      this.canvasCtx.fillStyle = '#888888';
       this.canvasCtx.fillRect(0, 0, this.dimensions.WIDTH, this.dimensions.HEIGHT);
       this.canvasCtx.restore();
     }
@@ -1840,7 +1840,7 @@
       // Fade opacity
       if (this.fadeDirection !== 0) {
         this.opacity += NightMode.FADE_SPEED * this.fadeDirection;
-        if (this.fadeDirection === 1 && this.opacity >= 0.8) {
+        if (this.fadeDirection === 1 && this.opacity >= 0.5) {
           this.opacity = 0.8;
           this.fadeDirection = 0;
           // Fade in stars
