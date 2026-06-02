@@ -374,7 +374,7 @@ function initResumeRun() {
   const C = {
     sky1:'#060b16', sky2:'#121830',
     ground:'#1e293b', gline:'#22d3ee',
-    dino:'#f1f5f9', dinoGlow:'#38bdf8',
+    dino:'#4ade80', dinoGlow:'#22c55e',
     cactus:'#4ade80', cactusGlow:'#166534',
     ptero:'#fb923c', pteroGlow:'#ea580c',
     text:'#f1f5f9', dim:'#94a3b8',
@@ -570,70 +570,82 @@ function initResumeRun() {
 
     ctx.save();
     ctx.translate(p.x, footY);
-    ctx.shadowColor = C.dinoGlow; ctx.shadowBlur = 16;
-    ctx.fillStyle = C.dino;
+    ctx.shadowColor = C.dinoGlow; ctx.shadowBlur = 14;
+    ctx.fillStyle = C.dino;   // green
 
     if (p.ducking) {
-      // Duck: wide horizontal body
-      ctx.fillRect(-4, -DDH,     60, 20);   // body
-      ctx.fillRect(52, -DDH-4,   18, 16);   // head
-      // Tail up
+      // ── Duck pose: wide & low, head thrust forward (right) ──────────
+      // Body
+      ctx.fillRect(0, -DDH,     58, 20);
+      // Neck + head forward
+      ctx.fillRect(40, -DDH-8,  26, 18);
+      // Snout
+      ctx.fillRect(62, -DDH+2,   8, 10);
+      // Tail (left side, small wedge)
       ctx.beginPath();
-      ctx.moveTo(-4, -DDH);
-      ctx.lineTo(-4, -DDH-10);
-      ctx.lineTo(8,  -DDH+2);
+      ctx.moveTo(0, -DDH); ctx.lineTo(-8,-DDH+6); ctx.lineTo(-3,-DDH+16); ctx.lineTo(6,-DDH+14);
       ctx.closePath(); ctx.fill();
-      // Legs running
-      ctx.fillRect( 6, -DDH+18, 9, lp>0 ? 12 : 7);
-      ctx.fillRect(22, -DDH+18, 9, lp>0 ? 7 : 12);
+      // Legs (alternating)
+      ctx.fillRect(10, -DDH+18, 11, lp>0 ? 13 : 7);
+      ctx.fillRect(26, -DDH+18, 11, lp>0 ? 7  : 13);
       // Eye
-      ctx.shadowBlur = 0;
-      ctx.fillStyle = '#0f172a';
-      ctx.beginPath(); ctx.arc(65, -DDH+4, 3.5, 0, Math.PI*2); ctx.fill();
-      ctx.fillStyle = 'rgba(255,255,255,0.7)';
-      ctx.beginPath(); ctx.arc(63.5, -DDH+2.5, 1.2, 0, Math.PI*2); ctx.fill();
+      ctx.shadowBlur = 0; ctx.fillStyle = '#0f172a';
+      ctx.fillRect(57, -DDH+2, 9, 9);
+      ctx.fillStyle = 'rgba(255,255,255,0.85)';
+      ctx.fillRect(58, -DDH+3, 4, 4);
 
     } else {
-      // Standing / running
-      // Legs
-      if (p.gr) {
-        ctx.fillRect( 8, -18, 11, lp>0 ? 22 : 11);
-        ctx.fillRect(22, -18, 11, lp>0 ? 11 : 22);
-      } else {
-        // Airborne: legs spread slightly
-        ctx.fillRect( 6, -18, 11, 16);
-        ctx.fillRect(22, -16, 11, 14);
-      }
-      // Body
-      ctx.fillRect(0, -DH+12, 38, 28);
-      // Neck
-      ctx.fillRect(16, -DH+4, 18, 14);
-      // Head
-      ctx.fillRect(12, -DH,   26, 20);
-      // Tail
+      // ── Standing / running: Chrome Dino pixel-art style, facing right ─
+      // Tail (tapers back-left from lower body)
       ctx.beginPath();
-      ctx.moveTo(0, -DH+14);
-      ctx.lineTo(-10,-DH+22);
-      ctx.lineTo(-2, -DH+32);
+      ctx.moveTo(4,  -DH+32); ctx.lineTo(-13,-DH+42);
+      ctx.lineTo(-6, -DH+52); ctx.lineTo(4,  -DH+46);
       ctx.closePath(); ctx.fill();
-      // Arm
-      ctx.fillRect(18, -DH+26, 12, 7);
-      // Eye
-      ctx.shadowBlur = 0;
-      ctx.fillStyle = '#0f172a';
-      ctx.beginPath(); ctx.arc(32, -DH+6, 4.5, 0, Math.PI*2); ctx.fill();
-      ctx.fillStyle = 'rgba(255,255,255,0.8)';
-      ctx.beginPath(); ctx.arc(30.5, -DH+4.5, 1.6, 0, Math.PI*2); ctx.fill();
-      ctx.fillStyle = C.dino;
-      // Mouth line
-      ctx.fillRect(34, -DH+12, 5, 2);
 
-      // Jump streaks
+      // Main body
+      ctx.fillRect(0, -DH+20, 38, 26);
+
+      // Upper-back hump (narrows toward head)
+      ctx.fillRect(0, -DH+10, 20, 13);
+
+      // Neck (connects hump to head)
+      ctx.fillRect(14, -DH+4, 18, 14);
+
+      // Head (extends forward/right)
+      ctx.fillRect(16, -DH,   28, 22);
+
+      // Snout tip
+      ctx.fillRect(40, -DH+8, 6, 10);
+
+      // Short arm (tiny forearm sticking out from mid-body)
+      ctx.fillRect(22, -DH+32, 13, 6);
+
+      // Legs (alternating length for run cycle)
+      if (p.gr) {
+        ctx.fillRect( 8, -18, 11, lp>0 ? 22 : 10);
+        ctx.fillRect(23, -18, 11, lp>0 ? 10 : 22);
+      } else {
+        // Airborne: legs slightly tucked
+        ctx.fillRect( 6, -17, 11, 14);
+        ctx.fillRect(22, -15, 11, 12);
+      }
+
+      // Eye (large dark square near front-top of head, Chrome Dino style)
+      ctx.shadowBlur = 0; ctx.fillStyle = '#052e16';
+      ctx.fillRect(34, -DH+4, 9, 9);
+      ctx.fillStyle = 'rgba(255,255,255,0.9)';
+      ctx.fillRect(35, -DH+5, 4, 4);
+
+      // Nostril / mouth gap
+      ctx.fillStyle = '#052e16';
+      ctx.fillRect(40, -DH+13, 5, 2);
+
+      // Jump trail (speed lines under feet)
       if (!p.gr) {
-        ctx.globalAlpha = 0.28;
+        ctx.globalAlpha = 0.25;
         ctx.fillStyle = C.dinoGlow;
-        ctx.fillRect(8,  -4, 6, Math.min(20, Math.abs(p.vy)*2.4));
-        ctx.fillRect(24, -3, 6, Math.min(18, Math.abs(p.vy)*2.0));
+        ctx.fillRect(8,  -3, 8, Math.min(22, Math.abs(p.vy)*2.5));
+        ctx.fillRect(24, -2, 8, Math.min(18, Math.abs(p.vy)*2.0));
         ctx.globalAlpha = 1;
       }
     }
@@ -697,46 +709,52 @@ function initResumeRun() {
     ctx.beginPath();
     ctx.ellipse(cx, cy, 14, 9, 0, 0, Math.PI*2);
     ctx.fill();
-    // Head
-    ctx.fillRect(cx+9, cy-7, 13, 10);
-    // Beak
+
+    // Head faces LEFT (direction of travel)
+    ctx.fillRect(cx-23, cy-8, 14, 11);
+
+    // Beak pointing LEFT
     ctx.beginPath();
-    ctx.moveTo(cx+22, cy-5);
-    ctx.lineTo(cx+33, cy-1);
-    ctx.lineTo(cx+22, cy+3);
-    ctx.closePath(); ctx.fill();
-    // Crest on head
-    ctx.beginPath();
-    ctx.moveTo(cx+10, cy-7);
-    ctx.lineTo(cx+6,  cy-16);
-    ctx.lineTo(cx+18, cy-7);
-    ctx.closePath(); ctx.fill();
-    // Tail
-    ctx.beginPath();
-    ctx.moveTo(cx-12, cy-1);
-    ctx.lineTo(cx-24, cy-5+wf*2);
-    ctx.lineTo(cx-19, cy+4);
+    ctx.moveTo(cx-23, cy-3);
+    ctx.lineTo(cx-36, cy);
+    ctx.lineTo(cx-23, cy+4);
     ctx.closePath(); ctx.fill();
 
-    // Wings
-    const wingY = cy + wf*14;
-    ctx.beginPath();                  // left wing
-    ctx.moveTo(cx-3,  cy-4);
+    // Head crest (spiky top)
+    ctx.beginPath();
+    ctx.moveTo(cx-22, cy-8);
+    ctx.lineTo(cx-14, cy-18);
+    ctx.lineTo(cx-8,  cy-8);
+    ctx.closePath(); ctx.fill();
+
+    // Tail to the RIGHT
+    ctx.beginPath();
+    ctx.moveTo(cx+12, cy-2);
+    ctx.lineTo(cx+25, cy-5+wf*2);
+    ctx.lineTo(cx+19, cy+5);
+    ctx.closePath(); ctx.fill();
+
+    // Wings (flap up/down symmetrically)
+    const wingY = cy + wf * 13;
+    ctx.beginPath();  // left wing
+    ctx.moveTo(cx-4,  cy-4);
     ctx.lineTo(cx-30, wingY-2);
-    ctx.lineTo(cx-12, wingY+8);
-    ctx.lineTo(cx-3,  cy+5);
+    ctx.lineTo(cx-14, wingY+8);
+    ctx.lineTo(cx-4,  cy+5);
     ctx.closePath(); ctx.fill();
-    ctx.beginPath();                  // right wing
-    ctx.moveTo(cx+3,  cy-4);
+    ctx.beginPath();  // right wing
+    ctx.moveTo(cx+4,  cy-4);
     ctx.lineTo(cx+30, wingY+4);
-    ctx.lineTo(cx+12, wingY+10);
-    ctx.lineTo(cx+3,  cy+5);
+    ctx.lineTo(cx+14, wingY+10);
+    ctx.lineTo(cx+4,  cy+5);
     ctx.closePath(); ctx.fill();
 
-    // Eye
+    // Eye (front of head, left side)
     ctx.shadowBlur = 0;
-    ctx.fillStyle = '#0f172a';
-    ctx.beginPath(); ctx.arc(cx+17, cy-2, 2.5, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#431407';
+    ctx.beginPath(); ctx.arc(cx-17, cy-2, 2.8, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = 'rgba(255,255,255,0.8)';
+    ctx.beginPath(); ctx.arc(cx-18.5, cy-3, 1.1, 0, Math.PI*2); ctx.fill();
     ctx.restore();
   }
 
