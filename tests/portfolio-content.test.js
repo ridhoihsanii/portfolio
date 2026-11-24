@@ -2,6 +2,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const test = require('node:test');
+const vm = require('node:vm');
 
 const root = path.resolve(__dirname, '..');
 const index = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
@@ -71,4 +72,48 @@ test('portfolio initializes even if the animation library is unavailable', () =>
 
 test('hero role cycler starts with something that can be built', () => {
   assert.doesNotMatch(index, /<span class="role-cycler"[^>]*>Java Backend Engineer<\/span>/);
+});
+
+test('Firebase likes increment and decrement without going below zero, even on delayed retries', () => {
+  const callbacks = [];
+  const listeners = {};
+  const classes = { toggle() {}, add() {}, remove() {} };
+  const button = {
+    classList: classes,
+    addEventListener(type, handler) { listeners[type] = handler; },
+    getBoundingClientRect() { return { left: 0, top: 0, width: 10, height: 10 }; }
+  };
+  const count = { classList: classes, textContent: '' };
+  const values = new Map();
+  const context = {
+    document: {
+      addEventListener() {},
+      getElementById(id) { return id === 'likeBtn' ? button : count; },
+      createElement() { return { style: {}, addEventListener() {} }; },
+      body: { appendChild() {} }
+    },
+    localStorage: {
+      getItem(key) { return values.get(key) || null; },
+      setItem(key, value) { values.set(key, value); }
+    },
+    window: { _firebaseDB: { ref() { return {
+      on(type, handler) { handler({ val: () => 0 }); },
+      transaction(handler) { callbacks.push(handler); }
+    }; } } }
+  };
+  vm.createContext(context);
+  vm.runInContext(script, context);
+  context.initLikeButton();
+  listeners.click();
+  listeners.click();
+  assert.equal(callbacks[0](0), 1, 'a retried like must retain its increment');
+  assert.equal(callbacks[1](1), 0, 'unliking must decrement the global counter');
+  assert.equal(callbacks[1](0), 0, 'the counter must not become negative');
+});
+
+test('case studies and Rack n Roll describe verified work and technologies', () => {
+  assert.match(index, /Backend Case Studies/);
+  assert.match(index, /Problem:[\s\S]*?Solution:[\s\S]*?Result:/);
+  assert.match(projects, /Rack n Roll[\s\S]*?React[\s\S]*?Firebase/);
+  assert.doesNotMatch(projects, /Source code\s+and live demonstrations are not public/i);
 });

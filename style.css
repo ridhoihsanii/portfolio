@@ -846,6 +846,15 @@ ul { list-style: none; }
   font-family: var(--font-mono);
 }
 
+.case-studies { margin-top: 2rem; }
+.case-studies h3 { font-size: 1.15rem; }
+.case-studies-note { color: var(--text-3); font-size: .9rem; margin: .4rem 0 1rem; }
+.case-studies-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 1rem; }
+.case-study { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.5rem; }
+.case-study h4 { margin-bottom: .75rem; }
+.case-study p { color: var(--text-2); font-size: .9rem; margin-top: .5rem; }
+.case-study strong { color: var(--text); }
+
 .exp-note {
   text-align: center;
   color: var(--text-3);
