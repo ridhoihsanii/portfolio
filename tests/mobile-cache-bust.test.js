@@ -15,6 +15,11 @@ test('mobile hero remains centered and constrained to the viewport', () => {
   assert.match(mobileRules, /\.hero-desc\s*\{[^}]*text-align:\s*center/s);
 });
 
+test('mobile navigation actions align to the right when the menu leaves the flex layout', () => {
+  const mobileRules = css.slice(css.indexOf('@media (max-width: 768px)'));
+  assert.match(mobileRules, /\.nav-actions\s*\{[^}]*margin-left:\s*auto\s*;/s);
+});
+
 test('stylesheet and CV links bypass stale cached assets', () => {
   const stylesheet = html.match(/<link[^>]+href="([^"]*style\.css[^"]*)"/);
   const cvLinks = [...html.matchAll(/href="([^"]*assets\/cv\.html[^"]*)"/g)];
