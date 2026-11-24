@@ -117,3 +117,25 @@ test('case studies and Rack n Roll describe verified work and technologies', () 
   assert.match(projects, /Rack n Roll[\s\S]*?React[\s\S]*?Firebase/);
   assert.doesNotMatch(projects, /Source code\s+and live demonstrations are not public/i);
 });
+
+test('CV and portfolio identify the Rack n Roll organizer and describe its technology', () => {
+  for (const document of [cv, projects]) {
+    assert.match(document, /organizer[^<]*@rnr\.intan/i);
+    assert.match(document, /Rack n Roll[\s\S]*?React[\s\S]*?Firebase/i);
+    assert.match(document, /Rack n Roll[\s\S]*?(?:Excel\/PDF|Excel and PDF)/i);
+  }
+});
+
+test('CV print body and skill tags use readable text sizes', () => {
+  assert.match(cv, /@media print\s*\{[\s\S]*?\.summary-text,\s*\.exp-bullets li,\s*\.project-desc,[\s\S]*?\{\s*font-size:\s*11pt;/);
+  assert.match(cv, /\.skill-tag\s*\{\s*font-size:\s*9pt;\s*\}/);
+});
+
+test('CV mobile body text remains readable', () => {
+  const mobileRules = cv.slice(cv.indexOf('@media screen and (max-width: 700px)'));
+  assert.match(mobileRules, /\.exp-bullets li,\s*\.project-desc,\s*\.summary-text,\s*\.edu-note\s*\{\s*font-size:\s*1rem;/);
+});
+
+test('portfolio does not mislabel the Timesheet Automation repository as private', () => {
+  assert.doesNotMatch(projects, /title="Private repository"/);
+});

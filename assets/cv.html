@@ -389,15 +389,19 @@
         box-shadow: none;
         min-height: 0;
       }
-      .cv-header { padding: 22px 30px; }
-      .cv-sidebar { padding: 20px 18px; gap: 18px; }
-      .cv-main { padding: 20px 24px; gap: 14px; }
+      .cv-header { padding: 18px 30px; }
+      .cv-sidebar { padding: 16px 18px; gap: 16px; }
+      .cv-main { padding: 16px 24px; gap: 10px; }
       .section-title { margin-bottom: 8px; }
       .skill-group { margin-bottom: 8px; }
+      .skill-tag { font-size: 9pt; }
+      .section-title, .skill-group-label { font-size: 8pt; }
+      .contact-item { font-size: 9pt; }
+      .project-title-row span:last-child { font-size: 8pt !important; }
       .exp-bullets { gap: 3px; }
       .summary-text, .exp-bullets li, .project-desc, .edu-school, .sii-value {
-        font-size: 9pt;
-        line-height: 1.4;
+        font-size: 11pt;
+        line-height: 1.3;
         text-align: left;
       }
       .project-item { padding: 8px 10px; margin-bottom: 8px; }
@@ -449,7 +453,7 @@
       .project-desc,
       .summary-text,
       .edu-note {
-        font-size: .82rem;
+        font-size: 1rem;
         text-align: left;
       }
 
@@ -466,7 +470,7 @@
   <header class="cv-header">
     <a
       class="download-button"
-      href="cv-rabbani-ridho-ihsani.pdf?v=2026112404"
+      href="cv-rabbani-ridho-ihsani.pdf?v=2026112406"
       download="Rabbani-Ridho-Ihsani-CV.pdf"
     >Download PDF</a>
     <img src="profile.jpeg" alt="Rabbani Ridho Ihsani" class="header-photo" />
@@ -587,18 +591,11 @@
         </div>
         <div class="exp-company">PT Tri Adi Bersama — Anteraja &nbsp;·&nbsp; Jakarta, Indonesia</div>
         <ul class="exp-bullets">
-          <li>Designed, developed, and maintained Java and Spring Boot backend services supporting multiple warehouse operational systems.</li>
-          <li>Built RESTful APIs from scratch, implementing business logic, CRUD operations, and scheduler-triggered processes for warehouse workflows.</li>
-          <li>Used Redis caching to reduce endpoint response time from 800 ms or more under high load to approximately 250 ms, applied Redis locks to reduce duplicate processing, and used Redis Queue for asynchronous API processing.</li>
-          <li>Developed Kafka producers, consumers, and topics to move synchronous processing into asynchronous workflows, allowing endpoints to respond sooner while backend work continues in the background.</li>
-          <li>Created backend unit tests using JUnit and Mockito.</li>
-          <li>Investigated and resolved production issues to help maintain application stability and continuity of warehouse operations.</li>
-          <li>Worked with QA, product, and cross-functional teams to deliver and maintain backend solutions.</li>
+          <li>Built and maintained Java and Spring Boot services, RESTful APIs, and scheduled processes for warehouse operations.</li>
+          <li>Reduced endpoint response time under high load from 800 ms or more to approximately 250 ms using Redis caching. Applied Redis locks to reduce duplicate processing and Redis Queue for asynchronous APIs.</li>
+          <li>Developed Kafka producers, consumers, and topics to move synchronous work into asynchronous workflows, allowing endpoints to respond sooner.</li>
+          <li>Created JUnit and Mockito tests, resolved production issues, and worked with QA and product teams.</li>
         </ul>
-        <div class="exp-tech">
-          <span>Java</span><span>Spring Boot</span><span>RESTful API</span>
-          <span>Redis</span><span>Apache Kafka</span><span>JUnit</span><span>Mockito</span>
-        </div>
       </div>
     </section>
 
@@ -612,11 +609,9 @@
           <span style="font-size:.7rem;color:#94a3b8;">Professional Project · Internal Tool</span>
         </div>
         <p class="project-desc">
-          Developed an internal application to automate timesheet preparation and submission to Odoo ERP.
-          It parses Excel and PDF files according to predefined formats, submits processed data to Odoo through
-          its JSON-RPC API, and supports structured data processing with CSV and Excel output. The tool supports
-          internal workflows; no live demonstration is provided here. Reduced Odoo timesheet
-          input from approximately 5–10 minutes to 1–2 minutes or less.
+          Built an internal tool that parses Excel and PDF files, submits timesheets to Odoo via JSON-RPC,
+          and exports CSV and Excel data. Reduced Odoo timesheet input from approximately 5–10 minutes
+          to 1–2 minutes or less.
         </p>
         <div class="project-stack">
           <span>Java</span><span>Spring Boot</span><span>Odoo JSON-RPC</span>
@@ -630,8 +625,9 @@
           <span style="font-size:.7rem;color:#94a3b8;">Personal Project · Billiards Tournament Organizer</span>
         </div>
         <p class="project-desc">
-          A personal web application built for a billiards tournament organizer to set up tournaments,
-          manage participant registrations and payment status, and view tournament brackets.
+          Built a personal web application for a billiards tournament organizer. Supports tournament setup,
+          participant and payment tracking, and tournament brackets with scores and winner advancement.
+          Uses JavaScript, React, Firebase, browser storage, and Excel/PDF export. Organizer Instagram: @rnr.intan.
         </p>
       </div>
     </section>
