@@ -1740,6 +1740,7 @@ ul { list-style: none; }
   }
 
   .nav-links.open { display: flex; }
+  .nav-actions { margin-left: auto; }
   .hamburger { display: flex; }
   .btn-nav-cv span { display: none; }
   .skills-categories { grid-template-columns: 1fr; }
