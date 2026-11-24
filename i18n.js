@@ -18,7 +18,7 @@
     'RESTful APIs': 'RESTful API',
     'Event-Driven Systems': 'Sistem Berbasis Peristiwa',
     'Warehouse Systems': 'Sistem Pergudangan',
-    'Java Backend Engineer with 4+ years of experience at PT Tri Adi Bersama (Anteraja). I build Java and Spring Boot services, RESTful APIs, Redis- and Kafka-based workflows, and Odoo integrations that support warehouse operations.': 'Java Backend Engineer dengan pengalaman lebih dari 4 tahun di PT Tri Adi Bersama (Anteraja). Saya membangun layanan Java dan Spring Boot, RESTful API, alur kerja berbasis Redis dan Kafka, serta integrasi Odoo untuk mendukung operasional gudang.',
+    'Java Backend Engineer with 4+ years of experience at PT Tri Adi Bersama (Anteraja). I build Java and Spring Boot services, RESTful APIs, and Redis- and Kafka-based workflows for warehouse operations. I also built a timesheet reporting tool that integrates with Odoo.': 'Java Backend Engineer dengan pengalaman lebih dari 4 tahun di PT Tri Adi Bersama (Anteraja). Saya membangun layanan Java dan Spring Boot, RESTful API, serta alur kerja berbasis Redis dan Kafka untuk operasional gudang. Saya juga membuat alat pelaporan timesheet yang terintegrasi dengan Odoo.',
     'Get In Touch': 'Hubungi Saya',
     'View CV': 'Lihat CV',
     'Years Experience': 'Tahun Pengalaman',
@@ -27,7 +27,7 @@
     'About Me': 'Tentang Saya',
     'Java Backend Engineer at': 'Java Backend Engineer di',
     "I'm Rabbani Ridho Ihsani, a Java Backend Engineer with 4+ years of professional experience at PT Tri Adi Bersama (Anteraja), building backend services for warehouse operational systems. My work focuses on Java, Spring Boot, and RESTful APIs.": 'Saya Rabbani Ridho Ihsani, Java Backend Engineer dengan pengalaman profesional lebih dari 4 tahun di PT Tri Adi Bersama (Anteraja), membangun layanan backend untuk sistem operasional gudang. Pekerjaan saya berfokus pada Java, Spring Boot, dan RESTful API.',
-    'I implement Redis caching and queue mechanisms, develop Kafka producers and consumers for event-driven processing, and integrate services with Odoo ERP. I also write unit tests with JUnit and Mockito and help resolve production issues.': 'Saya menerapkan cache dan antrean Redis, mengembangkan producer dan consumer Kafka untuk pemrosesan berbasis peristiwa, serta mengintegrasikan layanan dengan Odoo ERP. Saya juga menulis unit test menggunakan JUnit dan Mockito serta membantu menyelesaikan masalah produksi.',
+    'I implement Redis caching and queue mechanisms and develop Kafka producers and consumers for event-driven processing. I also built an Odoo-integrated tool for reporting my completed tasks, write unit tests with JUnit and Mockito, and help resolve production issues.': 'Saya menerapkan cache dan antrean Redis serta mengembangkan producer dan consumer Kafka untuk pemrosesan berbasis peristiwa. Saya juga membuat alat terintegrasi Odoo untuk melaporkan tugas yang telah saya selesaikan, menulis unit test menggunakan JUnit dan Mockito, serta membantu menyelesaikan masalah produksi.',
     'View Full Resume': 'Lihat CV Lengkap',
     'What I Know': 'Keahlian Saya',
     'Skills & Technologies': 'Keahlian & Teknologi',
@@ -69,7 +69,7 @@
     'view the full CV': 'lihat CV lengkap',
     "What I've Built": 'Proyek Saya',
     'Timesheet Automation Tool': 'Alat Otomatisasi Timesheet',
-    'An internal application that automates timesheet preparation and submission to Odoo ERP. It parses Excel and PDF files in predefined formats, submits processed data through the Odoo JSON-RPC API, and supports structured processing with CSV and Excel output. The tool is used for internal workflows; no live demonstration is provided here. It reduced Odoo timesheet input from approximately 5–10 minutes to 1–2 minutes or less.': 'Aplikasi internal untuk mengotomatiskan penyiapan dan pengiriman timesheet ke Odoo ERP. Aplikasi memproses file Excel dan PDF dengan format yang ditentukan, mengirimkan data melalui Odoo JSON-RPC API, dan menghasilkan keluaran CSV dan Excel. Alat ini digunakan untuk alur kerja internal; tidak tersedia demonstrasi langsung. Waktu input timesheet Odoo berkurang dari sekitar 5–10 menit menjadi 1–2 menit atau kurang.',
+    'A tool I built to consolidate my completed tasks into timesheets for reporting to my company via Odoo ERP. It parses Excel and PDF files in predefined formats, submits processed data through the Odoo JSON-RPC API, and produces CSV and Excel output. No live demonstration is provided. It reduced Odoo timesheet input from approximately 5–10 minutes to 1–2 minutes or less.': 'Alat yang saya buat untuk merekap tugas yang telah saya selesaikan menjadi timesheet sebagai laporan ke perusahaan melalui Odoo ERP. Alat ini memproses file Excel dan PDF dengan format yang ditentukan, mengirimkan data melalui Odoo JSON-RPC API, dan menghasilkan keluaran CSV dan Excel. Tidak tersedia demonstrasi langsung. Waktu input timesheet Odoo berkurang dari sekitar 5–10 menit menjadi 1–2 menit atau kurang.',
     'Excel/PDF Processing': 'Pemrosesan Excel/PDF',
     'Excel and PDF timesheet data parsing': 'Pemrosesan data timesheet Excel dan PDF',
     'Odoo JSON-RPC timesheet submission': 'Pengiriman timesheet melalui Odoo JSON-RPC',
@@ -120,15 +120,15 @@
     'Integration': 'Integrasi',
     'Excel/PDF data processing': 'Pemrosesan data Excel/PDF',
     'Professional Summary': 'Ringkasan Profesional',
-    'Java Backend Engineer with 4+ years of experience at PT Tri Adi Bersama (Anteraja), building warehouse systems with Java, Spring Boot, RESTful APIs, Redis, and Apache Kafka. Experienced in Odoo integrations, production support, and backend testing with JUnit and Mockito.': 'Java Backend Engineer dengan pengalaman lebih dari 4 tahun di PT Tri Adi Bersama (Anteraja), membangun sistem pergudangan dengan Java, Spring Boot, RESTful API, Redis, dan Apache Kafka. Berpengalaman dalam integrasi Odoo, dukungan produksi, serta pengujian backend menggunakan JUnit dan Mockito.',
+    'Java Backend Engineer with 4+ years of experience at PT Tri Adi Bersama (Anteraja), building warehouse systems with Java, Spring Boot, RESTful APIs, Redis, and Apache Kafka. Experienced in production support, backend testing with JUnit and Mockito, and Odoo integration for timesheet reporting.': 'Java Backend Engineer dengan pengalaman lebih dari 4 tahun di PT Tri Adi Bersama (Anteraja), membangun sistem pergudangan dengan Java, Spring Boot, RESTful API, Redis, dan Apache Kafka. Berpengalaman dalam dukungan produksi, pengujian backend menggunakan JUnit dan Mockito, serta integrasi Odoo untuk pelaporan timesheet.',
     'Work Experience': 'Pengalaman Kerja',
     'Built and maintained Java and Spring Boot services, RESTful APIs, and scheduled processes for warehouse operations.': 'Membangun dan memelihara layanan Java dan Spring Boot, RESTful API, serta proses terjadwal untuk operasional gudang.',
     'Reduced endpoint response time under high load from 800 ms or more to approximately 250 ms using Redis caching. Applied Redis locks to reduce duplicate processing and Redis Queue for asynchronous APIs.': 'Mengurangi waktu respons endpoint saat beban tinggi dari 800 ms atau lebih menjadi sekitar 250 ms menggunakan cache Redis. Menerapkan Redis lock untuk mengurangi pemrosesan duplikat dan Redis Queue untuk API asinkron.',
     'Developed Kafka producers, consumers, and topics to move synchronous work into asynchronous workflows, allowing endpoints to respond sooner.': 'Mengembangkan producer, consumer, dan topik Kafka untuk mengubah proses sinkron menjadi alur kerja asinkron agar endpoint merespons lebih cepat.',
     'Created JUnit and Mockito tests, resolved production issues, and worked with QA and product teams.': 'Membuat pengujian JUnit dan Mockito, menyelesaikan masalah produksi, dan bekerja sama dengan tim QA dan produk.',
     'Personal & Professional Projects': 'Proyek Pribadi & Profesional',
-    'Professional Project · Internal Tool': 'Proyek Profesional · Alat Internal',
-    'Built an internal tool that parses Excel and PDF files, submits timesheets to Odoo via JSON-RPC, and exports CSV and Excel data. Reduced Odoo timesheet input from approximately 5–10 minutes to 1–2 minutes or less.': 'Membangun alat internal yang memproses file Excel dan PDF, mengirim timesheet ke Odoo melalui JSON-RPC, serta mengekspor data CSV dan Excel. Mengurangi waktu input timesheet Odoo dari sekitar 5–10 menit menjadi 1–2 menit atau kurang.',
+    'Individual Tool · Work Reporting': 'Alat Individu · Pelaporan Kerja',
+    'Built a tool to consolidate my completed tasks into timesheets for company reporting via Odoo JSON-RPC. Parses Excel/PDF files and exports CSV/Excel. Reduced Odoo timesheet input from approximately 5–10 minutes to 1–2 minutes or less.': 'Membuat alat untuk merekap tugas yang telah saya selesaikan menjadi timesheet sebagai laporan ke perusahaan melalui Odoo JSON-RPC. Memproses file Excel/PDF dan mengekspor CSV/Excel. Mengurangi waktu input timesheet Odoo dari sekitar 5–10 menit menjadi 1–2 menit atau kurang.',
     'Personal Project · Billiards Tournament Organizer': 'Proyek Pribadi · Penyelenggara Turnamen Biliar',
     'Built a personal web application for a billiards tournament organizer. Supports tournament setup, participant and payment tracking, and tournament brackets with scores and winner advancement. Uses JavaScript, React, Firebase, browser storage, and Excel/PDF export. Organizer Instagram: @rnr.intan.': 'Membangun aplikasi web pribadi untuk penyelenggara turnamen biliar. Mendukung pengaturan turnamen, pelacakan peserta dan pembayaran, serta bagan turnamen dengan skor dan kelanjutan pemenang. Menggunakan JavaScript, React, Firebase, penyimpanan browser, dan ekspor Excel/PDF. Instagram penyelenggara: @rnr.intan.'
   };
@@ -184,7 +184,7 @@
       });
       attributes.forEach(({ element, name, original }) => element.setAttribute(name, translate(original, language)));
       if (selector) selector.value = language;
-      if (download) download.href = `${pdfForLanguage(language)}?v=2026112407`;
+      if (download) download.href = `${pdfForLanguage(language)}?v=2026112408`;
       root.dispatchEvent(new CustomEvent('languagechange', { detail: language }));
     }
 
