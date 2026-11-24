@@ -97,13 +97,16 @@ document.addEventListener('DOMContentLoaded', () => {
     cycler.style.transform = 'translateY(-8px)';
     setTimeout(() => {
       roleIdx = (roleIdx + 1) % roles.length;
-      cycler.textContent = roles[roleIdx];
+      cycler.textContent = window.PortfolioI18n.translate(roles[roleIdx], window.PortfolioI18n.language);
       cycler.style.opacity = '1';
       cycler.style.transform = 'translateY(0)';
     }, 300);
   }
 
   cycler.style.transition = 'opacity .3s ease, transform .3s ease';
+  window.addEventListener('languagechange', () => {
+    cycler.textContent = window.PortfolioI18n.translate(roles[roleIdx], window.PortfolioI18n.language);
+  });
   if (!reducedMotion.matches) setInterval(cycleRole, 2800);
 
   // ── Smooth scroll for hero CTA ────────────────────────────────
@@ -154,7 +157,9 @@ function initDraggableBadges() {
     let homeX = 0, homeY = 0;
 
     badge.style.cursor = 'grab';
-    badge.title = 'Drag me!';
+    const updateTitle = () => { badge.title = window.PortfolioI18n.translate('Drag me!', window.PortfolioI18n.language); };
+    updateTitle();
+    window.addEventListener('languagechange', updateTitle);
 
     const onStart = (cx, cy) => {
       const r = badge.getBoundingClientRect();
@@ -312,18 +317,25 @@ function initShareButton() {
   const btn      = document.getElementById('shareBtn');
   const labelEl  = document.getElementById('shareLabel');
   let resetTimer = null;
+  let currentLabel = 'Share';
 
   function setLabel(text, active) {
-    labelEl.textContent = text;
+    currentLabel = text;
+    labelEl.textContent = window.PortfolioI18n.translate(currentLabel, window.PortfolioI18n.language);
     btn.classList.toggle('copied', active);
     if (resetTimer) clearTimeout(resetTimer);
     if (active) {
       resetTimer = setTimeout(() => {
-        labelEl.textContent = 'Share';
+        currentLabel = 'Share';
+        labelEl.textContent = window.PortfolioI18n.translate(currentLabel, window.PortfolioI18n.language);
         btn.classList.remove('copied');
       }, 2000);
     }
   }
+
+  window.addEventListener('languagechange', () => {
+    labelEl.textContent = window.PortfolioI18n.translate(currentLabel, window.PortfolioI18n.language);
+  });
 
   btn.addEventListener('click', async () => {
     btn.classList.remove('pop');
@@ -332,8 +344,8 @@ function initShareButton() {
     btn.addEventListener('animationend', () => btn.classList.remove('pop'), { once: true });
 
     const shareData = {
-      title: 'Rabbani Ridho Ihsani — Portfolio',
-      text:  'Check out this portfolio by Rabbani Ridho Ihsani, Backend Developer!',
+      title: window.PortfolioI18n.translate('Rabbani Ridho Ihsani — Portfolio', window.PortfolioI18n.language),
+      text: window.PortfolioI18n.translate('Check out this portfolio by Rabbani Ridho Ihsani, Backend Developer!', window.PortfolioI18n.language),
       url:   window.location.href,
     };
 
