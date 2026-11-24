@@ -12,7 +12,8 @@ Clearly distinguish an independently owned project from an employer's internal t
 - Describe Rack n Roll only with verified features: tournament setup, participant and payment tracking, and tournament brackets.
 - Add a portfolio project card for Rack n Roll linking to `https://ridhoihsanii.github.io/racknroll/`.
 - Do not list technologies until they are verified.
-- Add a screen-only `Download PDF` button to the CV page, linked to the existing updated PDF in the same assets folder, with the `download` attribute so visitors can save it locally.
+- Regenerate `assets/cv-rabbani-ridho-ihsani.pdf` from the updated CV HTML so the downloadable file includes Rack n Roll.
+- Add a screen-only `Download PDF` button to the CV page, linked to the regenerated PDF in the same assets folder, with the `download` attribute so visitors can save it locally.
 - Hide the download button when printing the CV.
 
 ## Delivery details
