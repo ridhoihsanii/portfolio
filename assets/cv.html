@@ -357,10 +357,36 @@
       text-align: justify;
     }
 
+    .cv-toolbar {
+      max-width: 210mm;
+      margin: 0 auto 12px;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .download-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 16px;
+      border-radius: 6px;
+      background: var(--accent);
+      color: var(--white);
+      font-size: .85rem;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .download-button:hover { background: #4338ca; }
+    .download-button:focus-visible { outline: 3px solid #a5b4fc; outline-offset: 3px; }
+
     /* ── Print ─────────────────────────────────────────────── */
+    @page { size: A4; margin: 0; }
+
     @media print {
       html { font-size: 12px; }
       body { background: white; }
+      .cv-toolbar { display: none; }
       .page {
         width: 100%;
         box-shadow: none;
@@ -423,6 +449,13 @@
   </style>
 </head>
 <body>
+<div class="cv-toolbar">
+  <a
+    class="download-button"
+    href="cv-rabbani-ridho-ihsani.pdf?v=20261124"
+    download="Rabbani-Ridho-Ihsani-CV.pdf"
+  >Download PDF</a>
+</div>
 <div class="page">
 
   <!-- ══ HEADER ══════════════════════════════════════════════ -->
@@ -564,12 +597,12 @@
 
     <!-- Projects -->
     <section>
-      <div class="section-title">Key Projects</div>
+      <div class="section-title">Personal &amp; Professional Projects</div>
 
       <div class="project-item">
         <div class="project-title-row">
           <span class="project-name">Timesheet Automation Tool</span>
-          <span style="font-size:.7rem;color:#94a3b8;">Private · Internal Tool</span>
+          <span style="font-size:.7rem;color:#94a3b8;">Professional Project · Internal Tool</span>
         </div>
         <p class="project-desc">
           Developed an internal application to automate timesheet preparation and submission to Odoo ERP.
@@ -580,6 +613,20 @@
         <div class="project-stack">
           <span>Java</span><span>Spring Boot</span><span>Odoo JSON-RPC</span>
           <span>Excel/PDF Processing</span><span>Docker</span>
+        </div>
+      </div>
+
+      <div class="project-item">
+        <div class="project-title-row">
+          <span class="project-name">Rack n Roll</span>
+          <span style="font-size:.7rem;color:#94a3b8;">Personal Project · Billiards Tournament Organizer</span>
+        </div>
+        <p class="project-desc">
+          A personal web application built for a billiards tournament organizer to set up tournaments,
+          manage participant registrations and payment status, and view tournament brackets.
+        </p>
+        <div class="project-stack">
+          <a href="https://ridhoihsanii.github.io/racknroll/" target="_blank" rel="noopener">Open Rack n Roll</a>
         </div>
       </div>
     </section>
