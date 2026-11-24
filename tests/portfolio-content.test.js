@@ -139,3 +139,26 @@ test('CV mobile body text remains readable', () => {
 test('portfolio does not mislabel the Timesheet Automation repository as private', () => {
   assert.doesNotMatch(projects, /title="Private repository"/);
 });
+
+test('language selector offers English and Indonesian beside the theme control', () => {
+  const nav = index.match(/<div class="nav-actions">([\s\S]*?)<\/div>/)?.[1];
+  assert.ok(nav);
+  assert.match(nav, /id="themeToggle"[\s\S]*?id="languageSelector"/);
+  assert.match(nav, /<option value="en">English<\/option>/);
+  assert.match(nav, /<option value="id">Indonesia<\/option>/);
+});
+
+test('translations support portfolio, CV and interactive content', () => {
+  const file = path.join(root, 'i18n.js');
+  assert.ok(fs.existsSync(file), 'translation module should exist');
+  const { translate, pdfForLanguage, resolveLanguage } = require(file);
+  assert.equal(translate('About Me', 'id'), 'Tentang Saya');
+  assert.equal(translate('Download PDF', 'id'), 'Unduh PDF');
+  assert.equal(translate('Shared!', 'id'), 'Dibagikan!');
+  assert.equal(translate('About Me', 'en'), 'About Me');
+  assert.equal(translate('Spring Boot', 'id'), 'Spring Boot');
+  assert.equal(resolveLanguage('id'), 'id');
+  assert.equal(resolveLanguage('unexpected'), 'en');
+  assert.match(pdfForLanguage('id'), /-id\.pdf/);
+  assert.match(pdfForLanguage('en'), /ihsani\.pdf/);
+});

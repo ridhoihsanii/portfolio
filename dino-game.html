@@ -1,4 +1,4 @@
-﻿<html>
+﻿<html lang="en">
 
 <head>
 <title>T-Rex Game</title>
@@ -871,10 +871,19 @@
     restartSourceWidth *= 2;
     restartSourceHeight *= 2;
     }
-    // Game over text from sprite.
-    this.canvasCtx.drawImage(this.textSprite,
-    textSourceX, textSourceY, textSourceWidth, textSourceHeight,
-    textTargetX, textTargetY, textTargetWidth, textTargetHeight);
+    // The original English message is part of the sprite.
+    if (localStorage.getItem('portfolio_language') === 'id') {
+      this.canvasCtx.save();
+      this.canvasCtx.font = 'bold 12px monospace';
+      this.canvasCtx.textAlign = 'center';
+      this.canvasCtx.fillStyle = '#535353';
+      this.canvasCtx.fillText('PERMAINAN SELESAI', centerX, textTargetY + 10);
+      this.canvasCtx.restore();
+    } else {
+      this.canvasCtx.drawImage(this.textSprite,
+      textSourceX, textSourceY, textSourceWidth, textSourceHeight,
+      textTargetX, textTargetY, textTargetWidth, textTargetHeight);
+    }
     // Restart button.
     this.canvasCtx.drawImage(this.restartImg, 0, 0,
     restartSourceWidth, restartSourceHeight,
@@ -882,6 +891,18 @@
     dimensions.RESTART_HEIGHT);
     }
     };
+    document.documentElement.lang = localStorage.getItem('portfolio_language') === 'id' ? 'id' : 'en';
+    window.addEventListener('storage', function(event) {
+      if (event.key !== 'portfolio_language') return;
+      document.documentElement.lang = event.newValue === 'id' ? 'id' : 'en';
+      var runner = Runner.instance_;
+      if (runner && runner.crashed && runner.gameOverPanel) {
+        var panel = runner.gameOverPanel;
+        var y = Math.round((panel.canvasDimensions.HEIGHT - 25) / 3);
+        panel.canvasCtx.clearRect(0, y - 2, panel.canvasDimensions.WIDTH, 16);
+        panel.draw();
+      }
+    });
     //******************************************************************************
     /**
     * Check for a collision.
