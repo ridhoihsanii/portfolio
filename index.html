@@ -19,7 +19,7 @@
   <!-- AOS Animations -->
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
 
-  <link rel="stylesheet" href="style.css?v=20261124" />
+  <link rel="stylesheet" href="style.css?v=2026112403" />
 </head>
 <body>
 
@@ -43,10 +43,10 @@
         <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
           <i class="fa-solid fa-moon" id="themeIcon"></i>
         </button>
-        <a href="assets/cv.html?v=2026112402" target="_blank" rel="noopener" class="btn-nav-cv">
+        <a href="assets/cv.html?v=2026112403" target="_blank" rel="noopener" class="btn-nav-cv">
           <i class="fa-solid fa-download"></i> CV
         </a>
-        <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-controls="navLinks" aria-expanded="false">
           <span></span><span></span><span></span>
         </button>
       </div>
@@ -69,7 +69,7 @@
         </h1>
         <div class="hero-roles">
           <span class="role-prefix">I build</span>
-          <span class="role-cycler" id="roleCycler">Java Backend Engineer</span>
+          <span class="role-cycler" id="roleCycler">Backend Systems</span>
         </div>
         <p class="hero-desc">
           Java Backend Engineer with 4+ years of experience at PT Tri Adi Bersama (Anteraja).
@@ -80,8 +80,8 @@
           <a href="#contact" class="btn-primary">
             <i class="fa-solid fa-paper-plane"></i> Get In Touch
           </a>
-          <a href="assets/cv.html?v=2026112402" target="_blank" rel="noopener" class="btn-secondary">
-            <i class="fa-solid fa-file-arrow-down"></i> Download CV
+          <a href="assets/cv.html?v=2026112403" target="_blank" rel="noopener" class="btn-secondary">
+            <i class="fa-solid fa-file-arrow-down"></i> View CV
           </a>
         </div>
         <div class="hero-socials">
@@ -159,7 +159,7 @@
               <a href="https://linkedin.com/in/ridhoihsanii" target="_blank" rel="noopener">linkedin.com/in/ridhoihsanii</a>
             </div>
           </div>
-          <a href="assets/cv.html?v=2026112402" target="_blank" rel="noopener" class="btn-primary" style="display:inline-flex;margin-top:1.5rem;">
+          <a href="assets/cv.html?v=2026112403" target="_blank" rel="noopener" class="btn-primary" style="display:inline-flex;margin-top:1.5rem;">
             <i class="fa-solid fa-file-arrow-down"></i> View Full Resume
           </a>
         </div>
@@ -266,8 +266,8 @@
             <ul class="job-duties">
               <li>Designed, developed, and maintained Java and Spring Boot backend services supporting multiple warehouse operational systems</li>
               <li>Built RESTful APIs from scratch, implementing business logic, CRUD operations, and scheduler-triggered processes for warehouse workflows</li>
-              <li>Implemented Redis Cache to reduce repetitive database access and improve response times, and used Redis Queue to manage asynchronous API processing</li>
-              <li>Developed Apache Kafka producers and consumers and configured topics for asynchronous, event-driven processing across internal and external systems</li>
+              <li>Used Redis caching to reduce endpoint response time from 800 ms or more under high load to approximately 250 ms, applied Redis locks to reduce duplicate processing, and used Redis Queue for asynchronous API processing</li>
+              <li>Developed Apache Kafka producers, consumers, and topics to move synchronous processing into asynchronous workflows, allowing endpoints to respond sooner while backend work continues in the background</li>
               <li>Created backend unit tests using JUnit and Mockito</li>
               <li>Investigated and resolved production issues to help maintain application stability and continuity of warehouse operations</li>
               <li>Worked with QA, product, and cross-functional teams to deliver and maintain backend solutions</li>
@@ -284,7 +284,7 @@
       <p class="exp-note" data-aos="fade-up">
         <i class="fa-solid fa-circle-info"></i>
         For the complete work history and details, please
-        <a href="assets/cv.html?v=2026112402" target="_blank" rel="noopener">download the full CV</a>.
+        <a href="assets/cv.html?v=2026112403" target="_blank" rel="noopener">view the full CV</a>.
       </p>
     </div>
   </section>
@@ -314,6 +314,7 @@
             It parses Excel and PDF files in predefined formats, submits processed data through the
             Odoo JSON-RPC API, and supports structured processing with CSV and Excel output. Source code
             and live demonstrations are not public because the tool is internal and sensitive.
+            It reduced Odoo timesheet input from approximately 5–10 minutes to 1–2 minutes or less.
           </p>
           <div class="project-tech">
             <span>Java</span><span>Spring Boot</span><span>Odoo JSON-RPC</span>
@@ -327,7 +328,7 @@
               <i class="fa-solid fa-check-circle"></i> Odoo JSON-RPC timesheet submission
             </div>
             <div class="highlight">
-              <i class="fa-solid fa-check-circle"></i> Less repetitive manual entry
+              <i class="fa-solid fa-check-circle"></i> Approximately 5–10 minutes reduced to 1–2 minutes or less
             </div>
             <div class="highlight">
               <i class="fa-solid fa-check-circle"></i> CSV and Excel output
@@ -339,7 +340,7 @@
           <div class="project-card-top">
             <div class="project-icon"><i class="fa-solid fa-trophy"></i></div>
             <div class="project-links">
-              <a href="https://ridhoihsanii.github.io/racknroll/" target="_blank" rel="noopener" title="Open Rack n Roll">
+              <a href="https://ridhoihsanii.github.io/racknroll/" target="_blank" rel="noopener" class="project-link" aria-label="Open Rack n Roll">
                 <i class="fa-solid fa-arrow-up-right-from-square"></i>
               </a>
             </div>
@@ -444,7 +445,7 @@
         </div>
       </div>
       <div class="game-wrapper" data-aos="fade-up" data-aos-delay="150">
-        <iframe id="dinoGameFrame" src="dino-game.html" scrolling="no" allowtransparency="true"></iframe>
+        <iframe id="dinoGameFrame" src="dino-game.html" title="Dino Game" scrolling="no" allowtransparency="true"></iframe>
         <div class="game-play-overlay" id="gamePlayOverlay">
           <button class="game-play-btn" id="gamePlayBtn" aria-label="Play Dino Game">
             <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
@@ -548,6 +549,6 @@
 
   <!-- AOS -->
   <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-  <script src="script.js"></script>
+  <script src="script.js?v=2026112403"></script>
 </body>
 </html>
