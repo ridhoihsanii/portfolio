@@ -6,6 +6,7 @@ const test = require('node:test');
 const root = path.resolve(__dirname, '..');
 const index = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
 const cv = fs.readFileSync(path.join(root, 'assets', 'cv.html'), 'utf8');
+const script = fs.readFileSync(path.join(root, 'script.js'), 'utf8');
 const projects = index.match(
   /<section class="section section-alt" id="projects">([\s\S]*?)<\/section>/
 )?.[1];
@@ -46,4 +47,28 @@ test('CV header offers the only navigation action as a PDF download', () => {
 test('CV print layout uses A4 and hides the download control', () => {
   assert.match(cv, /@page\s*\{\s*size:\s*A4;\s*margin:\s*0;\s*\}/);
   assert.match(cv, /@media print\s*\{[\s\S]*?\.download-button\s*\{\s*display:\s*none;/);
+});
+
+test('portfolio and CV show the approved performance achievements', () => {
+  for (const document of [index, cv]) {
+    assert.match(document, /800\s*ms[\s\S]*?250\s*ms/i);
+    assert.match(document, /Redis locks?[\s\S]*?duplicate processing/i);
+    assert.match(document, /5[–-]10 minutes[\s\S]*?1[–-]2 minutes/i);
+    assert.match(document, /Redis Queue/i);
+    assert.match(document, /Kafka[\s\S]*?topics/i);
+  }
+});
+
+test('mobile menu communicates its state and game iframe has a title', () => {
+  assert.match(index, /id="hamburger"[^>]*aria-controls="navLinks"[^>]*aria-expanded="false"/);
+  assert.match(index, /<iframe[^>]+title="Dino Game"/);
+  assert.match(script, /setAttribute\('aria-expanded'/);
+});
+
+test('portfolio initializes even if the animation library is unavailable', () => {
+  assert.match(script, /typeof AOS\s*!==?\s*['"]undefined['"]/);
+});
+
+test('hero role cycler starts with something that can be built', () => {
+  assert.doesNotMatch(index, /<span class="role-cycler"[^>]*>Java Backend Engineer<\/span>/);
 });

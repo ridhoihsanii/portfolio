@@ -3,12 +3,19 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   // ── AOS ─────────────────────────────────────────────────────
-  AOS.init({
-    duration: 700,
-    easing: 'ease-out-cubic',
-    once: true,
-    offset: 60
-  });
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  if (typeof AOS !== 'undefined') {
+    AOS.init({
+      duration: 700,
+      easing: 'ease-out-cubic',
+      once: true,
+      offset: 60,
+      disable: () => reducedMotion.matches
+    });
+  } else {
+    console.warn('Scroll animations unavailable: AOS failed to load.');
+    document.querySelectorAll('[data-aos]').forEach(element => element.removeAttribute('data-aos'));
+  }
 
   // ── Dark Mode ────────────────────────────────────────────────
   const html       = document.documentElement;
@@ -57,22 +64,31 @@ document.addEventListener('DOMContentLoaded', () => {
   const hamburger = document.getElementById('hamburger');
   const navMenu   = document.getElementById('navLinks');
 
-  hamburger.addEventListener('click', () => {
-    navMenu.classList.toggle('open');
-  });
+  function setMenuOpen(open) {
+    navMenu.classList.toggle('open', open);
+    hamburger.setAttribute('aria-expanded', String(open));
+  }
+
+  hamburger.addEventListener('click', () => setMenuOpen(!navMenu.classList.contains('open')));
 
   navMenu.querySelectorAll('.nav-link').forEach(l => {
-    l.addEventListener('click', () => navMenu.classList.remove('open'));
+    l.addEventListener('click', () => setMenuOpen(false));
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && navMenu.classList.contains('open')) {
+      setMenuOpen(false);
+      hamburger.focus();
+    }
   });
 
   // ── Back to Top ───────────────────────────────────────────────
   const backToTop = document.getElementById('backToTop');
   backToTop.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: reducedMotion.matches ? 'auto' : 'smooth' });
   });
 
   // ── Role Cycler ───────────────────────────────────────────────
-  const roles    = ['Java Backend Engineer', 'RESTful APIs', 'Event-Driven Systems', 'Warehouse Systems'];
+  const roles    = ['Backend Systems', 'RESTful APIs', 'Event-Driven Systems', 'Warehouse Systems'];
   let   roleIdx  = 0;
   const cycler   = document.getElementById('roleCycler');
 
@@ -88,15 +104,16 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   cycler.style.transition = 'opacity .3s ease, transform .3s ease';
-  setInterval(cycleRole, 2800);
+  if (!reducedMotion.matches) setInterval(cycleRole, 2800);
 
   // ── Smooth scroll for hero CTA ────────────────────────────────
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', e => {
-      const target = document.querySelector(a.getAttribute('href'));
+      const id = a.getAttribute('href').slice(1);
+      const target = id && document.getElementById(id);
       if (target) {
         e.preventDefault();
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        target.scrollIntoView({ behavior: reducedMotion.matches ? 'auto' : 'smooth', block: 'start' });
       }
     });
   });
@@ -104,6 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ── Hover tilt on project cards ───────────────────────────────
   document.querySelectorAll('.project-card:not(.project-card-placeholder)').forEach(card => {
     card.addEventListener('mousemove', e => {
+      if (reducedMotion.matches) return;
       const rect = card.getBoundingClientRect();
       const x = (e.clientX - rect.left) / rect.width  - 0.5;
       const y = (e.clientY - rect.top)  / rect.height - 0.5;
