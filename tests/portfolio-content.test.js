@@ -161,6 +161,7 @@ test('language selector offers English and Indonesian beside the theme control',
   const nav = index.match(/<div class="nav-actions">([\s\S]*?)<\/div>/)?.[1];
   assert.ok(nav);
   assert.match(nav, /id="themeToggle"[\s\S]*?id="languageSelector"/);
+  assert.match(nav, /id="languageLabel"[^>]*aria-hidden="true"[^>]*>ENG<\/span>/);
   assert.match(nav, /<option value="en">English<\/option>/);
   assert.match(nav, /<option value="id">Indonesia<\/option>/);
 });
