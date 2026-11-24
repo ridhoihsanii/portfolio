@@ -12,14 +12,31 @@ const projects = index.match(
   /<section class="section section-alt" id="projects">([\s\S]*?)<\/section>/
 )?.[1];
 
-test('CV distinguishes internal work from the personal Rack n Roll project', () => {
+test('CV distinguishes the reporting tool from the Rack n Roll project', () => {
   assert.match(cv, /Personal &amp; Professional Projects/);
   assert.match(cv, /Timesheet Automation Tool/);
-  assert.match(cv, /Professional Project\s*[·|—]\s*Internal Tool/);
+  assert.match(cv, /Individual Tool\s*[·|—]\s*Work Reporting/);
   assert.match(cv, /Rack n Roll/);
   assert.match(cv, /Personal Project\s*[·|—]\s*Billiards Tournament Organizer/);
   assert.match(cv, /participant.{0,30}payment|payment.{0,30}participant/i);
   assert.match(cv, /tournament brackets/i);
+});
+
+test('portfolio and CV describe Odoo as reporting completed tasks, not warehouse operations', () => {
+  const { translate } = require('../i18n.js');
+  const text = html => html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+  const hero = text(index.match(/<p class="hero-desc">([\s\S]*?)<\/p>/)[1]);
+  const project = text(index.match(/<h3 class="project-title">Timesheet Automation Tool<\/h3>\s*<p class="project-desc">([\s\S]*?)<\/p>/)[1]);
+  const cvProject = text(cv.match(/<span class="project-name">Timesheet Automation Tool<\/span>[\s\S]*?<p class="project-desc">([\s\S]*?)<\/p>/)[1]);
+  for (const description of [project, cvProject]) {
+    assert.match(description, /my completed tasks/i);
+    assert.match(description, /company reporting|reporting to my company/i);
+    assert.match(description, /Odoo/i);
+    assert.match(translate(description, 'id'), /tugas yang telah saya selesaikan/i);
+    assert.match(translate(description, 'id'), /laporan (?:ke|kepada) perusahaan/i);
+  }
+  assert.doesNotMatch(hero, /Odoo integrations that support warehouse operations/i);
+  assert.match(translate(hero, 'id'), /pelaporan timesheet/i);
 });
 
 test('portfolio includes a linked Rack n Roll card with verified features', () => {
