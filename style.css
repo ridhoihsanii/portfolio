@@ -1760,14 +1760,22 @@ ul { list-style: none; }
   .projects-grid { grid-template-columns: 1fr; }
 
   /* Hero text fixes */
-  .hero-container { padding: 3rem 1.25rem; }
+  .hero-container {
+    width: 100%;
+    min-width: 0;
+    grid-template-columns: minmax(0, 1fr);
+    padding: 3rem 1.25rem;
+  }
+  .hero-text { min-width: 0; }
+  .hero-photo-wrap { padding: 15px 0; }
   .hero-desc {
-    text-align: left;
+    text-align: center;
     max-width: 100%;
     font-size: .95rem;
     overflow-wrap: break-word;
   }
   .hero-roles {
+    min-width: 0;
     justify-content: center;
     flex-wrap: wrap;
     font-size: 1.05rem;

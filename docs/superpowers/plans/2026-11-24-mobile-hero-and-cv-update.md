@@ -26,23 +26,15 @@
 - Consumes: Existing `.hero-container`, `.hero-text`, `.hero-photo-wrap`, `.hero-roles`, `.hero-desc`, `.hero-cta`, and `.hero-socials` elements.
 - Produces: A centered, viewport-bounded hero at mobile widths; no changes to desktop layout.
 
-- [ ] **Step 1: Capture the failing mobile layout**
+- [x] **Step 1: Capture the failing mobile layout**
 
-Start the static site from the repository root:
+Serve the repository and inspect the hero at an explicit 375px iframe viewport with a temporary browser harness. The check fails before the CSS change, showing `.hero-container` extending to 465px and the description left-aligned.
 
 ```powershell
 python -m http.server 8765
 ```
 
-In another PowerShell terminal, capture the current 375px layout with installed Chrome:
-
-```powershell
-& 'C:\Program Files\Google\Chrome\Application\chrome.exe' --headless=new --disable-gpu --window-size=375,900 --screenshot="$env:TEMP\portfolio-before-375.png" http://127.0.0.1:8765/index.html
-```
-
-Inspect the screenshot and confirm the current hero text or CTA extends beyond the viewport / is not centered.
-
-- [ ] **Step 2: Apply a mobile-only width and alignment correction**
+- [x] **Step 2: Apply a mobile-only width and alignment correction**
 
 Within the existing `@media (max-width: 768px)` rules in `style.css`:
 
@@ -53,20 +45,13 @@ Within the existing `@media (max-width: 768px)` rules in `style.css`:
 
 Do not add global overflow clipping to hide the symptom.
 
-- [ ] **Step 3: Verify mobile and desktop screenshots**
+- [x] **Step 3: Verify mobile and desktop layout**
 
-Capture screenshots at 320px, 375px, and 596px viewport widths, then at 1280px:
+Run a browser layout check at 320px, 375px, 596px, and 768px; each reports `PASS: hero fits and is centered`. Check the 1280px desktop layout for its original two-column grid and description alignment. Capture and inspect rendered screenshots at 375px, 596px, and 1280px with a temporary Chrome DevTools Protocol harness; remove the harness and screenshot artifacts after verification.
 
-```powershell
-& 'C:\Program Files\Google\Chrome\Application\chrome.exe' --headless=new --disable-gpu --window-size=320,900 --screenshot="$env:TEMP\portfolio-mobile-320.png" http://127.0.0.1:8765/index.html
-& 'C:\Program Files\Google\Chrome\Application\chrome.exe' --headless=new --disable-gpu --window-size=375,900 --screenshot="$env:TEMP\portfolio-mobile-375.png" http://127.0.0.1:8765/index.html
-& 'C:\Program Files\Google\Chrome\Application\chrome.exe' --headless=new --disable-gpu --window-size=596,900 --screenshot="$env:TEMP\portfolio-mobile-596.png" http://127.0.0.1:8765/index.html
-& 'C:\Program Files\Google\Chrome\Application\chrome.exe' --headless=new --disable-gpu --window-size=1280,900 --screenshot="$env:TEMP\portfolio-desktop-1280.png" http://127.0.0.1:8765/index.html
-```
+Pass criteria: all hero content is visible and centered at mobile widths, the photo fits, no horizontal content is cut off, and the desktop composition remains unchanged.
 
-Inspect the resulting screenshots. Pass criteria: all hero content is visible and centered at mobile widths, the photo fits, no horizontal content is cut off, and the desktop composition remains unchanged.
-
-- [ ] **Step 4: Check the CSS diff**
+- [x] **Step 4: Check the CSS diff**
 
 Run:
 
@@ -81,13 +66,14 @@ Expected: no whitespace errors; only the responsive hero rules changed.
 **Files:**
 - Modify: `assets/cv.html`
 - Modify: `index.html`
+- Modify: `script.js`
 - Replace: `assets/cv-rabbani-ridho-ihsani.pdf` with `C:\Users\RabbaniRidhoIhsani\Downloads\CV_Rabbani_Ridho_Ihsani.pdf`
 
 **Interfaces:**
 - Consumes: The supplied updated CV as the source of truth.
 - Produces: An updated HTML CV, updated repeated portfolio copy, and a matching downloadable PDF at the existing asset path.
 
-- [ ] **Step 1: Update the HTML CV to the supplied facts**
+- [x] **Step 1: Update the HTML CV to the supplied facts**
 
 In `assets/cv.html`, retain the current page structure and responsive/print CSS, but update the CV content:
 
@@ -101,11 +87,11 @@ In `assets/cv.html`, retain the current page structure and responsive/print CSS,
 
 Remove unsupported old skill groups, work-type/availability claims, project features, and coursework. Keep verified contact information already present.
 
-- [ ] **Step 2: Synchronize repeated content in the portfolio**
+- [x] **Step 2: Synchronize repeated content in the portfolio**
 
-In `index.html`, update the hero role/description and the existing About, Skills, Experience, Timesheet Automation Tool, and Education text to match the supplied CV. Remove obsolete skills and unsupported course/project claims; do not introduce details not stated by the CV. Keep the existing section structure and links to `assets/cv.html`.
+In `index.html`, update the hero role/description and the existing About, Skills, Experience, Timesheet Automation Tool, and Education text to match the supplied CV. Replace unsupported skill percentage bars with technology tags grouped by the CV's skill categories, remove obsolete skills and unsupported course/project claims, and update the portfolio description if it refers to the removed skill bars. In `script.js`, restrict the rotating hero roles to facts supported by the supplied CV and remove the now-unused skill-bar observer. Do not introduce details not stated by the CV. Keep the existing section structure and links to `assets/cv.html`.
 
-- [ ] **Step 3: Replace the PDF asset**
+- [x] **Step 3: Replace the PDF asset**
 
 From the repository root, copy the supplied file over the existing public CV PDF:
 
@@ -113,7 +99,7 @@ From the repository root, copy the supplied file over the existing public CV PDF
 Copy-Item 'C:\Users\RabbaniRidhoIhsani\Downloads\CV_Rabbani_Ridho_Ihsani.pdf' 'assets\cv-rabbani-ridho-ihsani.pdf' -Force
 ```
 
-- [ ] **Step 4: Verify the PDF and content synchronization**
+- [x] **Step 4: Verify the PDF and content synchronization**
 
 Extract the replacement PDF text:
 
@@ -134,18 +120,15 @@ Test-Path 'assets\cv.html'
 Test-Path 'assets\cv-rabbani-ridho-ihsani.pdf'
 ```
 
-- [ ] **Step 5: Verify the CV page at mobile and print sizes**
+- [x] **Step 5: Verify the CV page at mobile and print sizes**
 
 Using the local server from Task 1, capture the refreshed CV at mobile width and render its print stylesheet:
 
-```powershell
-& 'C:\Program Files\Google\Chrome\Application\chrome.exe' --headless=new --disable-gpu --window-size=375,900 --screenshot="$env:TEMP\portfolio-cv-mobile.png" http://127.0.0.1:8765/assets/cv.html
-& 'C:\Program Files\Google\Chrome\Application\chrome.exe' --headless=new --disable-gpu --print-to-pdf="$env:TEMP\portfolio-cv-print.pdf" http://127.0.0.1:8765/assets/cv.html
-```
+The CV layout check at 375px reports `PASS: CV fits 375px`. Chrome DevTools `Page.printToPDF` produced a PDF; `pdftotext -layout` confirmed the updated role, summary, skills, project, degree, and languages.
 
 Inspect the mobile screenshot and confirm the content remains readable without horizontal clipping. Confirm the print PDF was created and retains the CV content and layout.
 
-- [ ] **Step 6: Run final repository checks**
+- [x] **Step 6: Run final repository checks**
 
 Run:
 
