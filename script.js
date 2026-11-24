@@ -71,23 +71,8 @@ document.addEventListener('DOMContentLoaded', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
-  // ── Skill bar animation via IntersectionObserver ─────────────
-  const skillFills = document.querySelectorAll('.skill-fill');
-
-  const skillObs = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        const fill = e.target;
-        fill.style.width = fill.dataset.w + '%';
-        skillObs.unobserve(fill);
-      }
-    });
-  }, { threshold: 0.2 });
-
-  skillFills.forEach(f => skillObs.observe(f));
-
   // ── Role Cycler ───────────────────────────────────────────────
-  const roles    = ['Backend Systems', 'Automation Tools', 'Clean Web Apps', 'Java Solutions'];
+  const roles    = ['Java Backend Engineer', 'RESTful APIs', 'Event-Driven Systems', 'Warehouse Systems'];
   let   roleIdx  = 0;
   const cycler   = document.getElementById('roleCycler');
 
