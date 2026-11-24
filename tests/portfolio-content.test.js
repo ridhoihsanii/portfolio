@@ -16,7 +16,6 @@ test('CV distinguishes internal work from the personal Rack n Roll project', () 
   assert.match(cv, /Professional Project\s*[·|—]\s*Internal Tool/);
   assert.match(cv, /Rack n Roll/);
   assert.match(cv, /Personal Project\s*[·|—]\s*Billiards Tournament Organizer/);
-  assert.match(cv, /href="https:\/\/ridhoihsanii\.github\.io\/racknroll\/"/);
   assert.match(cv, /participant.{0,30}payment|payment.{0,30}participant/i);
   assert.match(cv, /tournament brackets/i);
 });
@@ -31,12 +30,20 @@ test('portfolio includes a linked Rack n Roll card with verified features', () =
   assert.match(projects, /tournament brackets/i);
 });
 
-test('CV offers an on-screen download of the updated PDF but hides the control in print', () => {
-  const toolbar = cv.match(/<div class="cv-toolbar">([\s\S]*?)<\/div>/)?.[1];
-  assert.ok(toolbar, 'the CV toolbar should exist');
-  assert.match(toolbar, /href="cv-rabbani-ridho-ihsani\.pdf\?v=\d{8}"/);
-  assert.match(toolbar, /download="Rabbani-Ridho-Ihsani-CV\.pdf"/);
-  assert.match(toolbar, />Download PDF</);
+test('CV header offers the only navigation action as a PDF download', () => {
+  const body = cv.match(/<body>([\s\S]*?)<\/body>/)?.[1];
+  const header = body?.match(/<header class="cv-header">([\s\S]*?)<\/header>/)?.[1];
+  assert.ok(header, 'the CV header should exist');
+  const links = [...body.matchAll(/<a\b[^>]*>[\s\S]*?<\/a>/g)];
+  assert.equal(links.length, 1, 'only the download link should be present');
+  assert.ok(header.includes(links[0][0]), 'the download link should be inside the header');
+  assert.match(links[0][0], /href="cv-rabbani-ridho-ihsani\.pdf\?v=\d+"/);
+  assert.match(links[0][0], /download="Rabbani-Ridho-Ihsani-CV\.pdf"/);
+  assert.match(links[0][0], />Download PDF</);
+  assert.doesNotMatch(body, /cv-toolbar|Open Rack n Roll/);
+});
+
+test('CV print layout uses A4 and hides the download control', () => {
   assert.match(cv, /@page\s*\{\s*size:\s*A4;\s*margin:\s*0;\s*\}/);
-  assert.match(cv, /@media print\s*\{[\s\S]*?\.cv-toolbar\s*\{\s*display:\s*none;/);
+  assert.match(cv, /@media print\s*\{[\s\S]*?\.download-button\s*\{\s*display:\s*none;/);
 });

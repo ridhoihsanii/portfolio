@@ -50,6 +50,7 @@
 
     /* ── HEADER (full width) ───────────────────────────────── */
     .cv-header {
+      position: relative;
       grid-column: 1 / -1;
       background: linear-gradient(135deg, var(--navy) 60%, var(--navy-2) 100%);
       color: var(--white);
@@ -357,14 +358,10 @@
       text-align: justify;
     }
 
-    .cv-toolbar {
-      max-width: 210mm;
-      margin: 0 auto 12px;
-      display: flex;
-      justify-content: flex-end;
-    }
-
     .download-button {
+      position: absolute;
+      top: 12px;
+      right: 16px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -386,7 +383,7 @@
     @media print {
       html { font-size: 12px; }
       body { background: white; }
-      .cv-toolbar { display: none; }
+      .download-button { display: none; }
       .page {
         width: 100%;
         box-shadow: none;
@@ -398,6 +395,8 @@
     /* ── Screen preview ────────────────────────────────────── */
     @media screen {
       body { background: #e5e7eb; padding: 24px; }
+      .page { max-width: 100%; }
+      .cv-header { padding-top: 64px; }
     }
 
     /* ── Mobile responsive ─────────────────────────────────── */
@@ -417,7 +416,7 @@
         grid-column: 1;
         flex-direction: column;
         text-align: center;
-        padding: 24px 16px;
+        padding: 64px 16px 24px;
         gap: 14px;
       }
 
@@ -449,17 +448,15 @@
   </style>
 </head>
 <body>
-<div class="cv-toolbar">
-  <a
-    class="download-button"
-    href="cv-rabbani-ridho-ihsani.pdf?v=20261124"
-    download="Rabbani-Ridho-Ihsani-CV.pdf"
-  >Download PDF</a>
-</div>
 <div class="page">
 
   <!-- ══ HEADER ══════════════════════════════════════════════ -->
   <header class="cv-header">
+    <a
+      class="download-button"
+      href="cv-rabbani-ridho-ihsani.pdf?v=2026112402"
+      download="Rabbani-Ridho-Ihsani-CV.pdf"
+    >Download PDF</a>
     <img src="profile.jpeg" alt="Rabbani Ridho Ihsani" class="header-photo" />
     <div class="header-info">
       <h1 class="header-name">Rabbani Ridho Ihsani</h1>
@@ -625,9 +622,6 @@
           A personal web application built for a billiards tournament organizer to set up tournaments,
           manage participant registrations and payment status, and view tournament brackets.
         </p>
-        <div class="project-stack">
-          <a href="https://ridhoihsanii.github.io/racknroll/" target="_blank" rel="noopener">Open Rack n Roll</a>
-        </div>
       </div>
     </section>
 
