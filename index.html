@@ -19,7 +19,7 @@
   <!-- AOS Animations -->
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
 
-  <link rel="stylesheet" href="style.css?v=2026112403" />
+  <link rel="stylesheet" href="style.css?v=2026112404" />
 </head>
 <body>
 
@@ -43,7 +43,7 @@
         <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
           <i class="fa-solid fa-moon" id="themeIcon"></i>
         </button>
-        <a href="assets/cv.html?v=2026112403" target="_blank" rel="noopener" class="btn-nav-cv">
+        <a href="assets/cv.html?v=2026112404" target="_blank" rel="noopener" class="btn-nav-cv">
           <i class="fa-solid fa-download"></i> CV
         </a>
         <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-controls="navLinks" aria-expanded="false">
@@ -80,7 +80,7 @@
           <a href="#contact" class="btn-primary">
             <i class="fa-solid fa-paper-plane"></i> Get In Touch
           </a>
-          <a href="assets/cv.html?v=2026112403" target="_blank" rel="noopener" class="btn-secondary">
+          <a href="assets/cv.html?v=2026112404" target="_blank" rel="noopener" class="btn-secondary">
             <i class="fa-solid fa-file-arrow-down"></i> View CV
           </a>
         </div>
@@ -159,7 +159,7 @@
               <a href="https://linkedin.com/in/ridhoihsanii" target="_blank" rel="noopener">linkedin.com/in/ridhoihsanii</a>
             </div>
           </div>
-          <a href="assets/cv.html?v=2026112403" target="_blank" rel="noopener" class="btn-primary" style="display:inline-flex;margin-top:1.5rem;">
+          <a href="assets/cv.html?v=2026112404" target="_blank" rel="noopener" class="btn-primary" style="display:inline-flex;margin-top:1.5rem;">
             <i class="fa-solid fa-file-arrow-down"></i> View Full Resume
           </a>
         </div>
@@ -281,10 +281,29 @@
 
       </div>
 
+      <div class="case-studies">
+        <h3>Backend Case Studies</h3>
+        <p class="case-studies-note">Selected work described without internal system details.</p>
+        <div class="case-studies-grid">
+          <article class="case-study">
+            <h4>Faster responses with Redis</h4>
+            <p><strong>Problem:</strong> An endpoint took 800 ms or more to respond under high load.</p>
+            <p><strong>Solution:</strong> Used Redis caching to reduce repeated database access and Redis locks to reduce the risk of duplicate processing.</p>
+            <p><strong>Result:</strong> Response time decreased to approximately 250 ms under high load.</p>
+          </article>
+          <article class="case-study">
+            <h4>Asynchronous processing with Kafka</h4>
+            <p><strong>Problem:</strong> Synchronous backend processing delayed responses to the frontend.</p>
+            <p><strong>Solution:</strong> Developed Kafka producers and consumers to move processing into an asynchronous workflow.</p>
+            <p><strong>Result:</strong> Endpoints could respond sooner while backend processing continued in the background.</p>
+          </article>
+        </div>
+      </div>
+
       <p class="exp-note" data-aos="fade-up">
         <i class="fa-solid fa-circle-info"></i>
         For the complete work history and details, please
-        <a href="assets/cv.html?v=2026112403" target="_blank" rel="noopener">view the full CV</a>.
+        <a href="assets/cv.html?v=2026112404" target="_blank" rel="noopener">view the full CV</a>.
       </p>
     </div>
   </section>
@@ -312,8 +331,8 @@
           <p class="project-desc">
             An internal application that automates timesheet preparation and submission to Odoo ERP.
             It parses Excel and PDF files in predefined formats, submits processed data through the
-            Odoo JSON-RPC API, and supports structured processing with CSV and Excel output. Source code
-            and live demonstrations are not public because the tool is internal and sensitive.
+            Odoo JSON-RPC API, and supports structured processing with CSV and Excel output. The tool is
+            used for internal workflows; no live demonstration is provided here.
             It reduced Odoo timesheet input from approximately 5–10 minutes to 1–2 minutes or less.
           </p>
           <div class="project-tech">
@@ -348,8 +367,13 @@
           <h3 class="project-title">Rack n Roll</h3>
           <p class="project-desc">
             A personal web application built for a billiards tournament organizer to set up tournaments,
-            manage participant registrations and payment status, and view tournament brackets.
+            manage participant registrations and payment status, and view tournament brackets. The bracket
+            interface uses React, with browser storage and Firebase-based bracket preview sharing.
           </p>
+          <div class="project-tech">
+            <span>JavaScript</span><span>React</span><span>Firebase</span>
+            <span>Excel/PDF Export</span>
+          </div>
           <div class="project-highlights">
             <div class="highlight">
               <i class="fa-solid fa-check-circle"></i> Tournament setup
@@ -549,6 +573,6 @@
 
   <!-- AOS -->
   <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-  <script src="script.js?v=2026112403"></script>
+  <script src="script.js?v=2026112404"></script>
 </body>
 </html>

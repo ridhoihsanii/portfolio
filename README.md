@@ -8,7 +8,7 @@ Personal portfolio website built with HTML, CSS, and vanilla JavaScript. No buil
 Double-click `index.html`. All assets load from CDN.
 
 ### Option 2 — VS Code Live Server (Recommended)
-1. Open the `portfolio-ridho` folder in VS Code
+1. Open the repository folder in VS Code
 2. Install the **Live Server** extension (if not already installed)
 3. Right-click `index.html` → **"Open with Live Server"**
 4. The site opens at `http://127.0.0.1:5500`
@@ -27,13 +27,17 @@ npx serve .
 ## 📁 Structure
 
 ```
-portfolio-ridho/
+portfolio/
 ├── index.html                      # Main HTML file
 ├── style.css                       # All styles (CSS variables, dark/light)
 ├── script.js                       # JavaScript (dark mode, animations, nav)
+├── dino-game.html                  # Embedded Dino Game
+├── firebase-config.js              # Firebase initialization for likes
 ├── assets/
 │   ├── profile.jpeg                # Profile photo
-│   └── cv-rabbani-ridho-ihsani.pdf # Downloadable CV
+│   ├── cv.html                     # CV preview
+│   └── cv-rabbani-ridho-ihsani.pdf # Downloadable A4 CV
+├── tests/                          # Node.js regression tests
 └── README.md
 ```
 
@@ -49,6 +53,7 @@ portfolio-ridho/
 | Icons      | Font Awesome 6 (CDN)                              |
 | Fonts      | Plus Jakarta Sans + Fira Code (Google Fonts CDN)  |
 | Animations | AOS — Animate On Scroll (CDN)                     |
+| Likes      | Firebase Realtime Database (CDN), with local fallback |
 
 > All CDN dependencies load from the internet. An internet connection is required on first load.
 > Subsequent loads are cached by the browser.
@@ -61,13 +66,14 @@ portfolio-ridho/
 - ✅ Fully responsive (mobile, tablet, desktop)
 - ✅ Smooth scrolling + active nav highlighting
 - ✅ Scroll reveal animations (AOS)
-- ✅ Animated skill progress bars (trigger on scroll)
+- ✅ Categorized skill tags and backend case studies
 - ✅ Role text cycler with fade animation
 - ✅ 3D tilt hover on project cards
 - ✅ Floating badges on hero photo
 - ✅ Back-to-top button
-- ✅ Download CV button
-- ✅ Contact form (mailto)
+- ✅ CV preview and PDF download
+- ✅ Contact links for email, LinkedIn, and GitHub
+- ✅ Dino Game and like/share controls
 - ✅ SEO meta tags
 
 ---
@@ -92,6 +98,15 @@ Font Awesome 6.5.0   https://cdnjs.cloudflare.com/
 Plus Jakarta Sans    https://fonts.googleapis.com/
 Fira Code            https://fonts.googleapis.com/
 AOS 2.3.4            https://unpkg.com/aos@2.3.4/
+Firebase 10.12.2     https://www.gstatic.com/firebasejs/
 ```
 
 No npm install needed.
+
+## Testing
+
+Run the regression suite with Node.js:
+
+```bash
+node --test
+```

@@ -287,7 +287,8 @@ function initLikeButton() {
       if (liked) spawnParticles();
 
       // Increment/decrement atomik — aman dari race condition
-      likesRef.transaction(current => (current || 0) + (liked ? 1 : -1 < 0 ? 0 : -1));
+      const change = liked ? 1 : -1;
+      likesRef.transaction(current => Math.max(0, (current || 0) + change));
     });
 
   } else {
