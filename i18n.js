@@ -173,6 +173,7 @@
       });
     });
     const selector = document.getElementById('languageSelector');
+    const languageLabel = document.getElementById('languageLabel');
     const download = document.querySelector('.download-button');
 
     function applyLanguage(language) {
@@ -184,6 +185,7 @@
       });
       attributes.forEach(({ element, name, original }) => element.setAttribute(name, translate(original, language)));
       if (selector) selector.value = language;
+      if (languageLabel) languageLabel.textContent = language === 'id' ? 'INA' : 'ENG';
       if (download) download.href = `${pdfForLanguage(language)}?v=2026112408`;
       root.dispatchEvent(new CustomEvent('languagechange', { detail: language }));
     }
