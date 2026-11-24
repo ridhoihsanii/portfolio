@@ -1,4 +1,5 @@
 const assert = require('node:assert/strict');
+const { spawnSync } = require('node:child_process');
 const fs = require('node:fs');
 const path = require('node:path');
 const test = require('node:test');
@@ -65,6 +66,53 @@ test('CV header offers the only navigation action as a PDF download', () => {
 test('CV print layout uses A4 and hides the download control', () => {
   assert.match(cv, /@page\s*\{\s*size:\s*A4;\s*margin:\s*0;\s*\}/);
   assert.match(cv, /@media print\s*\{[\s\S]*?\.download-button\s*\{\s*display:\s*none;/);
+});
+
+test('CV includes the portfolio address as text without adding a preview link', () => {
+  assert.match(cv, /ridhoihsanii\.github\.io\/portfolio/);
+  assert.equal((cv.match(/<a\b/g) || []).length, 1);
+});
+
+test('portfolio provides language-specific ATS downloads separately from the CV preview', () => {
+  const { pdfForLanguage } = require('../i18n.js');
+  assert.match(index, /id="atsDownload"[^>]*download/);
+  assert.equal(pdfForLanguage('en', 'ats'), 'cv-rabbani-ridho-ihsani-ats.pdf');
+  assert.equal(pdfForLanguage('id', 'ats'), 'cv-rabbani-ridho-ihsani-id-ats.pdf');
+  assert.ok(fs.existsSync(path.join(root, 'assets', pdfForLanguage('en', 'ats'))));
+  assert.ok(fs.existsSync(path.join(root, 'assets', pdfForLanguage('id', 'ats'))));
+});
+
+test('ATS PDFs extract in logical reading order and fit one A4 page', t => {
+  const { pdfForLanguage } = require('../i18n.js');
+  for (const [language, headings] of [
+    ['en', ['Rabbani Ridho Ihsani', 'PROFESSIONAL SUMMARY', 'WORK EXPERIENCE', 'Reduced endpoint', 'PERSONAL & PROFESSIONAL PROJECTS', 'EDUCATION', 'TECHNICAL SKILLS']],
+    ['id', ['Rabbani Ridho Ihsani', 'RINGKASAN PROFESIONAL', 'PENGALAMAN KERJA', 'Mengurangi waktu respons', 'PROYEK PRIBADI & PROFESIONAL', 'PENDIDIKAN', 'KEAHLIAN TEKNIS']]
+  ]) {
+    const file = path.join(root, 'assets', pdfForLanguage(language, 'ats'));
+    const result = spawnSync('pdftotext', ['-enc', 'UTF-8', '-raw', file, '-'], { encoding: 'utf8' });
+    if (result.error && result.error.code === 'ENOENT') return t.skip('pdftotext is not installed');
+    assert.equal(result.status, 0, result.stderr);
+    const text = result.stdout;
+    let position = -1;
+    for (const heading of headings) {
+      const next = text.indexOf(heading, position + 1);
+      assert.ok(next > position, `${language}: ${heading} should follow the previous section`);
+      position = next;
+    }
+    assert.match(text, /ridhoihsanii\.github\.io\/portfolio/);
+    assert.doesNotMatch(text, /Download PDF|Unduh PDF/i);
+    assert.equal((text.match(/\f/g) || []).length, 1);
+    const box = fs.readFileSync(file).toString('latin1').match(/\/MediaBox\s*\[\s*0\s+0\s+([\d.]+)\s+([\d.]+)\s*\]/);
+    assert.ok(box);
+    assert.ok(Math.abs(Number(box[1]) - 595.28) < 2 && Math.abs(Number(box[2]) - 841.89) < 2);
+  }
+});
+
+test('Redis case study includes its technical scope and qualified comparison', () => {
+  const { translate } = require('../i18n.js');
+  assert.match(index, /Java and Spring Boot warehouse services/);
+  assert.match(index, /roughly 69% compared with 800 ms/);
+  assert.match(translate('Java and Spring Boot warehouse services.', 'id'), /layanan gudang Java dan Spring Boot/i);
 });
 
 test('portfolio and CV show the approved performance achievements', () => {

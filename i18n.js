@@ -29,6 +29,7 @@
     "I'm Rabbani Ridho Ihsani, a Java Backend Engineer with 4+ years of professional experience at PT Tri Adi Bersama (Anteraja), building backend services for warehouse operational systems. My work focuses on Java, Spring Boot, and RESTful APIs.": 'Saya Rabbani Ridho Ihsani, Java Backend Engineer dengan pengalaman profesional lebih dari 4 tahun di PT Tri Adi Bersama (Anteraja), membangun layanan backend untuk sistem operasional gudang. Pekerjaan saya berfokus pada Java, Spring Boot, dan RESTful API.',
     'I implement Redis caching and queue mechanisms and develop Kafka producers and consumers for event-driven processing. I also built an Odoo-integrated tool for reporting my completed tasks, write unit tests with JUnit and Mockito, and help resolve production issues.': 'Saya menerapkan cache dan antrean Redis serta mengembangkan producer dan consumer Kafka untuk pemrosesan berbasis peristiwa. Saya juga membuat alat terintegrasi Odoo untuk melaporkan tugas yang telah saya selesaikan, menulis unit test menggunakan JUnit dan Mockito, serta membantu menyelesaikan masalah produksi.',
     'View Full Resume': 'Lihat CV Lengkap',
+    'Download ATS CV': 'Unduh CV ATS',
     'What I Know': 'Keahlian Saya',
     'Skills & Technologies': 'Keahlian & Teknologi',
     'Backend Development': 'Pengembangan Backend',
@@ -55,12 +56,16 @@
     'Backend Case Studies': 'Studi Kasus Backend',
     'Selected work described without internal system details.': 'Pekerjaan terpilih dijelaskan tanpa rincian sistem internal.',
     'Faster responses with Redis': 'Respons lebih cepat dengan Redis',
+    'Scope:': 'Lingkup:',
+    'Java and Spring Boot warehouse services.': 'Layanan gudang Java dan Spring Boot.',
     'Problem:': 'Masalah:',
     'An endpoint took 800 ms or more to respond under high load.': 'Sebuah endpoint membutuhkan 800 ms atau lebih untuk merespons saat beban tinggi.',
     'Solution:': 'Solusi:',
-    'Used Redis caching to reduce repeated database access and Redis locks to reduce the risk of duplicate processing.': 'Menggunakan cache Redis untuk mengurangi akses database berulang dan Redis lock untuk mengurangi risiko pemrosesan duplikat.',
+    'Used Redis caching to reduce repeated database access.': 'Menggunakan cache Redis untuk mengurangi akses database berulang.',
+    'Concurrency:': 'Konkurensi:',
+    'Applied Redis locks to reduce the risk of duplicate processing.': 'Menerapkan Redis lock untuk mengurangi risiko pemrosesan duplikat.',
     'Result:': 'Hasil:',
-    'Response time decreased to approximately 250 ms under high load.': 'Waktu respons turun menjadi sekitar 250 ms saat beban tinggi.',
+    'Response time decreased to approximately 250 ms under high load — roughly 69% compared with 800 ms.': 'Waktu respons turun menjadi sekitar 250 ms saat beban tinggi — sekitar 69% dibandingkan dengan 800 ms.',
     'Asynchronous processing with Kafka': 'Pemrosesan asinkron dengan Kafka',
     'Synchronous backend processing delayed responses to the frontend.': 'Pemrosesan backend sinkron memperlambat respons ke frontend.',
     'Developed Kafka producers and consumers to move processing into an asynchronous workflow.': 'Mengembangkan producer dan consumer Kafka untuk memindahkan pemrosesan ke alur kerja asinkron.',
@@ -142,8 +147,8 @@
     return resolveLanguage(language) === 'id' && Object.prototype.hasOwnProperty.call(indonesian, key) ? indonesian[key] : key;
   }
 
-  function pdfForLanguage(language) {
-    return `cv-rabbani-ridho-ihsani${resolveLanguage(language) === 'id' ? '-id' : ''}.pdf`;
+  function pdfForLanguage(language, format) {
+    return `cv-rabbani-ridho-ihsani${resolveLanguage(language) === 'id' ? '-id' : ''}${format === 'ats' ? '-ats' : ''}.pdf`;
   }
 
   const api = { translate, resolveLanguage, pdfForLanguage };
@@ -153,6 +158,11 @@
 
   root.document.addEventListener('DOMContentLoaded', () => {
     const document = root.document;
+    const requestedFormat = new URLSearchParams(root.location.search).get('format');
+    if (requestedFormat === 'ats' && document.querySelector('.cv-main')) {
+      document.documentElement.dataset.cvFormat = 'ats';
+      document.querySelector('.page').appendChild(document.querySelector('.cv-sidebar'));
+    }
     const textNodes = [];
     const attributes = [];
     const walker = document.createTreeWalker(document.documentElement, NodeFilter.SHOW_TEXT, {
@@ -175,6 +185,7 @@
     const selector = document.getElementById('languageSelector');
     const languageLabel = document.getElementById('languageLabel');
     const download = document.querySelector('.download-button');
+    const atsDownload = document.getElementById('atsDownload');
 
     function applyLanguage(language) {
       language = resolveLanguage(language);
@@ -186,7 +197,8 @@
       attributes.forEach(({ element, name, original }) => element.setAttribute(name, translate(original, language)));
       if (selector) selector.value = language;
       if (languageLabel) languageLabel.textContent = language === 'id' ? 'INA' : 'ENG';
-      if (download) download.href = `${pdfForLanguage(language)}?v=2026112408`;
+      if (download) download.href = `${pdfForLanguage(language)}?v=2026112410`;
+      if (atsDownload) atsDownload.href = `assets/${pdfForLanguage(language, 'ats')}?v=2026112410`;
       root.dispatchEvent(new CustomEvent('languagechange', { detail: language }));
     }
 

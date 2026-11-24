@@ -31,12 +31,13 @@ portfolio/
 ├── index.html                      # Main HTML file
 ├── style.css                       # All styles (CSS variables, dark/light)
 ├── script.js                       # JavaScript (dark mode, animations, nav)
+├── i18n.js                         # English/Indonesian translations and CV selection
 ├── dino-game.html                  # Embedded Dino Game
 ├── firebase-config.js              # Firebase initialization for likes
 ├── assets/
 │   ├── profile.jpeg                # Profile photo
 │   ├── cv.html                     # CV preview
-│   └── cv-rabbani-ridho-ihsani.pdf # Downloadable A4 CV
+│   └── cv-*.pdf                    # Visual and ATS CV downloads, in both languages
 ├── tests/                          # Node.js regression tests
 └── README.md
 ```
@@ -72,6 +73,8 @@ portfolio/
 - ✅ Floating badges on hero photo
 - ✅ Back-to-top button
 - ✅ CV preview and PDF download
+- ✅ English / Indonesian language selection with saved preference
+- ✅ Separate one-column ATS CV download in both languages
 - ✅ Contact links for email, LinkedIn, and GitHub
 - ✅ Dino Game and like/share controls
 - ✅ SEO meta tags
