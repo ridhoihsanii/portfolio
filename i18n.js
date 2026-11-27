@@ -33,6 +33,8 @@
     'What I Know': 'Keahlian Saya',
     'Skills & Technologies': 'Keahlian & Teknologi',
     'Backend Development': 'Pengembangan Backend',
+    'Frontend (Junior · Additional)': 'Frontend (Junior · Tambahan)',
+    'Frontend — Junior (Additional)': 'Frontend — Junior (Tambahan)',
     'Scheduler-triggered processes': 'Proses terjadwal',
     'Caching & Messaging': 'Caching & Pesan',
     'Producer & Consumer': 'Producer & Consumer',
@@ -53,6 +55,7 @@
     'Created backend unit tests using JUnit and Mockito': 'Membuat unit test backend menggunakan JUnit dan Mockito',
     'Investigated and resolved production issues to help maintain application stability and continuity of warehouse operations': 'Menyelidiki dan menyelesaikan masalah produksi untuk menjaga stabilitas aplikasi dan kelangsungan operasional gudang',
     'Worked with QA, product, and cross-functional teams to deliver and maintain backend solutions': 'Bekerja sama dengan tim QA, produk, dan lintas fungsi untuk menghadirkan dan memelihara solusi backend',
+    'Contributed at a junior level to internal Android UI work using Kotlin and XML layouts': 'Berkontribusi pada pekerjaan UI Android internal pada level junior menggunakan Kotlin dan layout XML.',
     'Backend Case Studies': 'Studi Kasus Backend',
     'Selected work described without internal system details.': 'Pekerjaan terpilih dijelaskan tanpa rincian sistem internal.',
     'Faster responses with Redis': 'Respons lebih cepat dengan Redis',
@@ -197,8 +200,8 @@
       attributes.forEach(({ element, name, original }) => element.setAttribute(name, translate(original, language)));
       if (selector) selector.value = language;
       if (languageLabel) languageLabel.textContent = language === 'id' ? 'INA' : 'ENG';
-      if (download) download.href = `${pdfForLanguage(language)}?v=2026112410`;
-      if (atsDownload) atsDownload.href = `assets/${pdfForLanguage(language, 'ats')}?v=2026112410`;
+      if (download) download.href = `${pdfForLanguage(language)}?v=2026112715`;
+      if (atsDownload) atsDownload.href = `assets/${pdfForLanguage(language, 'ats')}?v=2026112715`;
       root.dispatchEvent(new CustomEvent('languagechange', { detail: language }));
     }
 

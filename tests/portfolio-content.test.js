@@ -40,6 +40,29 @@ test('portfolio and CV describe Odoo as reporting completed tasks, not warehouse
   assert.match(translate(hero, 'id'), /pelaporan timesheet/i);
 });
 
+test('portfolio and CV position frontend as junior and additional to backend', () => {
+  const contribution = 'Contributed at a junior level to internal Android UI work using Kotlin and XML layouts';
+  const frontendCategory = index.indexOf('Frontend (Junior');
+  assert.ok(frontendCategory > index.indexOf('Backend Development'));
+  assert.match(index, /Frontend \(Junior[^<]*Additional\)/);
+  assert.match(cv, /Frontend\s*[—-]\s*Junior \(Additional\)/);
+  for (const document of [index, cv]) {
+    assert.match(document, /Kotlin[\s\S]*?Android UI[\s\S]*?XML layouts/);
+    assert.ok(document.includes(contribution));
+  }
+  assert.match(cv, /header-title">Java Backend Engineer</);
+});
+
+test('frontend level and Android UI contribution have Indonesian translations', () => {
+  const { translate } = require('../i18n.js');
+  assert.equal(translate('Frontend (Junior · Additional)', 'id'), 'Frontend (Junior · Tambahan)');
+  assert.equal(translate('Frontend — Junior (Additional)', 'id'), 'Frontend — Junior (Tambahan)');
+  assert.equal(
+    translate('Contributed at a junior level to internal Android UI work using Kotlin and XML layouts', 'id'),
+    'Berkontribusi pada pekerjaan UI Android internal pada level junior menggunakan Kotlin dan layout XML.'
+  );
+});
+
 test('portfolio includes a linked Rack n Roll card with verified features', () => {
   assert.ok(projects, 'the portfolio Projects section should exist');
   assert.match(projects, /Rack n Roll/);
@@ -99,6 +122,18 @@ test('ATS PDFs extract in logical reading order and fit one A4 page', t => {
       assert.ok(next > position, `${language}: ${heading} should follow the previous section`);
       position = next;
     }
+    const frontendTerms = language === 'id'
+      ? ['FRONTEND', 'JUNIOR', 'TAMBAHAN', 'KOTLIN', 'ANDROID UI', 'LAYOUT XML']
+      : ['FRONTEND', 'JUNIOR', 'ADDITIONAL', 'KOTLIN', 'ANDROID UI', 'XML LAYOUTS'];
+    for (const term of frontendTerms) {
+      assert.ok(text.toUpperCase().includes(term), `${language}: ${term} should be in the ATS CV`);
+    }
+    assert.ok(
+      text.includes(language === 'id'
+        ? 'Berkontribusi pada pekerjaan UI Android internal pada level junior menggunakan Kotlin dan layout XML.'
+        : 'Contributed at a junior level to internal Android UI work using Kotlin and XML layouts'),
+      `${language}: the junior Android UI contribution should be in the ATS CV`
+    );
     assert.match(text, /ridhoihsanii\.github\.io\/portfolio/);
     assert.doesNotMatch(text, /Download PDF|Unduh PDF/i);
     assert.equal((text.match(/\f/g) || []).length, 1);
